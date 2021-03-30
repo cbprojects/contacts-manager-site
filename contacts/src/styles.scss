@@ -1,0 +1,276 @@
+.tim-typo {
+    padding-left: 25%;
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+}
+
+.tim-typo .tim-note {
+    bottom: 5px;
+    color: #c0c1c2;
+    display: block;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    left: 0;
+    margin-left: 20px;
+    position: absolute;
+    width: 260px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.sidebar:after {
+    background-image: url("/assets/images/sidebar-1.jpg");
+    opacity: 0.75;
+}
+
+/* offline-doc */
+
+.offline-doc .navbar.navbar-transparent {
+    padding-top: 25px;
+    border-bottom: none;
+}
+
+.offline-doc .navbar.navbar-transparent .navbar-minimize {
+    display: none;
+}
+
+.offline-doc .navbar.navbar-transparent .navbar-brand,
+.offline-doc .navbar.navbar-transparent .collapse .navbar-nav .nav-link {
+    color: #ffffff !important;
+}
+
+.offline-doc .footer {
+    z-index: 3 !important;
+}
+
+.offline-doc .page-header .container {
+    z-index: 3;
+}
+
+.offline-doc .page-header:after {
+    background-color: rgba(0, 0, 0, 0.5);
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+#map {
+    z-index: 2;
+    height: calc(100vh - 70px);
+    margin-top: 70px;
+}
+
+.ng-select .ng-clear-wrapper {
+    display: none;
+}
+
+.nice-select {
+    width: 100% !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    padding: 0px 5px;
+}
+
+.card .card-body {
+    padding: 2rem 20px !important;
+}
+
+.margin-5px {
+    margin: 5px;
+}
+
+.table > tbody > tr:hover {
+    background: whitesmoke;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.displayNone {
+    display: none;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.bg-transparent {
+    background: transparent !important;
+}
+
+.card-profile .card-avatar + .card-body {
+    margin-top: -10px !important;
+}
+
+.navbar.navbar-absolute {
+    z-index: 4 !important;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus,
+.dropdown-menu a:hover,
+.dropdown-menu a:focus,
+.dropdown-menu a:active {
+    color: #ffffff !important;
+    cursor: pointer;
+}
+
+.p-dialog .p-dialog-header {
+    border-radius: 5px 5px 0 0;
+    background: #131a1c;
+    color: #fff;
+}
+
+.p-dialog .p-dialog-footer {
+    border-radius: 0 0 5px 5px;
+}
+
+.p-dialog {
+    border-radius: 5px;
+}
+
+.font-forgot {
+    font-size: 10px;
+    margin-top: 15px;
+}
+
+.font-black {
+    color: #333333;
+}
+
+.hover-danger:hover {
+    background-color: #d90000 !important;
+    box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(212 0 0 / 40%) !important;
+}
+
+.noClick {
+    color: whitesmoke !important;
+    background-color: #c0c1c2 !important;
+    pointer-events: none;
+    cursor: no-drop !important;
+}
+
+.messages-row {
+    position: absolute;
+    margin: 60px 45px 0;
+    width: calc(100% - 60px);
+    font-size: 12px;
+}
+
+.main-panel > .content {
+    margin-top: 50px;
+}
+
+.sinResultados {
+    font-size: 18px;
+    color: #7c7c7c;
+    font-weight: bold;
+    padding: 10px;
+    margin: 5px 0;
+    text-align: center;
+    border: 1px solid #eeeeee;
+    border-radius: 5px;
+    background: #00bcd40f;
+}
+
+/*
+.p-message .p-message-icon {
+    font-size: 0.7rem;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.p-message .p-message-wrapper {
+    padding: 0 10px;
+    display: block;
+}
+
+.p-message .p-message-summary {
+    width: 100%;
+}
+*/
+.p-message .p-message-wrapper {
+    padding: 5px;
+    font-size: 12px;
+}
+
+.p-toast {
+    font-size: 12px;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.breadcrumb {
+    margin-bottom: 0.75rem;
+}
+
+.navbar .collapse .navbar-nav .nav-item .nav-link {
+    text-align: center;
+}
+
+.p-message .p-message-detail {
+    text-align: justify;
+    padding: 5px 10px;
+    display: block;
+}
+
+.p-confirm-popup {
+    border: 0;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border-radius: 6px;
+    color: #333333;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+}
+
+.p-confirm-popup .p-confirm-popup-content {
+    border-bottom: 1px solid #f1f1f1;
+    margin: 10px 5px;
+}
+
+.p-confirm-popup .p-confirm-popup-footer {
+    text-align: right;
+    margin: 5px;
+}
+
+.p-confirm-popup-reject {
+    color: #1d2225 !important;
+    padding: 0px 5px !important;
+    margin: 0px 5px;
+}
+
+.p-confirm-popup-accept {
+    background: #16bbcf;
+    border: 1px solid #16bbcf;
+    padding: 0px 5px !important;
+}
+
+.p-confirm-popup-accept:hover {
+    background: #16bbcf !important;
+    border: 1px solid #16bbcf !important;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+    border-color: #16bbcf;
+    background: #16bbcf;
+}
+
+.p-confirm-popup-icon {
+    margin-right: 5px;
+}
+
+.p-checkbox .p-checkbox-box:not(.pdisabled).p-focus {
+    border-color: #16bbcf;
+}

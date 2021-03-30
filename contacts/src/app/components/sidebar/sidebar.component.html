@@ -1,0 +1,48 @@
+<div class="sidebar" data-color="azure" data-background-color="black" data-image="../assets/images/sidebar-1.jpg">
+    <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+    <div class="logo">
+        <a href="https://www.cbaeneprojects.com" class="simple-text logo-normal">
+            <img src="assets/images/logo.png" width="40px">
+            Contacts Manager
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <ul id="menu" class="nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home">
+                    <i class="material-icons">dashboard</i>
+                    <p>{{msg.lbl_menu_inicio}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/management">
+                    <i class="material-icons">person</i>
+                    <p>{{msg.lbl_menu_gestion}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/query">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{msg.lbl_menu_consulta}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home">
+                    <i class="material-icons">library_books</i>
+                    <p>{{msg.lbl_menu_reportes}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home">
+                    <i class="material-icons">notifications</i>
+                    <p>{{msg.lbl_menu_notificaciones}}</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar-background" style="background-image: url(../assets/images/sidebar-1.jpg) "></div>
+</div>

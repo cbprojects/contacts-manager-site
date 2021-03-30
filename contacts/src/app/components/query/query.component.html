@@ -1,0 +1,155 @@
+<div class="wrapper ">
+	<!-- HEADER -->
+	<app-sidebar></app-sidebar>
+	<!-- HEADER -->
+
+	<div class="main-panel">
+		<!-- HEADER -->
+		<app-header></app-header>
+		<!-- HEADER -->
+
+		<!-- CONTENT -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header card-header-primary">
+								<h4 class="card-title ">{{msg.lbl_contactos}}</h4>
+								<p class="card-category">{{msg.lbl_contactos_consulta_subtitles}}</p>
+							</div>
+							<div class="card-body">
+								<div class="row pull-right" style="padding-right: 30px;">
+									<div class="input-group no-border">
+										<input type="text" [(ngModel)]="nombreFiltro" class="form-control"
+											placeholder="{{msg.lbl_btn_buscar}}">
+										<button type="submit" (click)="consultarContactoPorNombre()"
+											class="btn btn-white btn-round btn-just-icon">
+											<i class="material-icons">search</i>
+											<div class="ripple-container"></div>
+										</button>
+									</div>
+								</div>
+								<div class="table-responsive">
+									<table *ngIf="listaContactos.length > 0; else sinResultados" class="table">
+										<thead class=" text-primary">
+											<th class="text-center">
+												<p-checkbox (click)="seleccionarTodosContactos()"
+													[(ngModel)]="seleccionarTodos" binary="true" inputId="binary">
+												</p-checkbox>
+											</th>
+											<th class="td-actions text-center">
+												<button type="button" [disabled]="!seleccionarTodos"
+													(click)="enviarEmailTodos($event)"
+													class="btn btn-primary btn-link btn-sm">
+													<i class="material-icons"
+														style="font-size: 28px;margin-top: -25px;">mark_as_unread</i>
+												</button>
+												<p-confirmPopup></p-confirmPopup>
+											</th>
+											<th class="text-center">
+												#
+											</th>
+											<th class="text-center">
+												{{msg.lbl_table_header_nombre_empresa}}
+											</th>
+											<th class="text-center">
+												{{msg.lbl_table_header_telefono_empresa}}
+											</th>
+											<th class="text-center">
+												{{msg.lbl_table_header_nombre_contacto}}
+											</th>
+											<th class="text-center">
+												{{msg.lbl_table_header_correo_contacto}}
+											</th>
+											<th class="text-center">
+												{{msg.lbl_table_header_telefono_contacto}}
+											</th>
+											<th class="text-center">
+												{{msg.lbl_table_header_proceso}}
+											</th>
+										</thead>
+										<tbody>
+											<tr *ngFor="let contacto of listaContactos; index as i;">
+												<td class="text-center">
+													<p-checkbox (click)="validarSeleccionarTodos()"
+														[(ngModel)]="contacto.seleccionado" binary="true"
+														inputId="binary">
+													</p-checkbox>
+												</td>
+												<td class="td-actions text-center">
+													<button type="button" [disabled]="!contacto.seleccionado"
+														(click)="enviarEmail($event, contacto.contactoTB)"
+														class="btn btn-primary btn-link btn-sm">
+														<i class="material-icons"
+															style="font-size: 28px;margin-top: -25px;">mail</i>
+													</button>
+													<p-confirmPopup></p-confirmPopup>
+												</td>
+												<td class="text-center" (click)="cargarContacto(contacto.contactoTB)">
+													{{contacto.contactoTB.idContacto}}</td>
+												<td (click)="cargarContacto(contacto.contactoTB)">
+													{{contacto.contactoTB.nombreEmpresa}}</td>
+												<td class="text-center" (click)="cargarContacto(contacto.contactoTB)">
+													{{contacto.contactoTB.telefonoEmpresa}}</td>
+												<td (click)="cargarContacto(contacto.contactoTB)">
+													{{contacto.contactoTB.nombreContacto}}</td>
+												<td (click)="cargarContacto(contacto.contactoTB)">
+													{{contacto.contactoTB.correoContacto}}</td>
+												<td class="text-center" (click)="cargarContacto(contacto.contactoTB)">
+													{{contacto.contactoTB.telefonoContacto}}</td>
+												<td class="text-primary text-center"
+													(click)="cargarContacto(contacto.contactoTB)">
+													<span
+														class="badge badge-{{cargarColorBadge(contacto.contactoTB.procesoContacto.value)}}">{{contacto.contactoTB.procesoContacto.label}}</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<ng-template #sinResultados>
+										<div class="service-grids">
+											<div class="col-md-12 ser-grid">
+												<p class="sinResultados">
+													{{msg.lbl_info_sin_resultados}}</p>
+											</div>
+										</div>
+									</ng-template>
+								</div>
+								<div>
+									<p-messages></p-messages>
+									<p-toast></p-toast>
+								</div>
+							</div>
+						</div>
+
+						<div class="card card-stats">
+							<div class="card-header card-header-info card-header-icon">
+								<div class="card-icon">
+									<i class="material-icons">nat</i>
+								</div>
+								<p class="card-category">{{msg.lbl_procesos}}</p>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<div class="row" style="padding: 0 10px;">
+										<span class="badge badge-secondary margin-5px">Prospecto</span>
+										<span class="badge badge-primary margin-5px">Contacto</span>
+										<span class="badge badge-success margin-5px">Cliente</span>
+										<span class="badge badge-danger margin-5px">Cliente Perdido</span>
+										<span class="badge badge-warning margin-5px">Potencial Pérdida</span>
+										<span class="badge badge-info margin-5px">Cambio Info.</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CONTENT -->
+
+		<!-- FOOTER -->
+		<app-footer></app-footer>
+		<!-- FOOTER -->
+	</div>
+</div>

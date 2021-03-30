@@ -1,0 +1,140 @@
+<div class="wrapper ">
+	<!-- HEADER -->
+	<app-sidebar></app-sidebar>
+	<!-- HEADER -->
+
+	<div class="main-panel">
+		<!-- HEADER -->
+		<app-header></app-header>
+		<!-- HEADER -->
+
+		<!-- CONTENT -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-{{esNuevoContacto ? '12' : '8'}}">
+						<div class="card">
+							<div class="card-header card-header-primary">
+								<h4 class="card-title ">{{msg.lbl_contactos}}</h4>
+								<p class="card-category">{{esNuevoContacto ? msg.lbl_contactos_crea_subtitles :
+									msg.lbl_contactos_actualiza_subtitles}}</p>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_nombre_empresa}}</label>
+											<input type="text" class="form-control"
+												[(ngModel)]="contacto.nombreEmpresa">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_telefono_empresa}}</label>
+											<input type="text" class="form-control"
+												[(ngModel)]="contacto.telefonoEmpresa">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_nombre_contacto}}</label>
+											<input type="text" class="form-control"
+												[(ngModel)]="contacto.nombreContacto">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_telefono_contacto}}</label>
+											<input type="text" class="form-control"
+												[(ngModel)]="contacto.telefonoContacto">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_correo_contacto}}</label>
+											<input type="email" class="form-control"
+												[(ngModel)]="contacto.correoContacto">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_cargo_contacto}}</label>
+											<input type="text" class="form-control"
+												[(ngModel)]="contacto.cargoContacto">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label
+												class="bmd-label-floating {{esNuevoContacto ? 'displayNone' : ''}}">{{msg.lbl_mtto_proceso}}</label>
+											<select id="selectProceso" nice-select
+												[attr.data-value]="contacto.procesoContacto"
+												[(ngModel)]="contacto.procesoContacto">
+												<option *ngFor="let proceso of enumProceso" [ngValue]="proceso">
+													{{proceso.label}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<div class="form-group">
+												<label
+													class="bmd-label-floating">{{msg.lbl_mtto_descripcion_empresa}}</label>
+												<textarea class="form-control" rows="2"
+													[(ngModel)]="contacto.descripcionEmpresa"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<button type="submit"
+										(click)="esNuevoContacto ? crearContacto() : modificarContacto()"
+										class="btn btn-primary pull-right">{{esNuevoContacto ?
+										msg.lbl_btn_crear : msg.lbl_btn_actualizar}}</button>
+									<button type="submit" (click)="volverConsulta()"
+										class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
+									<div class="clearfix"></div>
+								</div>
+								<div>
+									<p-messages></p-messages>
+									<p-toast></p-toast>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="{{esNuevoContacto ? 'displayNone' : 'col-md-4'}}">
+						<div class="card card-profile">
+							<div class="card-avatar">
+								<a>
+									<img class="img" src="../assets/images/logo.png" />
+								</a>
+							</div>
+							<div class="card-body">
+								<h2><span class="badge badge-pill badge-info"># {{contacto.idContacto}}</span></h2>
+								<h6 class="card-category text-gray">{{contacto.nombreEmpresa}} /
+									{{contacto.cargoContacto}}</h6>
+								<h4 class="card-title">{{contacto.nombreContacto}}</h4>
+								<p class="card-description">{{contacto.descripcionEmpresa}}
+								</p>
+								<button type="submit" class="btn btn-danger"
+									(click)="eliminarContacto()">{{msg.lbl_btn_eliminar}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CONTENT -->
+
+		<!-- FOOTER -->
+		<app-footer></app-footer>
+		<!-- FOOTER -->
+	</div>
+</div>
