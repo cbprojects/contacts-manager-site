@@ -39,6 +39,7 @@ import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoade
 import { AppComponent } from './app.component';
 import { Guardian } from './config/Guardian';
 import { HomeComponent } from './components/home/home.component';
+import { RestaurarClaveComponent } from './components/restaurarClave/restaurarClave.component';
 import { QueryComponent } from './components/query/query.component';
 import { ManagementComponent } from './components/management/management.component';
 
@@ -87,6 +88,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SidebarComponent,
     FooterComponent,
     HomeComponent,
+    RestaurarClaveComponent,
     QueryComponent,
     ManagementComponent
   ],

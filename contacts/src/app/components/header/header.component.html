@@ -83,10 +83,36 @@
 
     <p-footer>
         <div class="pull-left font-forgot">
-            <a class="font-black" routerLink="/home">{{msg.lbl_btn_olvidaste_tu_clave}}</a>
+            <a class="font-black cursorPointer" (click)="irRecordarClave()">{{msg.lbl_btn_olvidaste_tu_clave}}</a>
         </div>
-        <button type="submit" class="btn btn-secondary" (click)="cerrarModalLogin()">{{msg.lbl_btn_atras}}</button>
+        <button type="submit" class="btn btn-secondary" (click)="cerrarModalLogin()">{{msg.lbl_btn_cancelar}}</button>
         <button type="submit" class="btn btn-primary" (click)="login()">{{msg.lbl_login}}</button>
+        <div class="clearfix"></div>
+    </p-footer>
+</p-dialog>
+<!-- End Dialog Login -->
+
+<!-- Dialog Restaurar Clave -->
+<p-dialog [(visible)]="displayModalRestaurar" [modal]="true" [style]="{width: '50vw'}" [transitionOptions]="'150ms'"
+    [showHeader]="false" (onShow)="aplicarMDBLogin()">
+
+    <div id="restaurarClave" class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="bmd-label-floating">{{msg.lbl_header_usuario}}</label>
+                <input type="text" class="form-control" [(ngModel)]="usuarioRecordar" (keydown)="recordarEnter($event)">
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="pull-left font-forgot">
+            <a class="font-black cursorPointer" (click)="irLogin()">{{msg.lbl_login}}</a>
+        </div>
+        <button type="submit" class="btn btn-secondary"
+            (click)="cerrarModalRestaurar()">{{msg.lbl_btn_cancelar}}</button>
+        <button type="submit" class="btn btn-primary"
+            (click)="restaurarClaveUsuario()">{{msg.lbl_header_restore_password}}</button>
         <div class="clearfix"></div>
     </p-footer>
 </p-dialog>

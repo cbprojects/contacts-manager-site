@@ -58,6 +58,7 @@ export class TextProperties {
       lbl_ir_a: idioma === constant.idiomaEs ? 'Ir a: ' : 'Go to: ',
       lbl_ir_inicio: idioma === constant.idiomaEs ? 'Ir al Login' : 'Go to Login',
       lbl_btn_olvidaste_tu_clave: idioma === constant.idiomaEs ? '¿Olvidaste tu clave?' : 'Do You forget your password?',
+      lbl_msg_claves_no_coinciden: idioma === constant.idiomaEs ? 'Las claves no coinciden' : 'The passwords do not match',
       lbl_btn_no_ha_llegado_correo_vcode: idioma === constant.idiomaEs ? '¿No ha llegado ningún Correo? Presiona para Reintentar.' : 'No mail has arrived? Press to Retry.',
       lbl_drag_archivos: idioma === constant.idiomaEs ? 'Haga [Clic] o arrastre un archivo aquí' : 'Click or Drag a file here',
       lbl_cantidad_max_archivos: idioma === constant.idiomaEs ? 'Cantidad máxima: 5 archivos' : 'Only 5 Files',
@@ -180,7 +181,10 @@ export class TextProperties {
 
       // Header
       lbl_header_usuario: idioma === constant.idiomaEs ? 'Usuario' : 'User',
+      lbl_header_usuario_no_existe: idioma === constant.idiomaEs ? 'Usuario no existe' : 'Do not exist User',
       lbl_header_password: idioma === constant.idiomaEs ? 'Clave' : 'Password',
+      lbl_header_repeat_password: idioma === constant.idiomaEs ? 'Repetir Clave' : 'Repeat Password',
+      lbl_header_restore_password: idioma === constant.idiomaEs ? 'Restaurar Clave' : 'Restore Password',
       lbl_header_nombre: idioma === constant.idiomaEs ? 'Nombre' : 'Name',
       lbl_header_inicio: idioma === constant.idiomaEs ? 'Inicio' : 'Home',
       lbl_header_acerca_de: idioma === constant.idiomaEs ? 'Acerca de' : 'About',

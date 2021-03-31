@@ -27,7 +27,9 @@ export class HeaderComponent implements OnInit {
   // Objetos de Animaciones
   fadeIn: any;
   displayModalLogin: boolean = false;
+  displayModalRestaurar: boolean = false;
   usuario: any = "";
+  usuarioRecordar: any = "";
   clave: any = "";
   esLogueado: boolean = false;
 
@@ -56,6 +58,7 @@ export class HeaderComponent implements OnInit {
   aplicarMDBLogin() {
     setTimeout(() => {
       $('#login').bootstrapMaterialDesign();
+      $('#restaurarClave').bootstrapMaterialDesign();
     }, 10);
   }
 
@@ -126,6 +129,10 @@ export class HeaderComponent implements OnInit {
     this.displayModalLogin = false;
   }
 
+  cerrarModalRestaurar() {
+    this.displayModalRestaurar = false;
+  }
+
   cerrarSesion() {
     this.usuario = "";
     this.clave = "";
@@ -138,6 +145,61 @@ export class HeaderComponent implements OnInit {
   loginEnter(event) {
     if (event.keyCode === 13) {
       this.login();
+    }
+  }
+
+  recordarEnter(event) {
+    if (event.keyCode === 13) {
+      this.restaurarClaveUsuario();
+    }
+  }
+
+  irLogin() {
+    this.displayModalRestaurar = false;
+    this.displayModalLogin = true;
+  }
+
+  irRecordarClave() {
+    this.displayModalRestaurar = true;
+    this.displayModalLogin = false;
+  }
+
+  restaurarClaveUsuario() {
+    try {
+      let usuario = this.objectModelInitializer.getDataUsuarioModel();
+      usuario.usuario = this.usuario;
+      this.restService.postREST(this.const.urlRestaurarClave, usuario)
+        .subscribe(resp => {
+          let respuesta: UsuarioModel = JSON.parse(JSON.stringify(resp));
+          if (respuesta !== null) {
+            // Mostrar mensaje exitoso y consultar comentarios de nuevo
+            this.messageService.clear();
+            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo });
+            this.sesionService.objServiceSesion.usuarioSesion = respuesta;
+            sessionStorage.setItem("usuarioSesion", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
+            this.usuario = "";
+            this.clave = "";
+            this.esLogueado = true;
+            this.cerrarModalLogin();
+            $('.card').bootstrapMaterialDesign();
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '' };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
     }
   }
 

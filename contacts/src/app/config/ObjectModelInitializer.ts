@@ -55,6 +55,7 @@ export class ObjectModelInitializer {
       urlRestaurarClave: `${HOST}/central/contactos/restaurarClave`,
       urlModificarClaveUsuario: `${HOST}/central/contactos/modificarClaveUsuario`,
       urlEnviarEmailContacto: `${HOST}/central/contactos/archivos/enviarEmailContacto`,
+      tokenRecordarClave: '3vkd3ugAOnnXZGfUER8',
       correoRemitente: 'eutanasiarockandroll@gmail.com',
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',

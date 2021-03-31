@@ -11,6 +11,7 @@ export class SesionService {
   // Fases
   objServiceSesion: any;
   objContactoCargado: ContactoModel;
+  usuarioRestaurarClave: any;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
     this.inicializar();

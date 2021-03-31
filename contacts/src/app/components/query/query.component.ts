@@ -246,7 +246,7 @@ export class QueryComponent implements OnInit {
       // Conversiones de datos
       this.mailDTO = this.objectModelInitializer.getDataRequestContactoEmailDtoModel();
       this.mailDTO.desde = this.const.correoRemitente;
-      this.mailDTO.asunto = "Correo Prueba";
+      this.mailDTO.asunto = "Recubrimientos Epoxicos para Pisos y Paredes, Cancelería Sanitaria y Sistemas HVAC";
       this.mailDTO.destinatarios = listaContactos;
       if (this.mailDTO.destinatarios !== undefined && this.mailDTO.destinatarios !== null) {
         this.mailDTO.destinatarios.forEach(contacto => {
