@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChartModule } from 'primeng/chart';
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
@@ -19,7 +20,6 @@ import { Functions } from './config/Functions';
 import { Util } from './config/Util';
 import { GoogleMapsModule } from '@angular/google-maps'
 import { AgmCoreModule } from '@agm/core';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 
 // Imports Esenciales
 import { AppRoutingModule } from './config/Routing';
@@ -105,7 +105,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NiceSelectModule,
     RouterModule,
 
-    CarouselModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderRouterModule,
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
@@ -118,6 +117,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ConfirmPopupModule,
     CheckboxModule,
     ButtonModule,
+    ChartModule,
     //SliderModule,
     //FieldsetModule,
     DialogModule

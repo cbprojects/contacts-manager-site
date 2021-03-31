@@ -48,9 +48,9 @@
               "./src/assets/js/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./src/assets/js/bootstrap-material-design.min.js",
-              "./src/assets/js/chartist.min.js",
               "./src/assets/js/perfect-scrollbar.jquery.min.js",
               "./src/assets/js/material-dashboard.js",
+              "./node_modules/chart.js/dist/Chart.js",
               "./src/assets/js/main.js"
             ]
           },
@@ -134,9 +134,9 @@
               "./src/assets/js/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./src/assets/js/bootstrap-material-design.min.js",
-              "./src/assets/js/chartist.min.js",
               "./src/assets/js/perfect-scrollbar.jquery.min.js",
               "./src/assets/js/material-dashboard.js",
+              "./node_modules/chart.js/dist/Chart.js",
               "./src/assets/js/main.js"
             ]
           }

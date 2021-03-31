@@ -23,7 +23,7 @@ export class Guardian implements CanActivate {
     let URLactual = window.location.href;
     let sesionOK = false;
     let user = sessionStorage.getItem("usuarioSesion");
-    if (URLactual.split("#")[1].includes('home') || URLactual.split("#")[1].includes('query') || URLactual.split("#")[1].includes('management') || URLactual.split("#")[1] !== "/") {
+    if (URLactual.split("#").length === 1 || URLactual.split("#")[1].includes('home') || URLactual.split("#")[1].includes('query') || URLactual.split("#")[1].includes('management') || URLactual.split("#")[1] !== "/") {
       if (user !== undefined && user !== null) {
         let usuarioTB = JSON.parse(user);
         if (usuarioTB.usuario !== undefined && usuarioTB.clave !== undefined && usuarioTB.usuario !== null && usuarioTB.clave !== null) {
