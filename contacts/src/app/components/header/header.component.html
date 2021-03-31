@@ -80,11 +80,19 @@
     </div>
 
     <p-footer>
-        <div class="pull-left font-forgot">
-            <a class="font-black cursorPointer" (click)="irRecordarClave()">{{msg.lbl_btn_olvidaste_tu_clave}}</a>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-left font-forgot">
+                    <a class="font-black cursorPointer"
+                        (click)="irRecordarClave()">{{msg.lbl_btn_olvidaste_tu_clave}}</a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-secondary"
+                    (click)="cerrarModalLogin()">{{msg.lbl_btn_cancelar}}</button>
+                <button type="submit" class="btn btn-primary" (click)="login()">{{msg.lbl_login}}</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-secondary" (click)="cerrarModalLogin()">{{msg.lbl_btn_cancelar}}</button>
-        <button type="submit" class="btn btn-primary" (click)="login()">{{msg.lbl_login}}</button>
         <div class="clearfix"></div>
     </p-footer>
 </p-dialog>
@@ -104,13 +112,19 @@
     </div>
 
     <p-footer>
-        <div class="pull-left font-forgot">
-            <a class="font-black cursorPointer" (click)="irLogin()">{{msg.lbl_login}}</a>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-left font-forgot">
+                    <a class="font-black cursorPointer" (click)="irLogin()">{{msg.lbl_login}}</a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-secondary"
+                    (click)="cerrarModalRestaurar()">{{msg.lbl_btn_cancelar}}</button>
+                <button type="submit" class="btn btn-primary"
+                    (click)="restaurarClaveUsuario()">{{msg.lbl_header_restore_password}}</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-secondary"
-            (click)="cerrarModalRestaurar()">{{msg.lbl_btn_cancelar}}</button>
-        <button type="submit" class="btn btn-primary"
-            (click)="restaurarClaveUsuario()">{{msg.lbl_header_restore_password}}</button>
         <div class="clearfix"></div>
     </p-footer>
 </p-dialog>

@@ -24,20 +24,22 @@
                 <a id="btnDDProfileMobile" class="nav-link cursorPointer"
                     (click)="toggleDropdown('dropdownProfileMobile')">
                     <i class="material-icons">person</i>
-                    <p>{{sesionService.objServiceSesion.esLogueado ? sesionService.objServiceSesion.usuarioSesion.usuario :
+                    <p>{{sesionService.objServiceSesion.esLogueado ?
+                        sesionService.objServiceSesion.usuarioSesion.usuario :
                         'No Logueado'}}</p>
                 </a>
                 <div id="dropdownProfileMobile" class="dropdown-menu dropdown-menu-right DD-mobile">
-                    <a *ngIf="!sesionService.objServiceSesion.esLogueado" class="dropdown-item color-DD-mobile hover-info" style="margin-top: 0;"
+                    <a *ngIf="!sesionService.objServiceSesion.esLogueado"
+                        class="dropdown-item color-DD-mobile hover-info" style="margin-top: 0;"
                         (click)="showDialogLogin()">
-                        <i class="material-icons">login</i>
+                        <i class="material-icons color-DD-mobile">login</i>
                         Log In
                     </a>
                     <div *ngIf="!sesionService.objServiceSesion.esLogueado" class="dropdown-divider"></div>
                     <a id="cerrar-mobile"
                         class="dropdown-item color-DD-mobile hover-danger {{!sesionService.objServiceSesion.esLogueado ? 'noClick' : ''}}"
                         style="margin-top: 0;" (click)="cerrarSesion()">
-                        <i class="material-icons">logout</i>
+                        <i class="material-icons color-DD-mobile">logout</i>
                         Log out
                     </a>
                 </div>
@@ -99,11 +101,19 @@
     </div>
 
     <p-footer>
-        <div class="pull-left font-forgot">
-            <a class="font-black cursorPointer" (click)="irRecordarClave()">{{msg.lbl_btn_olvidaste_tu_clave}}</a>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-left font-forgot">
+                    <a class="font-black cursorPointer"
+                        (click)="irRecordarClave()">{{msg.lbl_btn_olvidaste_tu_clave}}</a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-secondary"
+                    (click)="cerrarModalLogin()">{{msg.lbl_btn_cancelar}}</button>
+                <button type="submit" class="btn btn-primary" (click)="login()">{{msg.lbl_login}}</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-secondary" (click)="cerrarModalLogin()">{{msg.lbl_btn_cancelar}}</button>
-        <button type="submit" class="btn btn-primary" (click)="login()">{{msg.lbl_login}}</button>
         <div class="clearfix"></div>
     </p-footer>
 </p-dialog>
@@ -123,13 +133,19 @@
     </div>
 
     <p-footer>
-        <div class="pull-left font-forgot">
-            <a class="font-black cursorPointer" (click)="irLogin()">{{msg.lbl_login}}</a>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-left font-forgot">
+                    <a class="font-black cursorPointer" (click)="irLogin()">{{msg.lbl_login}}</a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-secondary"
+                    (click)="cerrarModalRestaurar()">{{msg.lbl_btn_cancelar}}</button>
+                <button type="submit" class="btn btn-primary"
+                    (click)="restaurarClaveUsuario()">{{msg.lbl_header_restore_password}}</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-secondary"
-            (click)="cerrarModalRestaurar()">{{msg.lbl_btn_cancelar}}</button>
-        <button type="submit" class="btn btn-primary"
-            (click)="restaurarClaveUsuario()">{{msg.lbl_header_restore_password}}</button>
         <div class="clearfix"></div>
     </p-footer>
 </p-dialog>

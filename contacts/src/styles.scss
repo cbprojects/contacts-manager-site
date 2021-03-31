@@ -319,6 +319,12 @@
     }
 }
 
+@media (max-width: 529px) {
+    button {
+        width: 100% !important;
+    }
+}
+
 .dropdown-menu .dropdown-item,
 .dropdown-menu li > a {
     margin: 0px !important;
@@ -330,4 +336,8 @@
 
 .p-toast {
     width: calc(100% - 40px) !important;
+}
+
+.color-DD-mobile:hover i {
+    color: #fff !important;
 }
