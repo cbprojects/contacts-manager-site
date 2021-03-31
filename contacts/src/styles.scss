@@ -119,7 +119,7 @@
 .dropdown-menu a:hover,
 .dropdown-menu a:focus,
 .dropdown-menu a:active {
-    color: #ffffff !important;
+    color: #ffffff;
     cursor: pointer;
 }
 
@@ -144,11 +144,6 @@
 
 .font-black {
     color: #333333;
-}
-
-.hover-danger:hover {
-    background-color: #d90000 !important;
-    box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(212 0 0 / 40%) !important;
 }
 
 .noClick {
@@ -273,4 +268,66 @@
 
 .p-checkbox .p-checkbox-box:not(.pdisabled).p-focus {
     border-color: #16bbcf;
+}
+
+.navbar .navbar-toggler {
+    right: 20px;
+    position: absolute;
+}
+
+.color-DD-mobile {
+    color: #3c4858 !important;
+}
+
+.color-DD-mobile:hover {
+    color: #3c4858 !important;
+}
+
+.hover-danger:hover {
+    background-color: #d90000 !important;
+    box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(212 0 0 / 40%) !important;
+    color: #fff !important;
+}
+
+.hover-info:hover {
+    background-color: #16bbcf !important;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%) !important;
+    color: #fff !important;
+}
+
+.DD-mobile {
+    margin-left: 5px;
+    width: calc(100% - 10px);
+}
+
+@media (max-width: 991px) {
+    .close-layer {
+        height: 100vh !important;
+        width: 105% !important;
+        position: fixed !important;
+        min-height: 3200px !important;
+    }
+
+    .hidden-mobile {
+        display: none !important;
+    }
+}
+
+@media (min-width: 991px) {
+    .hidden-desktop {
+        display: none !important;
+    }
+}
+
+.dropdown-menu .dropdown-item,
+.dropdown-menu li > a {
+    margin: 0px !important;
+}
+
+.p-toast .p-toast-message .p-toast-icon-close {
+    width: 2.5rem !important;
+}
+
+.p-toast {
+    width: calc(100% - 40px) !important;
 }

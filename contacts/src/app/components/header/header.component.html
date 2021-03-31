@@ -11,14 +11,9 @@
                 </ol>
             </nav>
         </div>
-        <div class="navbar-wrapper" style="width: 100%;">
-            <nav style="width: 100%;">
-                <p-messages></p-messages>
-            </nav>
-        </div>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
-            aria-expanded="false" aria-label="Toggle navigation">
+        <button id="toggleMenuMobile" class="navbar-toggler" type="button" data-toggle="collapse"
+            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
@@ -42,15 +37,18 @@
                 <li class="nav-item dropdown">
                     <a id="btnDDProfile" class="nav-link cursorPointer" (click)="toggleDropdown('dropdownProfile')">
                         <i class="material-icons">person</i><span
-                            *ngIf="esLogueado">{{sesionService.objServiceSesion.usuarioSesion.usuario}}</span>
+                            *ngIf="sesionService.objServiceSesion.esLogueado">{{sesionService.objServiceSesion.usuarioSesion.usuario}}</span>
                     </a>
                     <div id="dropdownProfile" class="dropdown-menu dropdown-menu-right">
-                        <a *ngIf="!esLogueado" class="dropdown-item" (click)="showDialogLogin()">
+                        <a *ngIf="!sesionService.objServiceSesion.esLogueado" class="dropdown-item"
+                            (click)="showDialogLogin()">
                             <i class="material-icons">login</i>
                             Log In
                         </a>
-                        <div *ngIf="!esLogueado" class="dropdown-divider"></div>
-                        <a class="dropdown-item hover-danger {{!esLogueado ? 'noClick' : ''}}" (click)="cerrarSesion()">
+                        <div *ngIf="!sesionService.objServiceSesion.esLogueado" class="dropdown-divider"></div>
+                        <a id="cerrar-desktop"
+                            class="dropdown-item hover-danger {{!sesionService.objServiceSesion.esLogueado ? 'noClick' : ''}}"
+                            (click)="cerrarSesion()">
                             <i class="material-icons">logout</i>
                             Log out
                         </a>

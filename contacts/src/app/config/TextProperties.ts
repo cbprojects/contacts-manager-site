@@ -152,6 +152,7 @@ export class TextProperties {
       lbl_menu_reportes: idioma === constant.idiomaEs ? 'Reportes' : 'Reports',
       lbl_menu_ubicaciones: idioma === constant.idiomaEs ? 'Ubicaciones' : 'Locations',
       lbl_menu_notificaciones: idioma === constant.idiomaEs ? 'Notificaciones' : 'Notifications',
+      lbl_menu_tareas: idioma === constant.idiomaEs ? 'Tareas' : 'Tasks',
 
       // Acciones
       lbl_btn_ingresar: idioma === constant.idiomaEs ? 'Ingresar' : 'Sign In',

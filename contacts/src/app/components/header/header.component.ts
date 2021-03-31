@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit {
   usuario: any = "";
   usuarioRecordar: any = "";
   clave: any = "";
-  esLogueado: boolean = false;
 
   // Utilidades
   msg: any;
@@ -46,7 +45,7 @@ export class HeaderComponent implements OnInit {
     let user = sessionStorage.getItem("usuarioSesion");
     if (user !== undefined && user !== null) {
       this.sesionService.objServiceSesion.usuarioSesion = JSON.parse(user);
-      this.esLogueado = true;
+      this.sesionService.objServiceSesion.esLogueado = true;
     }
   }
 
@@ -82,6 +81,12 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleDropdown(id) {
+    if (id === 'dropdownProfile' && $('#dropdownNotys').hasClass('show')) {
+      $('#dropdownNotys').removeClass('show');
+    }
+    if (id === 'dropdownNotys' && $('#dropdownProfile').hasClass('show')) {
+      $('#dropdownProfile').removeClass('show');
+    }
     $('#' + id).toggleClass('show');
   }
 
@@ -96,12 +101,12 @@ export class HeaderComponent implements OnInit {
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar comentarios de nuevo
             this.messageService.clear();
-            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo });
+            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
             this.sesionService.objServiceSesion.usuarioSesion = respuesta;
             sessionStorage.setItem("usuarioSesion", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
             this.usuario = "";
             this.clave = "";
-            this.esLogueado = true;
+            this.sesionService.objServiceSesion.esLogueado = true;
             this.cerrarModalLogin();
             $('.card').bootstrapMaterialDesign();
           }
@@ -110,7 +115,7 @@ export class HeaderComponent implements OnInit {
             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
             let titleError = listaMensajes[0];
             listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '' };
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
             this.messageService.clear();
 
             listaMensajes.forEach(mensaje => {
@@ -137,8 +142,9 @@ export class HeaderComponent implements OnInit {
     this.usuario = "";
     this.clave = "";
     this.sesionService.objServiceSesion.usuarioSesion = undefined;
-    this.esLogueado = false;
+    this.sesionService.objServiceSesion.esLogueado = false;
     sessionStorage.setItem("cerrarSesion", "1");
+    $('#cerrar-mobile').click();
     this.router.navigate(['/home']);
   }
 
@@ -174,12 +180,12 @@ export class HeaderComponent implements OnInit {
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar comentarios de nuevo
             this.messageService.clear();
-            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo });
+            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
             this.sesionService.objServiceSesion.usuarioSesion = respuesta;
             sessionStorage.setItem("usuarioSesion", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
             this.usuario = "";
             this.clave = "";
-            this.esLogueado = true;
+            this.sesionService.objServiceSesion.esLogueado = true;
             this.cerrarModalLogin();
             $('.card').bootstrapMaterialDesign();
           }
@@ -188,7 +194,7 @@ export class HeaderComponent implements OnInit {
             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
             let titleError = listaMensajes[0];
             listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '' };
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
             this.messageService.clear();
 
             listaMensajes.forEach(mensaje => {
@@ -200,6 +206,14 @@ export class HeaderComponent implements OnInit {
           })
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  actualizarLogin() {
+    debugger;
+    let user = sessionStorage.getItem("usuarioSesion");
+    if (user !== undefined && user !== null && this.sesionService.objServiceSesion.usuarioSesion !== undefined && this.sesionService.objServiceSesion.usuarioSesion !== null) {
+      this.sesionService.objServiceSesion.esLogueado = true;
     }
   }
 

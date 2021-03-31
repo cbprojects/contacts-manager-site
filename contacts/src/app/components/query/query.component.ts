@@ -60,6 +60,8 @@ export class QueryComponent implements OnInit {
     this.cargarContactos();
     this.mailDTO = this.objectModelInitializer.getDataRequestContactoEmailDtoModel();
     this.mailDTO.destinatarios = [];
+    $('html').removeClass('nav-open');
+    $('#toggleMenuMobile').click();
   }
 
   cargarContacto(contacto: ContactoModel) {
@@ -114,7 +116,7 @@ export class QueryComponent implements OnInit {
             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
             let titleError = listaMensajes[0];
             listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '' };
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
             this.messageService.clear();
 
             listaMensajes.forEach(mensaje => {
@@ -150,7 +152,7 @@ export class QueryComponent implements OnInit {
             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
             let titleError = listaMensajes[0];
             listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '' };
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
             this.messageService.clear();
 
             listaMensajes.forEach(mensaje => {
@@ -260,14 +262,14 @@ export class QueryComponent implements OnInit {
           if (respuesta !== null) {
             // Mostrar mensaje de envios de correos exitoso o no
             this.messageService.clear();
-            this.messageService.add({ severity: respuesta.exitoso ? this.const.severity[1] : this.const.severity[3], summary: respuesta.exitoso ? this.msg.lbl_summary_succes : this.msg.lbl_summary_danger, detail: respuesta.mensaje });
+            this.messageService.add({ severity: respuesta.exitoso ? this.const.severity[1] : this.const.severity[3], summary: respuesta.exitoso ? this.msg.lbl_summary_succes : this.msg.lbl_summary_danger, detail: respuesta.mensaje, sticky: true });
           }
         },
           error => {
             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
             let titleError = listaMensajes[0];
             listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '' };
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
             this.messageService.clear();
 
             listaMensajes.forEach(mensaje => {

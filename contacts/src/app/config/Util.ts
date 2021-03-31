@@ -295,7 +295,7 @@ export class Util {
       let title = exc.mensaje.split(":")[0];
       let validaciones = exc.mensaje.split(":")[1].split("<br>");
 
-      let mensajeTitulo = { severity: '', summary: '', detail: '' };
+      let mensajeTitulo = { severity: '', summary: '', detail: '', sticky: true };
       Object.assign(this.mensaje, mensajeTitulo);
       mensajeTitulo.severity = title.length > 0 ? this.const.severity[2] : this.const.severity[3];
       mensajeTitulo.summary = title.length > 0 ? this.msg.lbl_summary_warning : this.msg.lbl_summary_unknown_danger;
@@ -308,7 +308,7 @@ export class Util {
           let campo = validacion.split("-")[0];
           let mensaje = validacion.split("-")[1];
 
-          let msgValidacion = { severity: '', summary: '', detail: '' };
+          let msgValidacion = { severity: '', summary: '', detail: '', sticky: true };
           Object.assign(this.mensaje, msgValidacion);
           msgValidacion.severity = mensajeTitulo.severity;
           msgValidacion.summary = campo;
@@ -318,7 +318,7 @@ export class Util {
       }
     }
     else {
-      return [{ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: this.msg.lbl_mensaje_no_conexion_servidor }];
+      return [{ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: this.msg.lbl_mensaje_no_conexion_servidor, sticky: true }];
     }
 
     let audio = new Audio();
@@ -469,7 +469,7 @@ export class Util {
       // Extraemos por el split de mensajes |
       let listaErrores = error.mensaje.split('|');
       listaErrores.forEach(errorMSG => {
-        let mensaje = { severity: '', summary: '', detail: '' };
+        let mensaje = { severity: '', summary: '', detail: '', sticky: true };
         Object.assign(this.mensaje, mensaje);
         mensaje.severity = this.const.severity[3];
         mensaje.summary = summary;
@@ -479,7 +479,7 @@ export class Util {
         }
       });
     } else {
-      let mensaje = { severity: '', summary: '', detail: '' };
+      let mensaje = { severity: '', summary: '', detail: '', sticky: true };
       mensaje.severity = this.const.severity[3];
       mensaje.summary = summary;
       mensaje.detail = this.msg.lbl_mensaje_sin_detalles_error;

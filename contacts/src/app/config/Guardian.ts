@@ -29,7 +29,7 @@ export class Guardian implements CanActivate {
         if (usuarioTB.usuario !== undefined && usuarioTB.clave !== undefined && usuarioTB.usuario !== null && usuarioTB.clave !== null) {
           sesionOK = true;
         } else {
-          let mensaje = { severity: '', summary: '', detail: '' };
+          let mensaje = { severity: '', summary: '', detail: '', sticky: true };
           mensaje.severity = this.objectModelInitializer.getConst().severity[2];
           mensaje.summary = this.msg.lbl_summary_warning;
           mensaje.detail = this.msg.lbl_mensaje_error_500_no_sesion;
@@ -37,7 +37,7 @@ export class Guardian implements CanActivate {
           this.router.navigateByUrl('/home');
         }
       } else {
-        let mensaje = { severity: '', summary: '', detail: '' };
+        let mensaje = { severity: '', summary: '', detail: '', sticky: true };
         mensaje.severity = this.objectModelInitializer.getConst().severity[2];
         mensaje.summary = this.msg.lbl_summary_warning;
         mensaje.detail = this.msg.lbl_mensaje_error_500_no_sesion;

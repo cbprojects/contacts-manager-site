@@ -54,6 +54,8 @@ export class ManagementComponent implements OnInit {
       this.contacto = this.sesionService.objContactoCargado;
       this.esNuevoContacto = false;
     }
+    $('html').removeClass('nav-open');
+    $('#toggleMenuMobile').click();
   }
 
   cargarEnumerados() {
@@ -84,7 +86,7 @@ export class ManagementComponent implements OnInit {
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar comentarios de nuevo
             this.messageService.clear();
-            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo });
+            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
 
             this.ngOnInit();
             $('.card').bootstrapMaterialDesign();
@@ -94,7 +96,7 @@ export class ManagementComponent implements OnInit {
             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
             let titleError = listaMensajes[0];
             listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '' };
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
             this.messageService.clear();
 
             listaMensajes.forEach(mensaje => {
@@ -119,7 +121,7 @@ export class ManagementComponent implements OnInit {
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar comentarios de nuevo
             this.messageService.clear();
-            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo });
+            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
 
             this.volverConsulta();
           }
@@ -128,7 +130,7 @@ export class ManagementComponent implements OnInit {
             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
             let titleError = listaMensajes[0];
             listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '' };
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
             this.messageService.clear();
 
             listaMensajes.forEach(mensaje => {

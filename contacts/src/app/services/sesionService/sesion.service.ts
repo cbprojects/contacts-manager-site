@@ -11,7 +11,8 @@ export class SesionService {
   // Fases
   objServiceSesion: any;
   objContactoCargado: ContactoModel;
-  usuarioRestaurarClave: any;
+  usuarioRestaurarClave: any;  
+  esLogueado: boolean = false;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
     this.inicializar();
