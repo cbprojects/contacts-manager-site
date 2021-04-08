@@ -55,7 +55,7 @@ export class MConceptoFacturaComponent implements OnInit {
       this.esNuevoConcepto = false;
     }
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   cargarEnumerados() {

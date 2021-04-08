@@ -61,7 +61,7 @@ export class QContactoComponent implements OnInit {
     this.mailDTO = this.objectModelInitializer.getDataRequestContactoEmailDtoModel();
     this.mailDTO.destinatarios = [];
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   cargarContacto(contacto: ContactoModel) {

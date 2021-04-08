@@ -57,6 +57,7 @@
 														</th>
 														<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
 														</th>
+														<th class="text-center">{{msg.lbl_btn_ite_remover}}</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -88,6 +89,12 @@
 														</td>
 														<td class="text-center" style="padding: 5px 10px">
 															{{facturacion.facturaTB.valorTotal | currency: 'USD'}}
+														</td>
+														<td class="td-actions text-center">
+															<button type="button" (click)="removerItemFactura(i)"
+																class="btn btn-danger btn-link btn-sm">
+																<i class="material-icons">close</i>
+															</button>
 														</td>
 													</tr>
 												</tbody>
@@ -145,7 +152,8 @@
 											<select id="selectTipoFactura" nice-select
 												[attr.data-value]="factura.tipoFactura"
 												[(ngModel)]="factura.tipoFactura">
-												<option *ngFor="let tipoFactura of enumTipoFactura" [ngValue]="factura">
+												<option *ngFor="let tipoFactura of enumTipoFactura"
+													[ngValue]="tipoFactura">
 													{{tipoFactura.label}}</option>
 											</select>
 										</div>
@@ -169,6 +177,7 @@
 																</th>
 																<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
 																</th>
+																<th class="text-center">{{msg.lbl_btn_ite_remover}}</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -203,6 +212,12 @@
 																<td class="text-center" style="padding: 5px 10px">
 																	{{facturacion.facturaTB.valorTotal | currency:
 																	'USD'}}
+																</td>
+																<td class="td-actions text-center">
+																	<button type="button" (click)="removerItemFactura(i)"
+																		class="btn btn-danger btn-link btn-sm">
+																		<i class="material-icons">close</i>
+																	</button>
 																</td>
 															</tr>
 														</tbody>

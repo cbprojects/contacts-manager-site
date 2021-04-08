@@ -509,4 +509,8 @@ export class Util {
     let key = window.Event ? e.which : e.keyCode;
     return (key >= 37 && key <= 40) || (key >= 48 && key <= 57) || (key === 46) || (key === 8) || (e.shiftKey === 1);
   }
+
+  toggleMenu() {
+    $('#toggleMenuMobile').click();
+  }
 }

@@ -53,7 +53,7 @@ export class QTareaComponent implements OnInit {
     this.sesionService.objTareaCargado = null;
     this.cargarTareas();
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   cargarTarea(tarea: TareaModel) {

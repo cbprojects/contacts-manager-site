@@ -62,11 +62,11 @@ export class MFacturaComponent implements OnInit {
     this.esNuevaFactura = true;
     if (this.sesionService.objFacturaCargado !== undefined && this.sesionService.objFacturaCargado !== null && this.sesionService.objFacturaCargado.numeroFactura > 0) {
       this.factura.numeroFactura = this.sesionService.objFacturaCargado.numeroFactura;
-      this.factura.tipoFactura = this.cargarLabelEnumerado(this.sesionService.objFacturaCargado.tipoFactura);
+      this.factura.tipoFactura = this.sesionService.objFacturaCargado.tipoFactura;
       this.esNuevaFactura = false;
     }
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   cargarEnumerados() {
@@ -137,7 +137,6 @@ export class MFacturaComponent implements OnInit {
             });
             this.messageService.add(mensajeFinal);
             this.listaFacturacion.forEach(factDTO => {
-              factDTO.facturaTB.conceptoFacturaTB.tipoConcepto = factDTO.facturaTB.conceptoFacturaTB.tipoConcepto.value;
               factDTO.facturaTB.conceptoFacturaTB.tipoConcepto = this.cargarValorConceptoEnumerado(factDTO.facturaTB.conceptoFacturaTB.tipoConcepto);
             });
 
@@ -158,7 +157,7 @@ export class MFacturaComponent implements OnInit {
         factDTO.facturaTB.numeroFactura = this.factura.numeroFactura;
         facturacionModificar.listaFacturacion.push(factDTO.facturaTB);
       });
-      this.restService.postREST(this.const.urlCrearFactura, facturacionModificar)
+      this.restService.postREST(this.const.urlModificarFactura, facturacionModificar)
         .subscribe(resp => {
           let respuesta: FacturaModel = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
@@ -166,8 +165,7 @@ export class MFacturaComponent implements OnInit {
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
 
-            this.ngOnInit();
-            $('.card').bootstrapMaterialDesign();
+            this.volverConsulta();
           }
         },
           error => {
@@ -182,7 +180,6 @@ export class MFacturaComponent implements OnInit {
             });
             this.messageService.add(mensajeFinal);
             this.listaFacturacion.forEach(factDTO => {
-              factDTO.facturaTB.conceptoFacturaTB.tipoConcepto = factDTO.facturaTB.conceptoFacturaTB.tipoConcepto.value;
               factDTO.facturaTB.conceptoFacturaTB.tipoConcepto = this.cargarValorConceptoEnumerado(factDTO.facturaTB.conceptoFacturaTB.tipoConcepto);
             });
 
@@ -246,18 +243,21 @@ export class MFacturaComponent implements OnInit {
               this.listaConceptos.push(enumConcepto);
             });
 
-            this.sesionService.objFacturaCargado.listaFacturas.forEach(factura => {
-              let factDTO: FacturacionDTOModel = this.objectModelInitializer.getDataDTOFacturaModel();
-              factDTO.total = factura.valorTotal;
-              factDTO.facturaTB = factura;
-              this.listaConceptos.forEach(conceptoEnum => {
-                if (conceptoEnum.value.idConcepto === factura.conceptoFacturaTB.idConcepto) {
-                  factDTO.conceptoTempTB = conceptoEnum;
-                }
+            if (this.sesionService.objFacturaCargado !== undefined && this.sesionService.objFacturaCargado !== null) {
+              this.sesionService.objFacturaCargado.listaFacturas.forEach(factura => {
+                let factDTO: FacturacionDTOModel = this.objectModelInitializer.getDataDTOFacturaModel();
+                factDTO.total = factura.valorTotal;
+                factDTO.facturaTB = factura;
+                this.listaConceptos.forEach(conceptoEnum => {
+                  if (conceptoEnum.value.idConcepto === factura.conceptoFacturaTB.idConcepto) {
+                    factDTO.conceptoTempTB = conceptoEnum;
+                  }
+                });
+                factDTO.facturaTB.conceptoFacturaTB.tipoConcepto = this.cargarValorConceptoEnumerado(factDTO.facturaTB.conceptoFacturaTB.tipoConcepto);
+                this.listaFacturacion.push(factDTO);
+                this.valorTotalFactura = this.valorTotalFactura + factura.valorTotal;
               });
-              this.listaFacturacion.push(factDTO);
-              this.valorTotalFactura = this.valorTotalFactura + factura.valorTotal;
-            });
+            }
           }
         },
           error => {
@@ -291,6 +291,7 @@ export class MFacturaComponent implements OnInit {
       facturacionDTO.facturaTB.cantidad = parseInt(event);
     }
     facturacionDTO.facturaTB.valorTotal = facturacionDTO.facturaTB.cantidad * facturacionDTO.facturaTB.conceptoFacturaTB.valorUnitario;
+    this.valorTotalFactura = 0;
     this.listaFacturacion.forEach(fact => {
       this.valorTotalFactura = this.valorTotalFactura + fact.facturaTB.valorTotal;
     });
@@ -308,9 +309,18 @@ export class MFacturaComponent implements OnInit {
     this.listaFacturacion.push(facturacionDTO);
   }
 
+  removerItemFactura(i) {
+    this.listaFacturacion.splice(i, 1);
+    this.valorTotalFactura = 0;
+    this.listaFacturacion.forEach(fact => {
+      this.valorTotalFactura = this.valorTotalFactura + fact.facturaTB.valorTotal;
+    });
+  }
+
   cargarConceptoDeTabla(event, facturacionDTO: FacturacionDTOModel) {
     facturacionDTO.facturaTB.conceptoFacturaTB = event.value;
     facturacionDTO.facturaTB.valorTotal = facturacionDTO.facturaTB.cantidad * facturacionDTO.facturaTB.conceptoFacturaTB.valorUnitario;
+    this.valorTotalFactura = 0;
     this.listaFacturacion.forEach(fact => {
       this.valorTotalFactura = this.valorTotalFactura + fact.facturaTB.valorTotal;
     });

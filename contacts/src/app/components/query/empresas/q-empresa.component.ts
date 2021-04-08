@@ -53,7 +53,7 @@ export class QEmpresaComponent implements OnInit {
     this.sesionService.objEmpresaCargado = null;
     this.cargarEmpresas();
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   cargarEmpresa(empresa: EmpresaModel) {

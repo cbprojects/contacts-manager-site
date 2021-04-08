@@ -51,7 +51,7 @@ export class MEmpresaComponent implements OnInit {
       this.esNuevaEmpresa = false;
     }
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   ngAfterViewChecked(): void {

@@ -55,7 +55,7 @@ export class QFacturaComponent implements OnInit {
     this.sesionService.objFacturaCargado = null;
     this.cargarFacturas();
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   cargarFactura(factura: FacturaConsultaDTOModel) {
@@ -84,7 +84,7 @@ export class QFacturaComponent implements OnInit {
               if (listaNumerosFact.length === 0) {
                 let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                 facturaConsultaDTO.numeroFactura = temp.numeroFactura;
-                facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura).label;
+                facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                 facturaConsultaDTO.total = temp.valorTotal;
                 facturaConsultaDTO.listaFacturas.push(temp);
                 this.listaFacturasConsulta.push(facturaConsultaDTO);
@@ -95,7 +95,7 @@ export class QFacturaComponent implements OnInit {
                 } else {
                   let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                   facturaConsultaDTO.numeroFactura = temp.numeroFactura;
-                  facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura).label;
+                  facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                   facturaConsultaDTO.total = temp.valorTotal;
                   facturaConsultaDTO.listaFacturas.push(temp);
                   this.listaFacturasConsulta.push(facturaConsultaDTO);
@@ -142,7 +142,7 @@ export class QFacturaComponent implements OnInit {
               if (listaNumerosFact.length === 0) {
                 let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                 facturaConsultaDTO.numeroFactura = temp.numeroFactura;
-                facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura).label;
+                facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                 facturaConsultaDTO.total = temp.valorTotal;
                 facturaConsultaDTO.listaFacturas.push(temp);
                 this.listaFacturasConsulta.push(facturaConsultaDTO);
@@ -153,7 +153,7 @@ export class QFacturaComponent implements OnInit {
                 } else {
                   let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                   facturaConsultaDTO.numeroFactura = temp.numeroFactura;
-                  facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura).label;
+                  facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                   facturaConsultaDTO.total = temp.valorTotal;
                   facturaConsultaDTO.listaFacturas.push(temp);
                   this.listaFacturasConsulta.push(facturaConsultaDTO);

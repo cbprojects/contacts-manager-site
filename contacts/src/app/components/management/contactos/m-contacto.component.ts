@@ -54,7 +54,7 @@ export class MContactoComponent implements OnInit {
       this.esNuevoContacto = false;
     }
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   cargarEnumerados() {

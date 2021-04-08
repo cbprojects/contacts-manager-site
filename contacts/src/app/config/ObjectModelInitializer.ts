@@ -343,7 +343,7 @@ export class ObjectModelInitializer {
     return {
       numeroFactura: 0,
       total: 0,
-      tipoFactura: '',
+      tipoFactura: {},
       listaFacturas: []
     }
   }

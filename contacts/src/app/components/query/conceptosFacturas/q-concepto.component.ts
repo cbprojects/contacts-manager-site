@@ -53,7 +53,7 @@ export class QConceptoFacturaComponent implements OnInit {
     this.sesionService.objConceptoFacturaCargado = null;
     this.cargarConceptos();
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   cargarConcepto(concepto: ConceptoFacturaModel) {

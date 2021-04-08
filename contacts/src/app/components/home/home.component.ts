@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
     };
     this.applyLightTheme();
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   applyLightTheme() {

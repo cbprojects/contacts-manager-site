@@ -53,7 +53,7 @@ export class MTareaComponent implements OnInit {
       this.esNuevaTarea = false;
     }
     $('html').removeClass('nav-open');
-    $('#toggleMenuMobile').click();
+    //$('#toggleMenuMobile').click();
   }
 
   ngAfterViewChecked(): void {
