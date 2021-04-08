@@ -7,6 +7,7 @@ export interface ContactoModel {
     correoContacto;
     cargoContacto;
     telefonoContacto;
+    ciudadContacto;
     procesoContacto;
 
     // Auditoria

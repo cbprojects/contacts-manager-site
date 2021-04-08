@@ -341,3 +341,33 @@
 .color-DD-mobile:hover i {
     color: #fff !important;
 }
+
+.ser-grid {
+    padding: 0;
+}
+
+.card .card-body + .card-footer,
+.card .card-footer {
+    margin: 0 20px 10px !important;
+}
+
+.form-control:read-only {
+    background: white !important;
+    border: none !important;
+    border-bottom: 1px solid #d2d2d2 !important;
+    border-radius: 0 !important;
+}
+
+.p-calendar {
+    width: 100%;
+}
+
+.p-datepicker table td > span.p-highlight {
+    background: #16bbcf;
+}
+
+.totalFactura {
+    padding: 5px 10px;
+    font-weight: bold;
+    text-shadow: 2px 2px 0px #e8e8e8;
+}

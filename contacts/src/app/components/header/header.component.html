@@ -21,17 +21,16 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
-                <li class="nav-item dropdown">
+                <li *ngIf="listaTareas.length > 0 && sesionService.objServiceSesion.esLogueado"
+                    class="nav-item dropdown">
                     <a id="btnDDNotys" class="nav-link cursorPointer" (click)="toggleDropdown('dropdownNotys')">
                         <i class="material-icons">notifications</i>
-                        <span class="notification">5</span>
+                        <span class="notification">{{listaTareas.length}}</span>
                     </a>
                     <div id="dropdownNotys" class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                        <a class="dropdown-item" href="#">Another Notification</a>
-                        <a class="dropdown-item" href="#">Another One</a>
+                        <a *ngFor="let tarea of listaTareas; index as i;" class="dropdown-item" href="#">
+                            {{tarea.tareaTB.descripcion}}
+                        </a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">

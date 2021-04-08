@@ -1,0 +1,112 @@
+<p-toast></p-toast>
+
+<div class="wrapper ">
+	<!-- HEADER -->
+	<app-sidebar></app-sidebar>
+	<!-- HEADER -->
+
+	<div class="main-panel">
+		<!-- HEADER -->
+		<app-header></app-header>
+		<!-- HEADER -->
+
+		<!-- CONTENT -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-{{esNuevaEmpresa ? '12' : '8'}}">
+						<div class="card">
+							<div class="card-header card-header-primary">
+								<h4 class="card-title ">{{msg.lbl_empresas}}</h4>
+								<p class="card-category">{{esNuevaEmpresa ? msg.lbl_empresas_crea_subtitles :
+									msg.lbl_empresas_actualiza_subtitles}}</p>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_nombre_empresa}}</label>
+											<input type="text" class="form-control" [(ngModel)]="empresa.nombre">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_ciudad}}</label>
+											<input type="text" class="form-control" [(ngModel)]="empresa.ciudad">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_telefono_empresa}}</label>
+											<input type="text" class="form-control" (keydown)="util.soloNumeros($event)"
+												[(ngModel)]="empresa.telefono">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_pagina_web}}</label>
+											<input type="text" class="form-control" [(ngModel)]="empresa.paginaWeb">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_correo_empresa}}</label>
+											<input type="email" class="form-control" [(ngModel)]="empresa.correo">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<div class="form-group">
+												<label
+													class="bmd-label-floating">{{msg.lbl_mtto_descripcion_empresa}}</label>
+												<textarea class="form-control" rows="2"
+													[(ngModel)]="empresa.descripcion"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<button type="submit" (click)="esNuevaEmpresa ? crearEmpresa() : modificarEmpresa()"
+										class="btn btn-primary pull-right">{{esNuevaEmpresa ?
+										msg.lbl_btn_crear : msg.lbl_btn_actualizar}}</button>
+									<button type="submit" (click)="volverConsulta()"
+										class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="{{esNuevaEmpresa ? 'displayNone' : 'col-md-4'}}">
+						<div class="card card-profile">
+							<div class="card-avatar">
+								<a>
+									<img class="img" src="../assets/images/logo.png" />
+								</a>
+							</div>
+							<div class="card-body">
+								<h2><span class="badge badge-pill badge-info"># {{empresa.idEmpresa}}</span></h2>
+								<h6 class="card-category text-gray">{{empresa.nombre}} /
+									{{empresa.ciudad}}</h6>
+								<h4 class="card-title">{{empresa.correo}}</h4>
+								<p class="card-description">{{empresa.descripcion}}
+								</p>
+								<button type="submit" class="btn btn-danger"
+									(click)="eliminarEmpresa()">{{msg.lbl_btn_eliminar}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CONTENT -->
+
+		<!-- FOOTER -->
+		<app-footer></app-footer>
+		<!-- FOOTER -->
+	</div>
+</div>

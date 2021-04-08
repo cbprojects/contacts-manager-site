@@ -75,7 +75,6 @@ export class TextProperties {
       lbl_inicio: idioma === constant.idiomaEs ? 'Inicio' : 'Start',
       lbl_resumen: idioma === constant.idiomaEs ? 'Resumen' : 'Resume',
       lbl_ultimas_publicaciones: idioma === constant.idiomaEs ? 'Últimas Publicaciones' : 'Latest Posts',
-      lbl_contactos: idioma === constant.idiomaEs ? 'Contactos' : 'Contacts',
       lbl_gestiona_contactos: idioma === constant.idiomaEs ? 'Gestiona tus Contactos' : 'Management your Contacts',
       lbl_casos: idioma === constant.idiomaEs ? 'Casos' : 'Cases',
       lbl_procesos: idioma === constant.idiomaEs ? 'Procesos' : 'Proccess',
@@ -83,9 +82,6 @@ export class TextProperties {
       lbl_clientes: idioma === constant.idiomaEs ? 'Clientes' : 'Customers',
       lbl_clientes_recuperados: idioma === constant.idiomaEs ? 'Clientes Recuperados' : 'Recovery Customers',
       lbl_clientes_nuevos: idioma === constant.idiomaEs ? 'Nuevos Clientes' : 'New Customers',
-      lbl_contactos_consulta_subtitles: idioma === constant.idiomaEs ? 'Consulta tus Contactos' : 'Check your Contacts',
-      lbl_contactos_crea_subtitles: idioma === constant.idiomaEs ? 'Crea Contactos' : 'Create Contacts',
-      lbl_contactos_actualiza_subtitles: idioma === constant.idiomaEs ? 'Actualiza tus Contactos' : 'Update your Contacts',
       lbl_leer_mas: idioma === constant.idiomaEs ? 'Leer Más...' : 'Read more...',
       lbl_disenador_grafico: idioma === constant.idiomaEs ? 'Diseñador Gráfico' : 'Graphic Designer',
       lbl_estudio_grabacion: idioma === constant.idiomaEs ? 'Estudio de Grabación' : 'Recording Studio',
@@ -152,6 +148,10 @@ export class TextProperties {
       lbl_menu_reportes: idioma === constant.idiomaEs ? 'Reportes' : 'Reports',
       lbl_menu_ubicaciones: idioma === constant.idiomaEs ? 'Ubicaciones' : 'Locations',
       lbl_menu_notificaciones: idioma === constant.idiomaEs ? 'Notificaciones' : 'Notifications',
+      lbl_menu_contactos: idioma === constant.idiomaEs ? 'Contactos' : 'Contacts',
+      lbl_menu_empresas: idioma === constant.idiomaEs ? 'Empresas' : 'Companies',
+      lbl_menu_conceptos: idioma === constant.idiomaEs ? 'Conceptos' : 'Concepts',
+      lbl_menu_facturas: idioma === constant.idiomaEs ? 'Facturas' : 'Invoices',
       lbl_menu_tareas: idioma === constant.idiomaEs ? 'Tareas' : 'Tasks',
 
       // Acciones
@@ -248,9 +248,20 @@ export class TextProperties {
       lbl_table_header_descripcion_empresa: idioma === constant.idiomaEs ? 'Descripción Empresa' : 'Company Description',
       lbl_table_header_nombre_contacto: idioma === constant.idiomaEs ? 'Contacto' : 'Contact',
       lbl_table_header_correo_contacto: idioma === constant.idiomaEs ? 'Correo Contacto' : 'Contact E-Mail',
+      lbl_table_header_correo_empresa: idioma === constant.idiomaEs ? 'Correo Empresa' : 'Company E-Mail',
       lbl_table_header_cargo_contacto: idioma === constant.idiomaEs ? 'Cargo Contacto' : 'Contact Position',
       lbl_table_header_telefono_contacto: idioma === constant.idiomaEs ? 'Teléfono Contacto' : 'Contact Telephone',
       lbl_table_header_proceso: idioma === constant.idiomaEs ? 'Proceso' : 'Process',
+      lbl_table_header_descripcion: idioma === constant.idiomaEs ? 'Descripción' : 'Description',
+      lbl_table_header_tipo_concepto: idioma === constant.idiomaEs ? 'Tipo Concepto' : 'Concept Type',
+      lbl_table_header_tipo_factura: idioma === constant.idiomaEs ? 'Tipo Factura' : 'Invoice Type',
+      lbl_table_header_fecha_recordatorio: idioma === constant.idiomaEs ? 'Fecha Recordatorio' : 'Notification Date',
+      lbl_table_header_concepto: idioma === constant.idiomaEs ? 'Concepto' : 'Concept',
+      lbl_table_header_cantidad: idioma === constant.idiomaEs ? 'Cantidad' : 'Quantity',
+      lbl_table_header_valor_unitario: idioma === constant.idiomaEs ? 'Valor Unitario' : 'Unit Value',
+      lbl_table_header_valor_total: idioma === constant.idiomaEs ? 'Valor Total' : 'Total Value',
+      lbl_table_header_ciudad: idioma === constant.idiomaEs ? 'Ciudad' : 'City',
+      lbl_table_header_numero_factura: idioma === constant.idiomaEs ? '# Factura' : '# Invoice',
 
       // Titles
       lbl_mtto_consulta: idioma === constant.idiomaEs ? 'Consulta' : 'Query',
@@ -301,9 +312,22 @@ export class TextProperties {
       lbl_enum_proceso_contacto_valor_potencial_perdida: idioma === constant.idiomaEs ? 'Potencial Pérdida' : 'Lost Potential',
       lbl_enum_proceso_contacto_valor_cambio_info: idioma === constant.idiomaEs ? 'Cambio Info.' : 'Change Info.',
 
+      lbl_enum_tipo_factura_valor_seleccione: idioma === constant.idiomaEs ? 'Seleccione un tipo' : 'Choose a type',
+      lbl_enum_tipo_factura_cotizacion: idioma === constant.idiomaEs ? 'Cotización' : 'Cotization',
+      lbl_enum_tipo_factura_factura: idioma === constant.idiomaEs ? 'Factura' : 'Invoice',
+
+      lbl_enum_tipo_concepto_valor_seleccione: idioma === constant.idiomaEs ? 'Seleccione un tipo' : 'Choose a type',
+      lbl_enum_tipo_concepto_mano_obra: idioma === constant.idiomaEs ? 'Mano de obra' : 'Man labor',
+      lbl_enum_tipo_concepto_material: idioma === constant.idiomaEs ? 'Material' : 'Material',
+
       // Mtto Contacto
+      lbl_contactos: idioma === constant.idiomaEs ? 'Contactos' : 'Contacts',
+      lbl_contactos_consulta_subtitles: idioma === constant.idiomaEs ? 'Consulta tus Contactos' : 'Check your Contacts',
+      lbl_contactos_crea_subtitles: idioma === constant.idiomaEs ? 'Crea Contactos' : 'Create Contacts',
+      lbl_contactos_actualiza_subtitles: idioma === constant.idiomaEs ? 'Actualiza tus Contactos' : 'Update your Contacts',
       lbl_mtto_id_contacto: idioma === constant.idiomaEs ? 'ID Contacto' : 'Contact ID',
       lbl_mtto_nombre_empresa: idioma === constant.idiomaEs ? 'Empresa' : 'Company',
+      lbl_mtto_ciudad: idioma === constant.idiomaEs ? 'Ciudad' : 'City',
       lbl_mtto_telefono_empresa: idioma === constant.idiomaEs ? 'Teléfono Empresa' : 'Company Telephone',
       lbl_mtto_descripcion_empresa: idioma === constant.idiomaEs ? 'Descripción Empresa' : 'Company Description',
       lbl_mtto_nombre_contacto: idioma === constant.idiomaEs ? 'Contacto' : 'Contact',
@@ -311,6 +335,46 @@ export class TextProperties {
       lbl_mtto_cargo_contacto: idioma === constant.idiomaEs ? 'Cargo Contacto' : 'Contact Position',
       lbl_mtto_telefono_contacto: idioma === constant.idiomaEs ? 'Teléfono Contacto' : 'Contact Telephone',
       lbl_mtto_proceso: idioma === constant.idiomaEs ? 'Proceso' : 'Process',
+
+      // Mtto Empresa
+      lbl_empresas: idioma === constant.idiomaEs ? 'Empresas' : 'Companies',
+      lbl_empresas_consulta_subtitles: idioma === constant.idiomaEs ? 'Consulta tus Empresas' : 'Check your Companies',
+      lbl_empresas_crea_subtitles: idioma === constant.idiomaEs ? 'Crea Empresas' : 'Create Companies',
+      lbl_empresas_actualiza_subtitles: idioma === constant.idiomaEs ? 'Actualiza tus Empresas' : 'Update your Companies',
+      lbl_mtto_id_empresa: idioma === constant.idiomaEs ? 'ID Empresa' : 'Company ID',
+      lbl_mtto_correo_empresa: idioma === constant.idiomaEs ? 'Correo Empresa' : 'Company E-Mail',
+      lbl_mtto_pagina_web: idioma === constant.idiomaEs ? 'Página Web' : 'Web Page',
+
+      // Mtto Tarea
+      lbl_tareas: idioma === constant.idiomaEs ? 'Tareas' : 'Tasks',
+      lbl_tareas_consulta_subtitles: idioma === constant.idiomaEs ? 'Consulta tus Tareas' : 'Check your Tasks',
+      lbl_tareas_crea_subtitles: idioma === constant.idiomaEs ? 'Crea Tareas' : 'Create Tasks',
+      lbl_tareas_actualiza_subtitles: idioma === constant.idiomaEs ? 'Actualiza tus Tareas' : 'Update your Tasks',
+      lbl_mtto_id_tarea: idioma === constant.idiomaEs ? 'ID Tarea' : 'Task ID',
+      lbl_mtto_descripcion: idioma === constant.idiomaEs ? 'Descripción' : 'Description',
+      lbl_mtto_fecha_recordatorio: idioma === constant.idiomaEs ? 'Fecha Recordatorio' : 'Notification Date',
+
+      // Mtto Factura
+      lbl_facturas: idioma === constant.idiomaEs ? 'Facturas' : 'Invoices',
+      lbl_facturas_consulta_subtitles: idioma === constant.idiomaEs ? 'Consulta tus Facturas' : 'Check your Invoices',
+      lbl_facturas_crea_subtitles: idioma === constant.idiomaEs ? 'Crea Facturas' : 'Create Invoices',
+      lbl_facturas_actualiza_subtitles: idioma === constant.idiomaEs ? 'Actualiza tus Facturas' : 'Update your Invoices',
+      lbl_mtto_id_factura: idioma === constant.idiomaEs ? 'ID Factura' : 'Invoice ID',
+      lbl_mtto_numero_factura: idioma === constant.idiomaEs ? '# Factura' : '# Invoice',
+      lbl_mtto_cantidad: idioma === constant.idiomaEs ? 'Cantidad' : 'Quantity',
+      lbl_mtto_concepto: idioma === constant.idiomaEs ? 'Concepto' : 'Concept',
+      lbl_mtto_tipo_factura: idioma === constant.idiomaEs ? 'Tipo Factura' : 'Invoice Type',
+      lbl_mtto_valor_total: idioma === constant.idiomaEs ? 'Valor Total' : 'Total Value',
+      lbl_mtto_valor_sub_total: idioma === constant.idiomaEs ? 'Valor Sub-Total' : 'Sub-Total Value',
+
+      // Mtto Concepto Factura
+      lbl_conceptos: idioma === constant.idiomaEs ? 'Conceptos' : 'Concepts',
+      lbl_conceptos_consulta_subtitles: idioma === constant.idiomaEs ? 'Consulta tus Conceptos' : 'Check your Concepts',
+      lbl_conceptos_crea_subtitles: idioma === constant.idiomaEs ? 'Crea Conceptos' : 'Create Concepts',
+      lbl_conceptos_actualiza_subtitles: idioma === constant.idiomaEs ? 'Actualiza tus Conceptos' : 'Update your Concepts',
+      lbl_mtto_id_concepto: idioma === constant.idiomaEs ? 'ID Concepto' : 'Concept ID',
+      lbl_mtto_tipo_concepto: idioma === constant.idiomaEs ? 'Tipo Concepto' : 'Concept Type',
+      lbl_mtto_valor_unitario: idioma === constant.idiomaEs ? 'Valor Unitario' : 'Unit Value',
 
     }
   };

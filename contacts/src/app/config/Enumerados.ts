@@ -61,6 +61,20 @@ export class Enumerados {
           { value: 6, label: properties.lbl_enum_proceso_contacto_valor_cambio_info }
         ]
       },
+      tipoFactura: {
+        cod: 7, valores: [
+          { value: 0, label: properties.lbl_enum_tipo_factura_valor_seleccione },
+          { value: 1, label: properties.lbl_enum_tipo_factura_cotizacion },
+          { value: 2, label: properties.lbl_enum_tipo_factura_factura }
+        ]
+      },
+      tipoConcepto: {
+        cod: 8, valores: [
+          { value: 0, label: properties.lbl_enum_tipo_concepto_valor_seleccione },
+          { value: 1, label: properties.lbl_enum_tipo_concepto_mano_obra },
+          { value: 2, label: properties.lbl_enum_tipo_concepto_material }
+        ]
+      },
       //valorIva: {cod: 25},
     }
   };

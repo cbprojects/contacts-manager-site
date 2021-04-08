@@ -56,7 +56,7 @@
 												{{msg.lbl_table_header_nombre_empresa}}
 											</th>
 											<th class="text-center">
-												{{msg.lbl_table_header_telefono_empresa}}
+												{{msg.lbl_table_header_ciudad}}
 											</th>
 											<th class="text-center">
 												{{msg.lbl_table_header_nombre_contacto}}
@@ -93,7 +93,7 @@
 												<td (click)="cargarContacto(contacto.contactoTB)">
 													{{contacto.contactoTB.nombreEmpresa}}</td>
 												<td class="text-center" (click)="cargarContacto(contacto.contactoTB)">
-													{{contacto.contactoTB.telefonoEmpresa}}</td>
+													{{contacto.contactoTB.ciudadContacto}}</td>
 												<td (click)="cargarContacto(contacto.contactoTB)">
 													{{contacto.contactoTB.nombreContacto}}</td>
 												<td (click)="cargarContacto(contacto.contactoTB)">
@@ -117,6 +117,11 @@
 										</div>
 									</ng-template>
 								</div>
+							</div>
+							<div class="card-footer">
+								<button type="submit" class="btn btn-info"
+									routerLink="/m-contacto">{{msg.lbl_btn_crear}}</button>
+								<div class="clearfix"></div>
 							</div>
 						</div>
 

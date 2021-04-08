@@ -13,6 +13,9 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChartModule } from 'primeng/chart';
+import { CalendarModule } from 'primeng/calendar';
+import { TableModule } from 'primeng/table';
+
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
@@ -34,14 +37,23 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 // Imports Componentes
 import { AppComponent } from './app.component';
 import { Guardian } from './config/Guardian';
 import { HomeComponent } from './components/home/home.component';
 import { RestaurarClaveComponent } from './components/restaurarClave/restaurarClave.component';
-import { QueryComponent } from './components/query/query.component';
-import { ManagementComponent } from './components/management/management.component';
+import { QContactoComponent } from './components/query/contactos/q-contacto.component';
+import { MContactoComponent } from './components/management/contactos/m-contacto.component';
+import { QTareaComponent } from './components/query/tareas/q-tarea.component';
+import { MTareaComponent } from './components/management/tareas/m-tarea.component';
+import { QEmpresaComponent } from './components/query/empresas/q-empresa.component';
+import { MEmpresaComponent } from './components/management/empresas/m-empresa.component';
+import { QFacturaComponent } from './components/query/facturas/q-factura.component';
+import { MFacturaComponent } from './components/management/facturas/m-factura.component';
+import { QConceptoFacturaComponent } from './components/query/conceptosFacturas/q-concepto.component';
+import { MConceptoFacturaComponent } from './components/management/conceptosFacturas/m-concepto.component';
 
 // Imports Componentes Internos
 import { HeaderComponent } from './components/header/header.component';
@@ -89,8 +101,16 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FooterComponent,
     HomeComponent,
     RestaurarClaveComponent,
-    QueryComponent,
-    ManagementComponent
+    QContactoComponent,
+    MContactoComponent,
+    QTareaComponent,
+    MTareaComponent,
+    QEmpresaComponent,
+    MEmpresaComponent,
+    QFacturaComponent,
+    MFacturaComponent,
+    QConceptoFacturaComponent,
+    MConceptoFacturaComponent
   ],
   imports: [
     AgmCoreModule.forRoot({ apiKey: 'AIzaSyBaNBQN5zBRz7h5lUKB4GGZQHhakKrajSA' }),
@@ -111,6 +131,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MessagesModule,
     MessageModule,
     ToastModule,
+    NgxJsonViewerModule,
     //GMapModule,
     //ScrollPanelModule,
     //GalleriaModule,
@@ -118,6 +139,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CheckboxModule,
     ButtonModule,
     ChartModule,
+    CalendarModule,
+    TableModule,
     //SliderModule,
     //FieldsetModule,
     DialogModule

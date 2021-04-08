@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
+import { ConceptoFacturaModel } from 'src/app/model/concepto-factura-model';
 import { ContactoModel } from 'src/app/model/contacto-model';
+import { FacturaConsultaDTOModel } from 'src/app/model/dto/factura-consulta-dto';
+import { EmpresaModel } from 'src/app/model/empresa-model';
+import { FacturaModel } from 'src/app/model/factura-model';
+import { TareaModel } from 'src/app/model/tarea-model';
 
 declare var $: any;
 
@@ -11,7 +16,11 @@ export class SesionService {
   // Fases
   objServiceSesion: any;
   objContactoCargado: ContactoModel;
-  usuarioRestaurarClave: any;  
+  objEmpresaCargado: EmpresaModel;
+  objTareaCargado: TareaModel;
+  objFacturaCargado: FacturaConsultaDTOModel;
+  objConceptoFacturaCargado: ConceptoFacturaModel;
+  usuarioRestaurarClave: any;
   esLogueado: boolean = false;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
@@ -23,6 +32,10 @@ export class SesionService {
 
   inicializar() {
     this.objContactoCargado = null;
+    this.objEmpresaCargado = null;
+    this.objTareaCargado = null;
+    this.objFacturaCargado = null;
+    this.objConceptoFacturaCargado = null;
 
     this.objServiceSesion = this.objectModelInitializer.getDataServiceSesion();
     this.objServiceSesion.phase = undefined;

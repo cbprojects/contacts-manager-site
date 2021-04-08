@@ -9,6 +9,7 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 import { tada, fadeIn } from 'ng-animate';
 import { MessageService } from 'primeng/api';
 import { UsuarioModel } from 'src/app/model/usuario-model';
+import { TareaDTOModel } from 'src/app/model/dto/tarea-dto';
 
 declare var $: any;
 
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit {
   usuario: any = "";
   usuarioRecordar: any = "";
   clave: any = "";
+  listaTareas: TareaDTOModel[] = [];
 
   // Utilidades
   msg: any;
@@ -42,6 +44,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cargarTareas();
     let user = sessionStorage.getItem("usuarioSesion");
     if (user !== undefined && user !== null) {
       this.sesionService.objServiceSesion.usuarioSesion = JSON.parse(user);
@@ -65,16 +68,16 @@ export class HeaderComponent implements OnInit {
     let ruta = "";
     if (url === '/home') {
       ruta = this.msg.lbl_menu_inicio;
-    } else if (url === '/query') {
-      ruta = this.msg.lbl_menu_consulta;
-    } else if (url === '/management') {
-      ruta = this.msg.lbl_menu_gestion;
-    } else if (url === '/reports') {
-      ruta = this.msg.lbl_menu_reportes;
-    } else if (url === '/locations') {
-      ruta = this.msg.lbl_menu_ubicaciones;
-    } else if (url === '/notys') {
-      ruta = this.msg.lbl_menu_notificaciones;
+    } else if (url.includes('-contacto')) {
+      ruta = this.msg.lbl_menu_contactos;
+    } else if (url.includes('-empresa')) {
+      ruta = this.msg.lbl_menu_empresas;
+    } else if (url.includes('-concepto')) {
+      ruta = this.msg.lbl_menu_conceptos;
+    } else if (url.includes('-factura')) {
+      ruta = this.msg.lbl_menu_facturas;
+    } else if (url.includes('-tarea')) {
+      ruta = this.msg.lbl_menu_tareas;
     }
 
     return ruta;
@@ -173,7 +176,7 @@ export class HeaderComponent implements OnInit {
   restaurarClaveUsuario() {
     try {
       let usuario = this.objectModelInitializer.getDataUsuarioModel();
-      usuario.usuario = this.usuario;
+      usuario.usuario = this.usuarioRecordar;
       this.restService.postREST(this.const.urlRestaurarClave, usuario)
         .subscribe(resp => {
           let respuesta: UsuarioModel = JSON.parse(JSON.stringify(resp));
@@ -210,10 +213,46 @@ export class HeaderComponent implements OnInit {
   }
 
   actualizarLogin() {
-    debugger;
     let user = sessionStorage.getItem("usuarioSesion");
     if (user !== undefined && user !== null && this.sesionService.objServiceSesion.usuarioSesion !== undefined && this.sesionService.objServiceSesion.usuarioSesion !== null) {
       this.sesionService.objServiceSesion.esLogueado = true;
+    }
+  }
+
+  cargarTareas() {
+    this.listaTareas = [];
+    try {
+      let tareaFiltro = this.objectModelInitializer.getDataTareaModel();
+      tareaFiltro.estado = 1;
+      this.restService.postREST(this.const.urlConsultarTareasPorFiltros, tareaFiltro)
+        .subscribe(resp => {
+          let listaTemp = JSON.parse(JSON.stringify(resp));
+          if (listaTemp !== undefined && listaTemp.length > 0) {
+            listaTemp.forEach(temp => {
+              if (temp.fechaRecordatorio !== undefined && temp.fechaRecordatorio !== null) {
+                let tareaDTO = this.objectModelInitializer.getDataDTOTareaModel();
+                tareaDTO.tareaTB = temp;
+                this.listaTareas.push(tareaDTO);
+              }
+            });
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
     }
   }
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-//export var HOST = 'https://localhost:9002';
+export var HOST = 'http://localhost:9002';
 //export var HOST = 'https://10.176.56.211:9002';
-export var HOST = 'https://165.227.197.116:8443/CentralContactos';
+//export var HOST = 'https://165.227.197.116:8443/CentralContactos';
 
-//export var SYSTEM = 'https://localhost:4200';
+export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'https://10.176.56.211:7001';
-export var SYSTEM = 'https://www.contact-manager.cbaeneprojects.com';
+//export var SYSTEM = 'https://www.contact-manager.cbaeneprojects.com';
 
 @Injectable()
 export class ObjectModelInitializer {
@@ -47,14 +47,39 @@ export class ObjectModelInitializer {
       urlRestService: `${HOST}/`,
       urlRestOauth: `${HOST}/oauth/token`,
       urlVCode: `${SYSTEM}/vCode/`,
+      // Usuarios
+      urlLoginUsuario: `${HOST}/central/contactos/loginUsuario`,
+      urlRestaurarClave: `${HOST}/central/contactos/restaurarClave`,
+      urlModificarClaveUsuario: `${HOST}/central/contactos/modificarClaveUsuario`,
+      // Archivos
+      urlEnviarEmailContacto: `${HOST}/central/contactos/archivos/enviarEmailContacto`,
+      // Contactos
       urlContarContactos: `${HOST}/central/contactos/contarContactos`,
       urlConsultarContactosPorFiltros: `${HOST}/central/contactos/consultarContactosPorFiltros`,
       urlCrearContacto: `${HOST}/central/contactos/crearContacto`,
       urlModificarContacto: `${HOST}/central/contactos/modificarContacto`,
-      urlLoginUsuario: `${HOST}/central/contactos/loginUsuario`,
-      urlRestaurarClave: `${HOST}/central/contactos/restaurarClave`,
-      urlModificarClaveUsuario: `${HOST}/central/contactos/modificarClaveUsuario`,
-      urlEnviarEmailContacto: `${HOST}/central/contactos/archivos/enviarEmailContacto`,
+      // Empresas
+      urlContarEmpresas: `${HOST}/central/contactos/contarEmpresas`,
+      urlConsultarEmpresasPorFiltros: `${HOST}/central/contactos/consultarEmpresasPorFiltros`,
+      urlCrearEmpresa: `${HOST}/central/contactos/crearEmpresa`,
+      urlModificarEmpresa: `${HOST}/central/contactos/modificarEmpresa`,
+      // Tareas
+      urlContarTarea: `${HOST}/central/contactos/contarTareas`,
+      urlConsultarTareasPorFiltros: `${HOST}/central/contactos/consultarTareasPorFiltros`,
+      urlCrearTarea: `${HOST}/central/contactos/crearTarea`,
+      urlModificarTarea: `${HOST}/central/contactos/modificarTarea`,
+      // Facturas
+      urlContarFacturas: `${HOST}/central/contactos/contarFacturas`,
+      urlConsultarFacturasPorFiltros: `${HOST}/central/contactos/consultarFacturasPorFiltros`,
+      urlCrearFactura: `${HOST}/central/contactos/crearFactura`,
+      urlModificarFactura: `${HOST}/central/contactos/modificarFactura`,
+      urlEliminarFactura: `${HOST}/central/contactos/eliminarFactura`,
+      // Conceptos Facturas
+      urlContarConceptosFacturas: `${HOST}/central/contactos/contarConceptosFacturas`,
+      urlConsultarConceptosFacturasPorFiltros: `${HOST}/central/contactos/consultarConceptosFacturasPorFiltros`,
+      urlCrearConceptoFactura: `${HOST}/central/contactos/crearConceptoFactura`,
+      urlModificarConceptoFactura: `${HOST}/central/contactos/modificarConceptoFactura`,
+      // Otras Parametrizaciones
       tokenRecordarClave: '3vkd3ugAOnnXZGfUER8',
       correoRemitente: 'eutanasiarockandroll@gmail.com',
       tokenUsernameAUTH: 'BaeneApp',
@@ -65,6 +90,7 @@ export class ObjectModelInitializer {
       // Model rango de fechas para NGBDatePicker
       minDate: { year: 1000, month: 1, day: 1 },
       maxDate: new Date(),
+      actualDate: new Date(),
       formatoFecha: 'dd/mm/yy',
       rangoYears: '1900:3000',
 
@@ -163,6 +189,7 @@ export class ObjectModelInitializer {
       correoContacto: '',
       cargoContacto: '',
       telefonoContacto: '',
+      ciudadContacto: '',
       procesoContacto: 0,
 
       // Auditoria
@@ -197,6 +224,21 @@ export class ObjectModelInitializer {
     }
   };
 
+  getDataDTOTareaModel() {
+    return {
+      seleccionado: false,
+      tareaTB: this.getDataTareaModel()
+    }
+  };
+
+  getDataDTOFacturaModel() {
+    return {
+      total: 0,
+      facturaTB: this.getDataFacturaModel(),
+      conceptoTempTB: this.getDataEnumerado()
+    }
+  };
+
   getDataRequestEmailDtoModel() {
     return {
       desde: '',
@@ -213,4 +255,96 @@ export class ObjectModelInitializer {
       asunto: ''
     }
   };
+
+  getDataEmpresaModel() {
+    return {
+      idEmpresa: 0,
+      nombre: '',
+      telefono: '',
+      descripcion: '',
+      correo: '',
+      paginaWeb: '',
+      ciudad: '',
+
+      // Auditoria
+      estado: 0,
+      fechaCreacion: '',
+      fechaActualizacion: '',
+      usuarioCreacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataTareaModel() {
+    return {
+      idTarea: 0,
+      descripcion: '',
+      fechaRecordatorio: '',
+
+      // Auditoria
+      estado: 0,
+      fechaCreacion: '',
+      fechaActualizacion: '',
+      usuarioCreacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataFacturaModel() {
+    return {
+      idFactura: 0,
+      numeroFactura: 0,
+      conceptoFacturaTB: this.getDataConceptoFacturaModel(),
+      tipoFactura: 0,
+      cantidad: 0,
+      valorTotal: 0,
+
+      // Auditoria
+      estado: 0,
+      fechaCreacion: '',
+      fechaActualizacion: '',
+      usuarioCreacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataConceptoFacturaModel() {
+    return {
+      idConcepto: 0,
+      descripcion: '',
+      tipoConcepto: '',
+      valorUnitario: 0,
+
+      // Auditoria
+      estado: 0,
+      fechaCreacion: '',
+      fechaActualizacion: '',
+      usuarioCreacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataEnumerado() {
+    return {
+      label: '',
+      value: 0
+    }
+  }
+
+  getDataRequestFacturacionDTOModel() {
+    return {
+      listaFacturacion: [],
+      tipoFactura: 0,
+      total: 0
+    }
+  }
+
+  getDataFacturaConsultaDTOModel() {
+    return {
+      numeroFactura: 0,
+      total: 0,
+      tipoFactura: '',
+      listaFacturas: []
+    }
+  }
 }

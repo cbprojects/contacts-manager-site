@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ManagementComponent } from './management.component';
+import { MTareaComponent } from './m-tarea.component';
 
 
-describe('ManagementComponent', () => {
-  let component: ManagementComponent;
-  let fixture: ComponentFixture<ManagementComponent>;
+describe('MTareaComponent', () => {
+  let component: MTareaComponent;
+  let fixture: ComponentFixture<MTareaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ManagementComponent]
+      declarations: [MTareaComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManagementComponent);
+    fixture = TestBed.createComponent(MTareaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

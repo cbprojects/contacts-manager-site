@@ -1,32 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../services/rest.service';
+import { RestService } from '../../../services/rest.service';
 import { MessageService } from 'primeng/api';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
-import { ContactoModel } from 'src/app/model/contacto-model';
-import { title } from 'node:process';
+import { ConceptoFacturaModel } from 'src/app/model/concepto-factura-model';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-management',
-  templateUrl: './management.component.html',
-  styleUrls: ['./management.component.scss'],
+  selector: 'app-m-concepto',
+  templateUrl: './m-concepto.component.html',
+  styleUrls: ['./m-concepto.component.scss'],
   providers: [RestService, MessageService]
 })
 
-export class ManagementComponent implements OnInit {
+export class MConceptoFacturaComponent implements OnInit {
   // Objetos de Sesion
   sesion: any;
 
   // Objetos de datos
-  contacto: ContactoModel;
-  esNuevoContacto: boolean;
-  enumProceso: any[];
+  concepto: ConceptoFacturaModel;
+  esNuevoConcepto: boolean;
+  enumTipoConcepto: any[];
 
   // Utilidades
   msg: any;
@@ -47,12 +46,13 @@ export class ManagementComponent implements OnInit {
 
   inicializar() {
     this.cargarEnumerados();
-    this.contacto = this.objectModelInitializer.getDataContactoModel();
-    this.contacto.procesoContacto = this.cargarValorEnumerado(0);
-    this.esNuevoContacto = true;
-    if (this.sesionService.objContactoCargado !== undefined && this.sesionService.objContactoCargado !== null && this.sesionService.objContactoCargado.idContacto > 0) {
-      this.contacto = this.sesionService.objContactoCargado;
-      this.esNuevoContacto = false;
+    this.concepto = this.objectModelInitializer.getDataConceptoFacturaModel();
+    this.concepto.tipoConcepto = this.cargarValorEnumerado(0);
+    this.concepto.valorUnitario = null;
+    this.esNuevoConcepto = true;
+    if (this.sesionService.objConceptoFacturaCargado !== undefined && this.sesionService.objConceptoFacturaCargado !== null && this.sesionService.objConceptoFacturaCargado.idConcepto > 0) {
+      this.concepto = this.sesionService.objConceptoFacturaCargado;
+      this.esNuevoConcepto = false;
     }
     $('html').removeClass('nav-open');
     $('#toggleMenuMobile').click();
@@ -60,29 +60,29 @@ export class ManagementComponent implements OnInit {
 
   cargarEnumerados() {
     let enums = this.enumerados.getEnumerados();
-    this.enumProceso = enums.procesoContacto.valores;
+    this.enumTipoConcepto = enums.tipoConcepto.valores;
   }
 
   cargarValorEnumerado(i) {
-    return this.util.getValorEnumerado(this.enumerados.getEnumerados().procesoContacto.valores, i);
+    return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoConcepto.valores, i);
   }
 
   ngAfterViewChecked(): void {
     $('#menu').children().removeClass('active');
-    $($('#menu').children()[1]).addClass('active');
+    $($('#menu').children()[3]).addClass('active');
     $('ng-select').niceSelect();
-    $($('select#selectProceso').siblings()[1]).children()[0].innerHTML = this.contacto.procesoContacto.label;
-    if (this.esNuevoContacto) {
+    $($('select#selectTipoConcepto').siblings()[1]).children()[0].innerHTML = this.concepto.tipoConcepto.label;
+    if (this.esNuevoConcepto) {
       $('.card').bootstrapMaterialDesign();
     }
   }
 
-  crearContacto() {
+  crearConcepto() {
     try {
-      this.contacto.procesoContacto = this.contacto.procesoContacto.value;
-      this.restService.postREST(this.const.urlCrearContacto, this.contacto)
+      this.concepto.tipoConcepto = this.concepto.tipoConcepto.value;
+      this.restService.postREST(this.const.urlCrearConceptoFactura, this.concepto)
         .subscribe(resp => {
-          let respuesta: ContactoModel = JSON.parse(JSON.stringify(resp));
+          let respuesta: ConceptoFacturaModel = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar comentarios de nuevo
             this.messageService.clear();
@@ -103,7 +103,7 @@ export class ManagementComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
-            this.contacto.procesoContacto = this.cargarValorEnumerado(this.contacto.procesoContacto);
+            this.concepto.tipoConcepto = this.cargarValorEnumerado(this.concepto.tipoConcepto);
 
             console.log(error, "error");
           })
@@ -112,12 +112,12 @@ export class ManagementComponent implements OnInit {
     }
   }
 
-  modificarContacto() {
+  modificarConcepto() {
     try {
-      this.contacto.procesoContacto = this.contacto.procesoContacto.value;
-      this.restService.putREST(this.const.urlModificarContacto, this.contacto)
+      this.concepto.tipoConcepto = this.concepto.tipoConcepto.value;
+      this.restService.putREST(this.const.urlModificarConceptoFactura, this.concepto)
         .subscribe(resp => {
-          let respuesta: ContactoModel = JSON.parse(JSON.stringify(resp));
+          let respuesta: ConceptoFacturaModel = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar comentarios de nuevo
             this.messageService.clear();
@@ -137,7 +137,10 @@ export class ManagementComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
-            this.contacto.procesoContacto = this.cargarValorEnumerado(this.contacto.procesoContacto);
+            this.concepto.tipoConcepto = this.cargarValorEnumerado(this.concepto.tipoConcepto);
+            if (this.concepto.estado === 0) {
+              this.concepto.estado = 1;
+            }
 
             console.log(error, "error");
           })
@@ -146,14 +149,13 @@ export class ManagementComponent implements OnInit {
     }
   }
 
-  eliminarContacto() {
-    this.contacto.estado = 0;
-    this.modificarContacto();
-    this.volverConsulta();
+  eliminarConcepto() {
+    this.concepto.estado = 0;
+    this.modificarConcepto();
   }
 
   volverConsulta() {
-    this.router.navigate(['/query']);
+    this.router.navigate(['/q-concepto']);
   }
 
 }

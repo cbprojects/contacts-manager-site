@@ -104,6 +104,10 @@ export class Util {
       return this.enums.tipoDocumento.valores;
     } else if (enumerado === this.enums.tipoUbicacion.cod) {
       return this.enums.tipoUbicacion.valores;
+    } else if (enumerado === this.enums.tipoFactura.cod) {
+      return this.enums.tipoUbicacion.valores;
+    } else if (enumerado === this.enums.tipoConcepto.cod) {
+      return this.enums.tipoUbicacion.valores;
     }
 
     else if (enumerado === null) {
@@ -138,6 +142,19 @@ export class Util {
 
     for (var obj of enumerado) {
       if (obj.value === id) {
+        valor = obj;
+        break;
+      }
+    }
+
+    return valor;
+  }
+
+  getLabelEnumerado(enumerado, idLabel) {
+    let valor = { value: 0, label: '' };
+
+    for (var obj of enumerado) {
+      if (obj.label === idLabel) {
         valor = obj;
         break;
       }
@@ -486,5 +503,10 @@ export class Util {
       listaMensajes.push(mensaje);
     }
     return listaMensajes;
+  }
+
+  soloNumeros(e) {
+    let key = window.Event ? e.which : e.keyCode;
+    return (key >= 37 && key <= 40) || (key >= 48 && key <= 57) || (key === 46) || (key === 8) || (e.shiftKey === 1);
   }
 }

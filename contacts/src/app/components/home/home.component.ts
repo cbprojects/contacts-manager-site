@@ -7,6 +7,8 @@ import { Util } from 'src/app/config/Util';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { TareaModel } from 'src/app/model/tarea-model';
+import { TareaDTOModel } from 'src/app/model/dto/tarea-dto';
 
 declare var $: any;
 
@@ -23,6 +25,7 @@ export class HomeComponent implements OnInit {
 
   // Objetos de datos
   contactosActivos: any;
+  listaTareas: TareaDTOModel[];
 
   // Utilidades
   msg: any;
@@ -57,6 +60,7 @@ export class HomeComponent implements OnInit {
   inicializar() {
     this.sesionService.objContactoCargado = null;
     this.contarContactos();
+    this.cargarTareas();
     this.dataChart1 = {
       labels: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
       datasets: [
@@ -142,6 +146,41 @@ export class HomeComponent implements OnInit {
           this.contactosActivos = JSON.parse(JSON.stringify(resp));
         },
           error => {
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  cargarTareas() {
+    this.listaTareas = [];
+    try {
+      let tareaFiltro = this.objectModelInitializer.getDataTareaModel();
+      tareaFiltro.estado = 1;
+      this.restService.postREST(this.const.urlConsultarTareasPorFiltros, tareaFiltro)
+        .subscribe(resp => {
+          let listaTemp = JSON.parse(JSON.stringify(resp));
+          if (listaTemp !== undefined && listaTemp.length > 0) {
+            listaTemp.forEach(temp => {
+              let tareaDTO = this.objectModelInitializer.getDataDTOTareaModel();
+              tareaDTO.tareaTB = temp;
+              this.listaTareas.push(tareaDTO);
+            });
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
             console.log(error, "error");
           })
     } catch (e) {

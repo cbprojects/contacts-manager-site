@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../services/rest.service';
+import { RestService } from '../../../services/rest.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
@@ -15,13 +15,13 @@ import { RequestContactoEMailDTOModel } from 'src/app/model/dto/request-contacto
 declare var $: any;
 
 @Component({
-  selector: 'app-query',
-  templateUrl: './query.component.html',
-  styleUrls: ['./query.component.scss'],
+  selector: 'app-q-contacto',
+  templateUrl: './q-contacto.component.html',
+  styleUrls: ['./q-contacto.component.scss'],
   providers: [RestService, MessageService]
 })
 
-export class QueryComponent implements OnInit {
+export class QContactoComponent implements OnInit {
   // Objetos de Sesion
   sesion: any;
 
@@ -51,7 +51,7 @@ export class QueryComponent implements OnInit {
 
   ngAfterViewChecked(): void {
     $('#menu').children().removeClass('active');
-    $($('#menu').children()[2]).addClass('active');
+    $($('#menu').children()[1]).addClass('active');
     $('.card').bootstrapMaterialDesign();
   }
 
@@ -67,7 +67,7 @@ export class QueryComponent implements OnInit {
   cargarContacto(contacto: ContactoModel) {
     this.sesionService.objContactoCargado = this.objectModelInitializer.getDataContactoModel();
     this.sesionService.objContactoCargado = contacto;
-    this.router.navigate(['/management']);
+    this.router.navigate(['/m-contacto']);
   }
 
   cargarColorBadge(i) {
