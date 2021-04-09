@@ -50,16 +50,14 @@
 											<table *ngIf="listaFacturacion.length > 0; else sinResultados"
 												class="table">
 												<thead class="text-primary">
-													<tr>
-														<th class="text-center">#</th>
-														<th class="text-center">{{msg.lbl_table_header_concepto}}</th>
-														<th class="text-center">{{msg.lbl_table_header_cantidad}}</th>
-														<th class="text-center">{{msg.lbl_table_header_valor_unitario}}
-														</th>
-														<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
-														</th>
-														<th class="text-center"></th>
-													</tr>
+													<th class="text-center">#</th>
+													<th class="text-center">{{msg.lbl_table_header_concepto}}</th>
+													<th class="text-center">{{msg.lbl_table_header_cantidad}}</th>
+													<th class="text-center">{{msg.lbl_table_header_valor_unitario}}
+													</th>
+													<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
+													</th>
+													<th class="text-center"></th>
 												</thead>
 												<tbody>
 													<tr *ngFor="let facturacion of listaFacturacion; index as i;">
@@ -85,12 +83,12 @@
 																[(ngModel)]="facturacion.facturaTB.cantidad">
 														</td>
 														<td class="text-center"
-															style="min-width: 120px; padding: 5px 10px">
+															style="min-width: 150px; padding: 5px 10px">
 															{{facturacion.facturaTB.conceptoFacturaTB.valorUnitario
 															| currency: 'USD'}}
 														</td>
 														<td class="text-center"
-															style="min-width: 130px; padding: 5px 10px">
+															style="min-width: 150px; padding: 5px 10px">
 															{{facturacion.facturaTB.valorTotal | currency: 'USD'}}
 														</td>
 														<td class="td-actions text-center">
@@ -171,19 +169,17 @@
 													<table *ngIf="listaFacturacion.length > 0; else sinResultados"
 														class="table">
 														<thead class="text-primary">
-															<tr>
-																<th class="text-center">#</th>
-																<th class="text-center">
-																	{{msg.lbl_table_header_concepto}}</th>
-																<th class="text-center">
-																	{{msg.lbl_table_header_cantidad}}</th>
-																<th class="text-center">
-																	{{msg.lbl_table_header_valor_unitario}}
-																</th>
-																<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
-																</th>
-																<th class="text-center"></th>
-															</tr>
+															<th class="text-center">#</th>
+															<th class="text-center">
+																{{msg.lbl_table_header_concepto}}</th>
+															<th class="text-center">
+																{{msg.lbl_table_header_cantidad}}</th>
+															<th class="text-center">
+																{{msg.lbl_table_header_valor_unitario}}
+															</th>
+															<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
+															</th>
+															<th class="text-center"></th>
 														</thead>
 														<tbody>
 															<tr
@@ -211,12 +207,12 @@
 																		[(ngModel)]="facturacion.facturaTB.cantidad">
 																</td>
 																<td class="text-center"
-																	style="min-width: 120px; padding: 5px 10px">
+																	style="min-width: 150px; padding: 5px 10px">
 																	{{facturacion.facturaTB.conceptoFacturaTB.valorUnitario
 																	| currency: 'USD'}}
 																</td>
 																<td class="text-center"
-																	style="min-width: 130px; padding: 5px 10px">
+																	style="min-width: 150px; padding: 5px 10px">
 																	{{facturacion.facturaTB.valorTotal | currency:
 																	'USD'}}
 																</td>

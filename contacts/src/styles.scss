@@ -372,7 +372,16 @@
     text-shadow: 2px 2px 0px #e8e8e8;
 }
 
-.table thead tr th {
+.table thead tr th,
+.table thead th {
     font-size: 16px;
     font-weight: bold;
+}
+
+td {
+    font-size: 0.875rem !important;
+}
+
+.table-responsive {
+    overflow-y: hidden !important;
 }
