@@ -46,9 +46,10 @@
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<div class="card" style="box-shadow: none;">
-											<table *ngIf="listaFacturacion.length > 0; else sinResultados">
-												<thead>
+										<div class="card table-responsive" style="box-shadow: none;">
+											<table *ngIf="listaFacturacion.length > 0; else sinResultados"
+												class="table">
+												<thead class="text-primary">
 													<tr>
 														<th class="text-center">#</th>
 														<th class="text-center">{{msg.lbl_table_header_concepto}}</th>
@@ -57,7 +58,7 @@
 														</th>
 														<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
 														</th>
-														<th class="text-center">{{msg.lbl_btn_ite_remover}}</th>
+														<th class="text-center"></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -163,9 +164,10 @@
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-12">
-												<div class="card" style="box-shadow: none;">
-													<table *ngIf="listaFacturacion.length > 0; else sinResultados">
-														<thead>
+												<div class="card table-responsive" style="box-shadow: none;">
+													<table *ngIf="listaFacturacion.length > 0; else sinResultados"
+														class="table">
+														<thead class="text-primary">
 															<tr>
 																<th class="text-center">#</th>
 																<th class="text-center">
@@ -177,7 +179,7 @@
 																</th>
 																<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
 																</th>
-																<th class="text-center">{{msg.lbl_btn_ite_remover}}</th>
+																<th class="text-center"></th>
 															</tr>
 														</thead>
 														<tbody>
@@ -214,7 +216,8 @@
 																	'USD'}}
 																</td>
 																<td class="td-actions text-center">
-																	<button type="button" (click)="removerItemFactura(i)"
+																	<button type="button"
+																		(click)="removerItemFactura(i)"
 																		class="btn btn-danger btn-link btn-sm">
 																		<i class="material-icons">close</i>
 																	</button>
