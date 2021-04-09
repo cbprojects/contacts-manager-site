@@ -84,11 +84,13 @@
 																(ngModelChange)="calcularPrecioTotal($event, facturacion)"
 																[(ngModel)]="facturacion.facturaTB.cantidad">
 														</td>
-														<td class="text-center" style="padding: 5px 10px">
+														<td class="text-center"
+															style="min-width: 120px; padding: 5px 10px">
 															{{facturacion.facturaTB.conceptoFacturaTB.valorUnitario
 															| currency: 'USD'}}
 														</td>
-														<td class="text-center" style="padding: 5px 10px">
+														<td class="text-center"
+															style="min-width: 130px; padding: 5px 10px">
 															{{facturacion.facturaTB.valorTotal | currency: 'USD'}}
 														</td>
 														<td class="td-actions text-center">
@@ -110,14 +112,15 @@
 														<td class="totalFactura text-center">{{valorTotalFactura |
 															currency:
 															'USD'}}</td>
+														<td></td>
 													</tr>
 												</tfoot>
 											</table>
-											<div>
-												<button type="submit" (click)="anadirItemFactura()"
-													class="btn btn-success pull-right">{{msg.lbl_btn_ite_agregar}}</button>
-												<div class="clearfix"></div>
-											</div>
+										</div>
+										<div>
+											<button type="submit" (click)="anadirItemFactura()"
+												class="btn btn-success pull-right">{{msg.lbl_btn_ite_agregar}}</button>
+											<div class="clearfix"></div>
 										</div>
 										<ng-template #sinResultados>
 											<div class="service-grids">
@@ -207,11 +210,13 @@
 																		(ngModelChange)="calcularPrecioTotal($event, facturacion)"
 																		[(ngModel)]="facturacion.facturaTB.cantidad">
 																</td>
-																<td class="text-center" style="padding: 5px 10px">
+																<td class="text-center"
+																	style="min-width: 120px; padding: 5px 10px">
 																	{{facturacion.facturaTB.conceptoFacturaTB.valorUnitario
 																	| currency: 'USD'}}
 																</td>
-																<td class="text-center" style="padding: 5px 10px">
+																<td class="text-center"
+																	style="min-width: 130px; padding: 5px 10px">
 																	{{facturacion.facturaTB.valorTotal | currency:
 																	'USD'}}
 																</td>
@@ -236,14 +241,15 @@
 																	|
 																	currency:
 																	'USD'}}</td>
+																<td></td>
 															</tr>
 														</tfoot>
 													</table>
-													<div>
-														<button type="submit" (click)="anadirItemFactura()"
-															class="btn btn-success pull-right">{{msg.lbl_btn_ite_agregar}}</button>
-														<div class="clearfix"></div>
-													</div>
+												</div>
+												<div>
+													<button type="submit" (click)="anadirItemFactura()"
+														class="btn btn-success pull-right">{{msg.lbl_btn_ite_agregar}}</button>
+													<div class="clearfix"></div>
 												</div>
 												<ng-template #sinResultados>
 													<div class="service-grids">
