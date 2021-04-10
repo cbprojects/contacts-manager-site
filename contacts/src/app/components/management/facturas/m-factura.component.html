@@ -270,6 +270,52 @@
 								</div>
 							</div>
 						</div>
+
+						<div *ngIf="!esNuevaFactura" class="card card-stats">
+							<div class="card-header card-header-info card-header-icon">
+								<div class="card-icon">
+									<i class="material-icons">mail</i>
+								</div>
+								<p class="card-category">{{msg.lbl_btn_enviar_correo}} - {{msg.lbl_btn_descargar}}</p>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<div class="row" style="padding: 0 10px;">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label
+													class="bmd-label-floating}}">{{msg.lbl_mtto_nombre_empresa}}</label>
+												<select id="selectEmpresa" nice-select [attr.data-value]="empresaTB"
+													[(ngModel)]="empresaTB">
+													<option *ngFor="let empresa of enumEmpresas" [ngValue]="empresa">
+														{{empresa.label}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label
+													class="bmd-label-floating}}">{{msg.lbl_mtto_nombre_contacto}}</label>
+												<select id="selectContacto" nice-select [attr.data-value]="contactoTB"
+													[(ngModel)]="contactoTB">
+													<option *ngFor="let contacto of enumContactos" [ngValue]="contacto">
+														{{contacto.label}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<button type="submit" class="btn btn-info"
+												(click)="enviarRestEmailFactura()">
+												{{msg.lbl_btn_enviar_correo}}</button>
+											<button type="submit" class="btn btn-danger"
+												(click)="descargarReporteFactura()">
+												{{msg.lbl_btn_descargar}}</button>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

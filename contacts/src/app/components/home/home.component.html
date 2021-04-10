@@ -168,7 +168,8 @@
 											<tbody>
 												<tr *ngFor="let tarea of listaTareas; index as i;">
 													<td style="width: 50px;" class="text-center">
-														<p-checkbox [(ngModel)]="tarea.seleccionado" binary="true"
+														<p-checkbox (onChange)="actualizarTareaRealizada(tarea.tareaTB)"
+															[(ngModel)]="tarea.tareaTB.realizado" binary="true"
 															inputId="binary">
 														</p-checkbox>
 													</td>

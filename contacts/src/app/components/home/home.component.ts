@@ -187,4 +187,36 @@ export class HomeComponent implements OnInit {
       console.log(e);
     }
   }
+
+  actualizarTareaRealizada(tarea: TareaModel) {
+    try {
+      debugger;
+      this.restService.putREST(this.const.urlModificarTarea, tarea)
+        .subscribe(resp => {
+          let respuesta: TareaModel = JSON.parse(JSON.stringify(resp));
+          if (respuesta !== null) {
+            // Mostrar mensaje exitoso y consultar comentarios de nuevo
+            this.messageService.clear();
+            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+            tarea.realizado = false;
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

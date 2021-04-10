@@ -2,6 +2,7 @@ export interface TareaModel {
     idTarea;
     descripcion;
     fechaRecordatorio;
+    realizado;
 
     // Auditoria
     estado;

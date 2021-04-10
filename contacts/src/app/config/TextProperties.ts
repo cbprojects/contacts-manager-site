@@ -112,6 +112,7 @@ export class TextProperties {
       lbl_mensaje_archivo_subido: idioma === constant.idiomaEs ? 'Archivo(s) subido correctamente.' : 'File(s) uploaded successfully.',
       lbl_mensaje_cant_archivos_permitidos: idioma === constant.idiomaEs ? 'La cantidad de archivos por subir supera la cantidad permitida.' : 'The number of files to upload exceeds the allowed number.',
       lbl_mensaje_cant_archivos_permitidos_detalle: idioma === constant.idiomaEs ? 'Máximo {0} archivo(s).' : 'Limit is {0} at most.',
+      lbl_mensaje_empresa_y_contacto_vacio_para_factura: idioma === constant.idiomaEs ? 'Debe diligenciar la información de Empresa y Contacto para enviar la factura/cotización' : 'You must fill out the Company and Contact information to send the Invoice/Cotization',
       lbl_mensaje_dropzone_principal: idioma === constant.idiomaEs ? 'Esta es una zona de carga de archivos' : 'This is a file upload area.',
       lbl_mensaje_dropzone_secundario: idioma === constant.idiomaEs ? 'Arrastre su archivo o dé [Clic] para subir uno desde el explorador de archivos' : 'Drag your file or Click to upload one from file explorer.',
       lbl_mensaje_size_archivos_permitidos: idioma === constant.idiomaEs ? 'Error con el tamaño del archivo: ' : 'File size error: ',
@@ -156,6 +157,8 @@ export class TextProperties {
 
       // Acciones
       lbl_btn_ingresar: idioma === constant.idiomaEs ? 'Ingresar' : 'Sign In',
+      lbl_btn_enviar_correo: idioma === constant.idiomaEs ? 'Enviar Correo' : 'Send E-Mail',
+      lbl_btn_descargar: idioma === constant.idiomaEs ? 'Descargar' : 'Download',
       lbl_btn_registrarse: idioma === constant.idiomaEs ? 'Registrarse' : 'Register',
       lbl_btn_inicio: idioma === constant.idiomaEs ? 'Inicio' : 'Login',
       lbl_btn_buscar: idioma === constant.idiomaEs ? 'Buscar' : 'Search',

@@ -11,6 +11,8 @@ import { FacturaModel } from 'src/app/model/factura-model';
 import { ConceptoFacturaModel } from 'src/app/model/concepto-factura-model';
 import { FacturacionDTOModel } from 'src/app/model/dto/facturacion-dto';
 import { RequestFacturacionDTOModel } from 'src/app/model/dto/request-facturacion-dto';
+import { ReporteFacturaDTOModel } from 'src/app/model/dto/reporte-factura-dto';
+import { ResponseEMailDTOModel } from 'src/app/model/dto/response-email-dto';
 
 declare var $: any;
 
@@ -32,6 +34,11 @@ export class MFacturaComponent implements OnInit {
   listaFacturacion: FacturacionDTOModel[];
   listaConceptos: any;
   valorTotalFactura: any;
+  empresaTB: any;
+  contactoTB: any;
+  enumEmpresas: any[];
+  enumContactos: any[];
+  pdfSrc: string = '';
 
   // Utilidades
   msg: any;
@@ -72,6 +79,8 @@ export class MFacturaComponent implements OnInit {
   cargarEnumerados() {
     let enums = this.enumerados.getEnumerados();
     this.enumTipoFactura = enums.tipoFactura.valores;
+    this.cargarEmpresas();
+    this.cargarContactos();
   }
 
   cargarValorEnumerado(i) {
@@ -324,6 +333,215 @@ export class MFacturaComponent implements OnInit {
     this.listaFacturacion.forEach(fact => {
       this.valorTotalFactura = this.valorTotalFactura + fact.facturaTB.valorTotal;
     });
+  }
+
+  enviarRestEmailFactura() {
+    try {
+      if (this.contactoTB.value !== -1 && this.empresaTB.value !== -1) {
+        // Conversiones de datos
+        let reporteFacturaDto: ReporteFacturaDTOModel = this.objectModelInitializer.getDataReporteFacturaDTOModel();
+        reporteFacturaDto.numeroFactura = this.factura.numeroFactura;
+        reporteFacturaDto.contactoTB = this.objectModelInitializer.getDataContactoModel();
+        reporteFacturaDto.contactoTB = this.contactoTB.value;
+        reporteFacturaDto.empresaTB = this.objectModelInitializer.getDataEmpresaModel();
+        reporteFacturaDto.empresaTB = this.empresaTB.value;
+
+        this.restService.postREST(this.const.urlEnviarEmailFactura, reporteFacturaDto)
+          .subscribe(resp => {
+            let respuesta: ResponseEMailDTOModel = JSON.parse(JSON.stringify(resp));
+            if (respuesta !== null) {
+              // Mostrar mensaje de envios de correos exitoso o no
+              this.messageService.clear();
+              this.messageService.add({ severity: respuesta.exitoso ? this.const.severity[1] : this.const.severity[3], summary: respuesta.exitoso ? this.msg.lbl_summary_succes : this.msg.lbl_summary_danger, detail: respuesta.mensaje, sticky: true });
+            }
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
+
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+
+              console.log(error, "error");
+            })
+      } else {
+        this.messageService.clear();
+        this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_mensaje_empresa_y_contacto_vacio_para_factura, sticky: true });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  cargarEmpresas() {
+    let enumVacio = { value: -1, label: this.msg.lbl_enum_generico_valor_vacio };
+    this.enumEmpresas = [];
+    this.enumEmpresas.push(enumVacio);
+    try {
+      let empresaFiltro = this.objectModelInitializer.getDataEmpresaModel();
+      empresaFiltro.estado = 1;
+      this.restService.postREST(this.const.urlConsultarEmpresasPorFiltros, empresaFiltro)
+        .subscribe(resp => {
+          let listaTemp = JSON.parse(JSON.stringify(resp));
+          if (listaTemp !== undefined && listaTemp.length > 0) {
+            listaTemp.forEach(temp => {
+              let enumEmpresa = { value: temp, label: temp.nombre };
+              this.enumEmpresas.push(enumEmpresa);
+            });
+            this.empresaTB = this.enumEmpresas[0];
+            $($('select#selectEmpresa').siblings()[1]).children()[0].innerHTML = this.empresaTB.label;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  cargarContactos() {
+    let enumVacio = { value: -1, label: this.msg.lbl_enum_generico_valor_vacio };
+    this.enumContactos = [];
+    this.enumContactos.push(enumVacio);
+    try {
+      let contactoFiltro = this.objectModelInitializer.getDataContactoModel();
+      contactoFiltro.estado = 1;
+      this.restService.postREST(this.const.urlConsultarContactosPorFiltros, contactoFiltro)
+        .subscribe(resp => {
+          let listaTemp = JSON.parse(JSON.stringify(resp));
+          if (listaTemp !== undefined && listaTemp.length > 0) {
+            listaTemp.forEach(temp => {
+              let enumContacto = { value: temp, label: temp.nombreContacto };
+              this.enumContactos.push(enumContacto);
+            });
+            this.contactoTB = this.enumContactos[0];
+            $($('select#selectContacto').siblings()[1]).children()[0].innerHTML = this.contactoTB.label;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  generarReporteFactura() {
+    try {
+      if (this.contactoTB.value !== -1 && this.empresaTB.value !== -1) {
+        // Conversiones de datos
+        let reporteFacturaDto: ReporteFacturaDTOModel = this.objectModelInitializer.getDataReporteFacturaDTOModel();
+        reporteFacturaDto.numeroFactura = this.factura.numeroFactura;
+        reporteFacturaDto.contactoTB = this.objectModelInitializer.getDataContactoModel();
+        reporteFacturaDto.contactoTB = this.contactoTB.value;
+        reporteFacturaDto.empresaTB = this.objectModelInitializer.getDataEmpresaModel();
+        reporteFacturaDto.empresaTB = this.empresaTB.value;
+
+        this.restService.postFileREST(this.const.urlGenerarReporteFactura, reporteFacturaDto)
+          .subscribe(resp => {
+            let data: any = resp;
+            console.log(resp, "res");
+            let reader = new FileReader();
+            reader.onload = (e: any) => {
+              console.log(e.target.result);
+              this.pdfSrc = e.target.result;
+            }
+            reader.readAsArrayBuffer(data);
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
+
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+
+              console.log(error, "error");
+            })
+      } else {
+        this.messageService.clear();
+        this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_mensaje_empresa_y_contacto_vacio_para_factura, sticky: true });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  descargarReporteFactura() {
+    try {
+      if (this.contactoTB.value !== -1 && this.empresaTB.value !== -1) {
+        // Conversiones de datos
+        let reporteFacturaDto: ReporteFacturaDTOModel = this.objectModelInitializer.getDataReporteFacturaDTOModel();
+        reporteFacturaDto.numeroFactura = this.factura.numeroFactura;
+        reporteFacturaDto.contactoTB = this.objectModelInitializer.getDataContactoModel();
+        reporteFacturaDto.contactoTB = this.contactoTB.value;
+        reporteFacturaDto.empresaTB = this.objectModelInitializer.getDataEmpresaModel();
+        reporteFacturaDto.empresaTB = this.empresaTB.value;
+
+        this.restService.postFileREST(this.const.urlGenerarReporteFactura, reporteFacturaDto)
+          .subscribe(resp => {
+            console.log(resp, "res");
+            let data = resp;
+            const url = window.URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.setAttribute('style', 'display:none');
+            a.href = url;
+            a.download = 'archivo.pdf';
+            a.click();
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
+
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+
+              console.log(error, "error");
+            })
+      } else {
+        this.messageService.clear();
+        this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_mensaje_empresa_y_contacto_vacio_para_factura, sticky: true });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
 }

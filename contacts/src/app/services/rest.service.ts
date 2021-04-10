@@ -49,7 +49,11 @@ export class RestService {
     return this.http.get(url, { responseType: 'blob' });
   }
 
-  postFileREST(url, data: File) {
+  postFileREST(url, data) {
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
+
+  postFileSendREST(url, data: File) {
     let formData: FormData = new FormData();
     formData.append('file', data);
 

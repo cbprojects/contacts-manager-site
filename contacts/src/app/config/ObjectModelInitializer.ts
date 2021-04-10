@@ -53,6 +53,8 @@ export class ObjectModelInitializer {
       urlModificarClaveUsuario: `${HOST}/central/contactos/modificarClaveUsuario`,
       // Archivos
       urlEnviarEmailContacto: `${HOST}/central/contactos/archivos/enviarEmailContacto`,
+      urlEnviarEmailFactura: `${HOST}/central/contactos/archivos/enviarEmailFactura`,
+      urlGenerarReporteFactura: `${HOST}/central/contactos/reportes/generarReporteFactura`,
       // Contactos
       urlContarContactos: `${HOST}/central/contactos/contarContactos`,
       urlConsultarContactosPorFiltros: `${HOST}/central/contactos/consultarContactosPorFiltros`,
@@ -280,6 +282,7 @@ export class ObjectModelInitializer {
       idTarea: 0,
       descripcion: '',
       fechaRecordatorio: '',
+      realizado: false,
 
       // Auditoria
       estado: 0,
@@ -347,4 +350,13 @@ export class ObjectModelInitializer {
       listaFacturas: []
     }
   }
+
+  getDataReporteFacturaDTOModel() {
+    return {
+      numeroFactura: 0,
+      empresaTB: this.getDataEmpresaModel(),
+      contactoTB: this.getDataContactoModel()
+    }
+  }
+
 }
