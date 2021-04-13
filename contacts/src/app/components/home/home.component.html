@@ -19,16 +19,13 @@
 			<div class="container-fluid">
 				<!-- Contadores -->
 				<div class="row">
-					<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="col-lg-4 col-md-4 col-sm-6">
 						<div class="card card-stats">
 							<div class="card-header card-header-info card-header-icon">
 								<div class="card-icon">
 									<i class="material-icons">support_agent</i>
 								</div>
 								<p class="card-category">{{msg.lbl_resumen}}</p>
-								<h3 class="card-title">30/{{contactosActivos}}
-									<small>{{msg.lbl_clientes}}</small>
-								</h3>
 							</div>
 							<div class="card-footer">
 								<div class="stats">
@@ -38,7 +35,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="col-lg-4 col-md-4 col-sm-6">
 						<div class="card card-stats">
 							<div class="card-header card-header-danger card-header-icon">
 								<div class="card-icon">
@@ -54,7 +51,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="col-lg-4 col-md-4 col-sm-6">
 						<div class="card card-stats">
 							<div class="card-header card-header-success card-header-icon">
 								<div class="card-icon">
@@ -71,6 +68,81 @@
 						</div>
 					</div>
 				</div>
+				<!-- Dialog Facturas -->
+				<p-dialog [(visible)]="displayModalFactura" [modal]="true" [style]="{width: '80vw'}"
+					[transitionOptions]="'150ms'" [showHeader]="false" (onShow)="aplicarMDB()">
+
+					<!-- Facturas -->
+					<div id="facturacion" class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="card card-stats">
+								<div class="card-header card-header-info card-header-icon">
+									<div class="card-icon">
+										<i class="material-icons">receipt</i>
+									</div>
+									<p class="card-category">{{msg.lbl_facturas}}</p>
+									<h4 class="card-category">{{msg.lbl_mtto_numero_factura}}:
+										{{numeroFactura > 0 ? numeroFactura : msg.lbl_mtto_no_hay_factura_seleccionada}}
+									</h4>
+								</div>
+								<div class="card-body">
+									<div class="table-responsive">
+										<table *ngIf="listaFacturas.length > 0; else sinResultados" class="table">
+											<thead class="text-primary">
+												<th class="text-center">
+													{{msg.lbl_table_header_numero_factura}}
+												</th>
+												<th class="text-center">
+													{{msg.lbl_table_header_tipo_factura}}
+												</th>
+												<th class="text-center">
+													{{msg.lbl_table_header_valor_total}}
+												</th>
+											</thead>
+											<tbody id="facts">
+												<tr id="fact-{{factura.numeroFactura}}"
+													(click)="seleccionarFactura(factura)"
+													*ngFor="let factura of listaFacturas; index as i;">
+													<td class="text-center">
+														{{factura.numeroFactura}}</td>
+													<td class="text-center">
+														{{factura.tipoFactura.label}}</td>
+													<td class="text-center">
+														{{factura.total | currency: 'USD'}}</td>
+												</tr>
+											</tbody>
+										</table>
+										<ng-template #sinResultados>
+											<div class="service-grids">
+												<div class="col-md-12 ser-grid">
+													<p class="sinResultados">
+														{{msg.lbl_info_sin_resultados}}</p>
+												</div>
+											</div>
+										</ng-template>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<p-footer>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<button type="submit" class="btn btn-secondary"
+									(click)="cerrarDialogFactura()">{{msg.lbl_btn_cancelar}}</button>
+								<button type="submit" [disabled]="numeroFactura <= 0"
+									(click)="enviarRestEmailFactura(empresaSeleccionadaTB)"
+									class="btn btn-danger">{{msg.lbl_btn_enviar_factura}}</button>
+								<button type="submit" [disabled]="numeroFactura <= 0" class="btn btn-primary"
+									(click)="solicitarInformacionEmpresa(empresaSeleccionadaTB)">{{msg.lbl_btn_solicitar_informacion}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</p-footer>
+				</p-dialog>
+				<!-- End Dialog Facturas -->
 				<!-- Empresas -->
 				<div class="row" *ngIf="listaEmpresas.length > 0; else sinResultados">
 					<div *ngFor="let empresa of listaEmpresas; index as i;" class="col-md-6">
@@ -85,8 +157,8 @@
 								<h4 class="card-title">{{empresa.nombre}}</h4>
 								<p class="card-category">{{empresa.descripcion}}</p>
 								<button *ngIf="contactoEnSesionTB !== undefined && contactoEnSesionTB !== null"
-									type="submit" (click)="enviarRestEmailFactura(empresa)"
-									class="btn btn-danger">{{msg.lbl_btn_enviar_factura}}</button>
+									type="submit" (click)="mostrarDialogFactura(empresa)"
+									class="btn btn-danger">{{msg.lbl_home_opciones}}</button>
 								<div class="clearfix"></div>
 							</div>
 							<div class="card-footer">
@@ -186,7 +258,7 @@
 					</div>
 				</div>
 				<!-- Tareas -->
-				<div class="row">
+				<div *ngIf="sesionService.objServiceSesion.esLogueado" class="row">
 					<div class="col-lg-12 col-md-12">
 						<div class="card">
 							<div class="card-header card-header-tabs card-header-primary">

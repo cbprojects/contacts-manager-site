@@ -417,3 +417,15 @@ p-checkbox {
     margin: auto;
     padding-top: 10px;
 }
+
+.row-selected {
+    background: #a8e5ec;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px whitesmoke;
+}
+
+.row-selected:hover {
+    background: #a8e5ec !important;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px whitesmoke;
+}

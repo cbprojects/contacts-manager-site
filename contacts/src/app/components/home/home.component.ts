@@ -13,6 +13,7 @@ import { EmpresaModel } from 'src/app/model/empresa-model';
 import { ContactoModel } from 'src/app/model/contacto-model';
 import { ReporteFacturaDTOModel } from 'src/app/model/dto/reporte-factura-dto';
 import { ResponseEMailDTOModel } from 'src/app/model/dto/response-email-dto';
+import { FacturaConsultaDTOModel } from 'src/app/model/dto/factura-consulta-dto';
 
 declare var $: any;
 
@@ -33,6 +34,10 @@ export class HomeComponent implements OnInit {
   listaTareas: TareaDTOModel[];
   listaEmpresas: EmpresaModel[];
   contactoEnSesionTB: ContactoModel;
+  displayModalFactura: boolean = false;
+  empresaSeleccionadaTB: EmpresaModel;
+  listaFacturas: FacturaConsultaDTOModel[];
+  numeroFactura: any = 0;
 
   // Utilidades
   msg: any;
@@ -80,6 +85,7 @@ export class HomeComponent implements OnInit {
     this.contarEmpresas();
     this.cargarTareas();
     this.cargarEmpresas();
+    this.cargarFacturas();
 
     // Charts
     this.dataChart1 = {
@@ -305,7 +311,7 @@ export class HomeComponent implements OnInit {
       if (this.contactoEnSesionTB !== undefined && this.contactoEnSesionTB != null && empresaTB !== null && empresaTB !== undefined) {
         // Conversiones de datos
         let reporteFacturaDto: ReporteFacturaDTOModel = this.objectModelInitializer.getDataReporteFacturaDTOModel();
-        reporteFacturaDto.numeroFactura = 1;
+        reporteFacturaDto.numeroFactura = this.numeroFactura;
         reporteFacturaDto.contactoTB = this.objectModelInitializer.getDataContactoModel();
         reporteFacturaDto.contactoTB = this.contactoEnSesionTB;
         reporteFacturaDto.empresaTB = this.objectModelInitializer.getDataEmpresaModel();
@@ -341,5 +347,137 @@ export class HomeComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  aplicarMDB() {
+    setTimeout(() => {
+      $('#facturacion').bootstrapMaterialDesign();
+    }, 10);
+  }
+
+  mostrarDialogFactura(empresaTB: EmpresaModel) {
+    this.displayModalFactura = true;
+    this.empresaSeleccionadaTB = empresaTB;
+  }
+
+  cerrarDialogFactura() {
+    this.numeroFactura = 0;
+    this.displayModalFactura = false;
+  }
+
+  solicitarInformacionEmpresa(empresaTB: EmpresaModel) {
+    try {
+      if (this.contactoEnSesionTB !== undefined && this.contactoEnSesionTB != null && empresaTB !== null && empresaTB !== undefined) {
+        // Conversiones de datos
+        let reporteFacturaDto: ReporteFacturaDTOModel = this.objectModelInitializer.getDataReporteFacturaDTOModel();
+        reporteFacturaDto.numeroFactura = this.numeroFactura;
+        reporteFacturaDto.contactoTB = this.objectModelInitializer.getDataContactoModel();
+        reporteFacturaDto.contactoTB = this.contactoEnSesionTB;
+        reporteFacturaDto.empresaTB = this.objectModelInitializer.getDataEmpresaModel();
+        reporteFacturaDto.empresaTB = empresaTB;
+
+        this.restService.postREST(this.const.urlEnviarEmailFactura, reporteFacturaDto)
+          .subscribe(resp => {
+            let respuesta: ResponseEMailDTOModel = JSON.parse(JSON.stringify(resp));
+            if (respuesta !== null) {
+              // Mostrar mensaje de envios de correos exitoso o no
+              this.messageService.clear();
+              this.messageService.add({ severity: respuesta.exitoso ? this.const.severity[1] : this.const.severity[3], summary: respuesta.exitoso ? this.msg.lbl_summary_succes : this.msg.lbl_summary_danger, detail: respuesta.mensaje, sticky: true });
+            }
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
+
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+
+              console.log(error, "error");
+            })
+      } else {
+        this.messageService.clear();
+        this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_mensaje_empresa_y_contacto_vacio_para_factura, sticky: true });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  cargarFacturas() {
+    this.listaFacturas = [];
+    try {
+      let facturaFiltro = this.objectModelInitializer.getDataFacturaModel();
+      facturaFiltro.estado = 1;
+      this.restService.postREST(this.const.urlConsultarFacturasPorFiltros, facturaFiltro)
+        .subscribe(resp => {
+          let listaTemp = JSON.parse(JSON.stringify(resp));
+          if (listaTemp !== undefined && listaTemp.length > 0) {
+            let listaNumerosFact = [];
+
+            listaTemp.forEach(temp => {
+              if (listaNumerosFact.length === 0) {
+                let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
+                facturaConsultaDTO.numeroFactura = temp.numeroFactura;
+                facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
+                facturaConsultaDTO.total = temp.valorTotal;
+                this.listaFacturas.push(facturaConsultaDTO);
+                listaNumerosFact.push(temp.numeroFactura);
+              } else {
+                if (listaNumerosFact.includes(temp.numeroFactura)) {
+                  this.actualizarValorFactConsultaDeList(temp.numeroFactura, temp.valorTotal, temp);
+                } else {
+                  let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
+                  facturaConsultaDTO.numeroFactura = temp.numeroFactura;
+                  facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
+                  facturaConsultaDTO.total = temp.valorTotal;
+                  facturaConsultaDTO.listaFacturas.push(temp);
+                  this.listaFacturas.push(facturaConsultaDTO);
+                  listaNumerosFact.push(temp.numeroFactura);
+                }
+              }
+            });
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  actualizarValorFactConsultaDeList(numeroFactura, valor, factura) {
+    this.listaFacturas.forEach(factConsulta => {
+      if (factConsulta.numeroFactura === numeroFactura) {
+        factConsulta.total = factConsulta.total + valor;
+        factConsulta.listaFacturas.push(factura);
+      }
+    });
+  }
+
+  cargarValorEnumerado(i) {
+    return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoFactura.valores, i);
+  }
+
+  seleccionarFactura(factura: FacturaConsultaDTOModel) {
+    this.numeroFactura = factura.numeroFactura;
+    $('#facts tr').removeClass('row-selected');
+    $('#fact-' + factura.numeroFactura).toggleClass('row-selected');
   }
 }
