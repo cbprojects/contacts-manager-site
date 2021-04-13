@@ -158,6 +158,7 @@ export class TextProperties {
       // Acciones
       lbl_btn_ingresar: idioma === constant.idiomaEs ? 'Ingresar' : 'Sign In',
       lbl_btn_enviar_correo: idioma === constant.idiomaEs ? 'Enviar Correo' : 'Send E-Mail',
+      lbl_btn_enviar_factura: idioma === constant.idiomaEs ? 'Enviar Factura/Cotizacion' : 'Send Invoice/Cotization',
       lbl_btn_descargar: idioma === constant.idiomaEs ? 'Descargar' : 'Download',
       lbl_btn_registrarse: idioma === constant.idiomaEs ? 'Registrarse' : 'Register',
       lbl_btn_inicio: idioma === constant.idiomaEs ? 'Inicio' : 'Login',
@@ -255,6 +256,7 @@ export class TextProperties {
       lbl_table_header_cargo_contacto: idioma === constant.idiomaEs ? 'Cargo Contacto' : 'Contact Position',
       lbl_table_header_telefono_contacto: idioma === constant.idiomaEs ? 'Teléfono Contacto' : 'Contact Telephone',
       lbl_table_header_proceso: idioma === constant.idiomaEs ? 'Proceso' : 'Process',
+      lbl_table_header_codigo: idioma === constant.idiomaEs ? 'Código' : 'Code',
       lbl_table_header_descripcion: idioma === constant.idiomaEs ? 'Descripción' : 'Description',
       lbl_table_header_tipo_concepto: idioma === constant.idiomaEs ? 'Tipo Concepto' : 'Concept Type',
       lbl_table_header_tipo_factura: idioma === constant.idiomaEs ? 'Tipo Factura' : 'Invoice Type',
@@ -323,6 +325,12 @@ export class TextProperties {
       lbl_enum_tipo_concepto_mano_obra: idioma === constant.idiomaEs ? 'Mano de obra' : 'Man labor',
       lbl_enum_tipo_concepto_material: idioma === constant.idiomaEs ? 'Material' : 'Material',
 
+      lbl_enum_tipo_unidad_valor_seleccione: idioma === constant.idiomaEs ? 'Seleccione una unidad' : 'Choose an unit',
+      lbl_enum_tipo_unidad_valor_metro: idioma === constant.idiomaEs ? 'Mt' : 'Mt',
+      lbl_enum_tipo_unidad_valor_metro_cuadrado: idioma === constant.idiomaEs ? 'Mt2' : 'Mt2',
+      lbl_enum_tipo_unidad_valor_litro: idioma === constant.idiomaEs ? 'Lt' : 'Lt',
+      lbl_enum_tipo_unidad_valor_hora: idioma === constant.idiomaEs ? 'Hr' : 'Hr',
+
       // Mtto Contacto
       lbl_contactos: idioma === constant.idiomaEs ? 'Contactos' : 'Contacts',
       lbl_contactos_consulta_subtitles: idioma === constant.idiomaEs ? 'Consulta tus Contactos' : 'Check your Contacts',
@@ -366,6 +374,7 @@ export class TextProperties {
       lbl_mtto_numero_factura: idioma === constant.idiomaEs ? '# Factura' : '# Invoice',
       lbl_mtto_cantidad: idioma === constant.idiomaEs ? 'Cantidad' : 'Quantity',
       lbl_mtto_concepto: idioma === constant.idiomaEs ? 'Concepto' : 'Concept',
+      lbl_mtto_codigo: idioma === constant.idiomaEs ? 'Código' : 'Code',
       lbl_mtto_tipo_factura: idioma === constant.idiomaEs ? 'Tipo Factura' : 'Invoice Type',
       lbl_mtto_valor_total: idioma === constant.idiomaEs ? 'Valor Total' : 'Total Value',
       lbl_mtto_valor_sub_total: idioma === constant.idiomaEs ? 'Valor Sub-Total' : 'Sub-Total Value',
@@ -377,6 +386,7 @@ export class TextProperties {
       lbl_conceptos_actualiza_subtitles: idioma === constant.idiomaEs ? 'Actualiza tus Conceptos' : 'Update your Concepts',
       lbl_mtto_id_concepto: idioma === constant.idiomaEs ? 'ID Concepto' : 'Concept ID',
       lbl_mtto_tipo_concepto: idioma === constant.idiomaEs ? 'Tipo Concepto' : 'Concept Type',
+      lbl_mtto_unidad: idioma === constant.idiomaEs ? 'Unidad' : 'Unit',
       lbl_mtto_valor_unitario: idioma === constant.idiomaEs ? 'Valor Unitario' : 'Unit Value',
 
     }

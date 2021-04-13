@@ -9,6 +9,10 @@ import { Enumerados } from 'src/app/config/Enumerados';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { TareaModel } from 'src/app/model/tarea-model';
 import { TareaDTOModel } from 'src/app/model/dto/tarea-dto';
+import { EmpresaModel } from 'src/app/model/empresa-model';
+import { ContactoModel } from 'src/app/model/contacto-model';
+import { ReporteFacturaDTOModel } from 'src/app/model/dto/reporte-factura-dto';
+import { ResponseEMailDTOModel } from 'src/app/model/dto/response-email-dto';
 
 declare var $: any;
 
@@ -25,7 +29,10 @@ export class HomeComponent implements OnInit {
 
   // Objetos de datos
   contactosActivos: any;
+  empresasActivas: any;
   listaTareas: TareaDTOModel[];
+  listaEmpresas: EmpresaModel[];
+  contactoEnSesionTB: ContactoModel;
 
   // Utilidades
   msg: any;
@@ -46,11 +53,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.inicializar();
-    let cerrarSesion = sessionStorage.getItem("cerrarSesion") === "1";
+    let cerrarSesion = localStorage.getItem("cerrarSesion") === "1";
     if (cerrarSesion) {
       this.messageService.clear();
       localStorage.clear();
-      sessionStorage.clear();
+      localStorage.clear();
     }
   }
 
@@ -58,9 +65,23 @@ export class HomeComponent implements OnInit {
   }
 
   inicializar() {
+    // Inicializar objetos cargados de módulos
     this.sesionService.objContactoCargado = null;
+    this.sesionService.objEmpresaCargado = null;
+    this.sesionService.objConceptoFacturaCargado = null;
+    this.sesionService.objFacturaCargado = null;
+    this.sesionService.objTareaCargado = null;
+
+    // Inicializar ContactoHome
+    this.contactoEnSesionTB = this.sesionService.contactoEnSesionTB;
+
+    // Funciones
     this.contarContactos();
+    this.contarEmpresas();
     this.cargarTareas();
+    this.cargarEmpresas();
+
+    // Charts
     this.dataChart1 = {
       labels: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
       datasets: [
@@ -107,7 +128,6 @@ export class HomeComponent implements OnInit {
     };
     this.applyLightTheme();
     $('html').removeClass('nav-open');
-    //$('#toggleMenuMobile').click();
   }
 
   applyLightTheme() {
@@ -144,6 +164,21 @@ export class HomeComponent implements OnInit {
       this.restService.getREST(this.const.urlContarContactos)
         .subscribe(resp => {
           this.contactosActivos = JSON.parse(JSON.stringify(resp));
+        },
+          error => {
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  contarEmpresas() {
+    this.empresasActivas = 0;
+    try {
+      this.restService.getREST(this.const.urlContarEmpresas)
+        .subscribe(resp => {
+          this.empresasActivas = JSON.parse(JSON.stringify(resp));
         },
           error => {
             console.log(error, "error");
@@ -190,7 +225,18 @@ export class HomeComponent implements OnInit {
 
   actualizarTareaRealizada(tarea: TareaModel) {
     try {
-      debugger;
+      let date = new Date();
+      let day = date.getDate()
+      let month = date.getMonth() + 1
+      let year = date.getFullYear()
+      let fecha = "";
+
+      if (month < 10) {
+        fecha = year + "-0" + month + "-" + day + "T05:00:00.000Z";
+      } else {
+        fecha = year + "-" + month + "-" + day + "T05:00:00.000Z";
+      }
+      tarea.fechaRecordatorio = fecha;
       this.restService.putREST(this.const.urlModificarTarea, tarea)
         .subscribe(resp => {
           let respuesta: TareaModel = JSON.parse(JSON.stringify(resp));
@@ -198,6 +244,7 @@ export class HomeComponent implements OnInit {
             // Mostrar mensaje exitoso y consultar comentarios de nuevo
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
+            this.cargarTareas();
           }
         },
           error => {
@@ -215,6 +262,82 @@ export class HomeComponent implements OnInit {
 
             console.log(error, "error");
           })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  cargarEmpresas() {
+    this.listaEmpresas = [];
+    try {
+      let empresaFiltro = this.objectModelInitializer.getDataEmpresaModel();
+      empresaFiltro.estado = 1;
+      this.restService.postREST(this.const.urlConsultarEmpresasPorFiltros, empresaFiltro)
+        .subscribe(resp => {
+          let listaTemp = JSON.parse(JSON.stringify(resp));
+          if (listaTemp !== undefined && listaTemp.length > 0) {
+            listaTemp.forEach(temp => {
+              this.listaEmpresas.push(temp);
+            });
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  enviarRestEmailFactura(empresaTB: EmpresaModel) {
+    try {
+      if (this.contactoEnSesionTB !== undefined && this.contactoEnSesionTB != null && empresaTB !== null && empresaTB !== undefined) {
+        // Conversiones de datos
+        let reporteFacturaDto: ReporteFacturaDTOModel = this.objectModelInitializer.getDataReporteFacturaDTOModel();
+        reporteFacturaDto.numeroFactura = 1;
+        reporteFacturaDto.contactoTB = this.objectModelInitializer.getDataContactoModel();
+        reporteFacturaDto.contactoTB = this.contactoEnSesionTB;
+        reporteFacturaDto.empresaTB = this.objectModelInitializer.getDataEmpresaModel();
+        reporteFacturaDto.empresaTB = empresaTB;
+
+        this.restService.postREST(this.const.urlEnviarEmailFactura, reporteFacturaDto)
+          .subscribe(resp => {
+            let respuesta: ResponseEMailDTOModel = JSON.parse(JSON.stringify(resp));
+            if (respuesta !== null) {
+              // Mostrar mensaje de envios de correos exitoso o no
+              this.messageService.clear();
+              this.messageService.add({ severity: respuesta.exitoso ? this.const.severity[1] : this.const.severity[3], summary: respuesta.exitoso ? this.msg.lbl_summary_succes : this.msg.lbl_summary_danger, detail: respuesta.mensaje, sticky: true });
+            }
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
+
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+
+              console.log(error, "error");
+            })
+      } else {
+        this.messageService.clear();
+        this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_mensaje_empresa_y_contacto_vacio_para_factura, sticky: true });
+      }
     } catch (e) {
       console.log(e);
     }

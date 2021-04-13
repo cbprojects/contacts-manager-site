@@ -20,13 +20,14 @@ export class SesionService {
   objTareaCargado: TareaModel;
   objFacturaCargado: FacturaConsultaDTOModel;
   objConceptoFacturaCargado: ConceptoFacturaModel;
+  contactoEnSesionTB: ContactoModel;
   usuarioRestaurarClave: any;
   esLogueado: boolean = false;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
     this.inicializar();
-    if (sessionStorage.getItem('objServiceSesion') !== undefined && sessionStorage.getItem('objServiceSesion') !== null) {
-      this.objServiceSesion = JSON.parse(sessionStorage.getItem('objServiceSesion'));
+    if (localStorage.getItem('objServiceSesion') !== undefined && localStorage.getItem('objServiceSesion') !== null) {
+      this.objServiceSesion = JSON.parse(localStorage.getItem('objServiceSesion'));
     }
   }
 

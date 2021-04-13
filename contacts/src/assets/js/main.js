@@ -163,4 +163,13 @@ function reload() {
       });
     });
   });
+
+  $(document).scroll(function () {
+    var y = $(this).scrollTop();
+    if (y > 400) {
+      $('.top').fadeIn();
+    } else {
+      $('.top').fadeOut();
+    }
+  });
 }

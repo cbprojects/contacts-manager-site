@@ -11,7 +11,6 @@ import { ContactoModel } from 'src/app/model/contacto-model';
 import { ContactoDTOModel } from 'src/app/model/dto/contacto-dto';
 import { ResponseEMailDTOModel } from 'src/app/model/dto/response-email-dto';
 import { RequestContactoEMailDTOModel } from 'src/app/model/dto/request-contacto-email-dto';
-import { ReporteFacturaDTOModel } from 'src/app/model/dto/reporte-factura-dto';
 
 declare var $: any;
 

@@ -29,6 +29,113 @@ export class Util {
     this.modeloTablas = this.objectModelInitializer.getDataModeloTablas();
   }
 
+  cargarMatrizPorcentajeUri() {
+    // SÍMBOLOS URI
+    let listaRefPorcentajesUri = [];
+
+    //%20	%21	%22	%23	%24	%25	%26	%27	%28	%29	
+    //     !   "	 #	 $	 %   &	 '	 (	 )
+    let ESPACIO = this.objectModelInitializer.getDataPorcentajeURIWeb('%20', ' ');
+    let CIERRA_ADMIRACION = this.objectModelInitializer.getDataPorcentajeURIWeb('%21', '!');
+    let COMILLA_DOBLE = this.objectModelInitializer.getDataPorcentajeURIWeb('%22', '\"');
+    let NUMERAL = this.objectModelInitializer.getDataPorcentajeURIWeb('%23', '#');
+    let DOLAR = this.objectModelInitializer.getDataPorcentajeURIWeb('%24', '$');
+    let PORCENTAJE = this.objectModelInitializer.getDataPorcentajeURIWeb('%25', '%');
+    let AMPER = this.objectModelInitializer.getDataPorcentajeURIWeb('%26', '&');
+    let COMILLA_SIMPLE = this.objectModelInitializer.getDataPorcentajeURIWeb('%27', '\'');
+    let ABRE_PARENTESIS = this.objectModelInitializer.getDataPorcentajeURIWeb('%28', '(');
+    let CIERRA_PARENTESIS = this.objectModelInitializer.getDataPorcentajeURIWeb('%29', ')');
+    listaRefPorcentajesUri.push(ESPACIO);
+    listaRefPorcentajesUri.push(CIERRA_ADMIRACION);
+    listaRefPorcentajesUri.push(COMILLA_DOBLE);
+    listaRefPorcentajesUri.push(NUMERAL);
+    listaRefPorcentajesUri.push(DOLAR);
+    listaRefPorcentajesUri.push(PORCENTAJE);
+    listaRefPorcentajesUri.push(AMPER);
+    listaRefPorcentajesUri.push(COMILLA_SIMPLE);
+    listaRefPorcentajesUri.push(ABRE_PARENTESIS);
+    listaRefPorcentajesUri.push(CIERRA_PARENTESIS);
+
+    //%2A	%2B %2C	%2D	%2E	%2F	
+    // *	 +   ,	 -   .   /
+    let ASTERISCO = this.objectModelInitializer.getDataPorcentajeURIWeb('%2A', '*');
+    let SIGNO_MAS = this.objectModelInitializer.getDataPorcentajeURIWeb('%2B', '+');
+    let COMA = this.objectModelInitializer.getDataPorcentajeURIWeb('%2C', ',');
+    let SIGNO_MENOS = this.objectModelInitializer.getDataPorcentajeURIWeb('%2D', '-');
+    let PUNTO = this.objectModelInitializer.getDataPorcentajeURIWeb('%2E', '.');
+    let SLASH = this.objectModelInitializer.getDataPorcentajeURIWeb('%2F', '/');
+    listaRefPorcentajesUri.push(ASTERISCO);
+    listaRefPorcentajesUri.push(SIGNO_MAS);
+    listaRefPorcentajesUri.push(COMA);
+    listaRefPorcentajesUri.push(SIGNO_MENOS);
+    listaRefPorcentajesUri.push(PUNTO);
+    listaRefPorcentajesUri.push(SLASH);
+
+    //%3A	%3B	%3C	%3D	%3E	%3F	%40
+    // :	 ;	 <   =	 >   ?	 @
+    let DOS_PUNTOS = this.objectModelInitializer.getDataPorcentajeURIWeb('%3A', ':');
+    let PUNTO_COMA = this.objectModelInitializer.getDataPorcentajeURIWeb('%3B', ';');
+    let MENOR_QUE = this.objectModelInitializer.getDataPorcentajeURIWeb('%3C', '<');
+    let SIGNO_IGUAL = this.objectModelInitializer.getDataPorcentajeURIWeb('%3D', '=');
+    let MAYOR_QUE = this.objectModelInitializer.getDataPorcentajeURIWeb('%3E', '>');
+    let CIERRA_PREGUNTA = this.objectModelInitializer.getDataPorcentajeURIWeb('%3F', '?');
+    let ARROBA = this.objectModelInitializer.getDataPorcentajeURIWeb('%40', '@');
+    listaRefPorcentajesUri.push(DOS_PUNTOS);
+    listaRefPorcentajesUri.push(PUNTO_COMA);
+    listaRefPorcentajesUri.push(MENOR_QUE);
+    listaRefPorcentajesUri.push(SIGNO_IGUAL);
+    listaRefPorcentajesUri.push(MAYOR_QUE);
+    listaRefPorcentajesUri.push(CIERRA_PREGUNTA);
+    listaRefPorcentajesUri.push(ARROBA);
+
+    // ACENTOS
+    let TILDE_A = this.objectModelInitializer.getDataPorcentajeURIWeb('%C3%A1', 'á');
+    let TILDE_E = this.objectModelInitializer.getDataPorcentajeURIWeb('%C3%A9', 'é');
+    let TILDE_I = this.objectModelInitializer.getDataPorcentajeURIWeb('%ED', 'í');
+    let TILDE_O = this.objectModelInitializer.getDataPorcentajeURIWeb('%F3', 'ó');
+    let TILDE_U = this.objectModelInitializer.getDataPorcentajeURIWeb('%FA', 'ú');
+    listaRefPorcentajesUri.push(TILDE_A);
+    listaRefPorcentajesUri.push(TILDE_E);
+    listaRefPorcentajesUri.push(TILDE_I);
+    listaRefPorcentajesUri.push(TILDE_O);
+    listaRefPorcentajesUri.push(TILDE_U);
+
+    //%5B	%5D %5C	%5E	%5F	%60	%7B	%7C	%7D	%7E	%C2%B4
+    // [	 ]   \	 ^	 _   `	 { 	 |	 }	 ~ 	  ´  
+    let ABRE_LLAVE_ANGULAR = this.objectModelInitializer.getDataPorcentajeURIWeb('%5B', '[');
+    let CIERRA_LLAVE_ANGULAR = this.objectModelInitializer.getDataPorcentajeURIWeb('%5D', ']');
+    let SLASH_INVERTIDO = this.objectModelInitializer.getDataPorcentajeURIWeb('%5C', '\\');
+    let CIRCUNFLEJO = this.objectModelInitializer.getDataPorcentajeURIWeb('%5E', '^');
+    let GUION_BAJO = this.objectModelInitializer.getDataPorcentajeURIWeb('%5F', '_');
+    let ACENTO_INVERTIDO = this.objectModelInitializer.getDataPorcentajeURIWeb('%60', '`');
+    let ABRE_LLAVE = this.objectModelInitializer.getDataPorcentajeURIWeb('%7B', '{');
+    let PIPE = this.objectModelInitializer.getDataPorcentajeURIWeb('%7C', '|');
+    let CIERRA_LLAVE = this.objectModelInitializer.getDataPorcentajeURIWeb('%7D', '}');
+    let APROXIMADO = this.objectModelInitializer.getDataPorcentajeURIWeb('%7E', '~');
+    let ACENTO = this.objectModelInitializer.getDataPorcentajeURIWeb('%C2%B4', '´');
+    listaRefPorcentajesUri.push(ABRE_LLAVE_ANGULAR);
+    listaRefPorcentajesUri.push(CIERRA_LLAVE_ANGULAR);
+    listaRefPorcentajesUri.push(SLASH_INVERTIDO);
+    listaRefPorcentajesUri.push(CIRCUNFLEJO);
+    listaRefPorcentajesUri.push(GUION_BAJO);
+    listaRefPorcentajesUri.push(ACENTO_INVERTIDO);
+    listaRefPorcentajesUri.push(ABRE_LLAVE);
+    listaRefPorcentajesUri.push(PIPE);
+    listaRefPorcentajesUri.push(CIERRA_LLAVE);
+    listaRefPorcentajesUri.push(APROXIMADO);
+    listaRefPorcentajesUri.push(ACENTO);
+
+    return listaRefPorcentajesUri;
+  }
+
+  transformarSimboloUri(uriSimbolos, listaRefPorcentajesUri) {
+    for (let uriObject of listaRefPorcentajesUri) {
+      uriSimbolos = uriSimbolos.split(uriObject.codigo).join(uriObject.simbolo);
+    }
+
+    return uriSimbolos;
+  }
+
   limpiarExcepcion() {
     console.clear;
     this.messageService.clear();
@@ -87,33 +194,9 @@ export class Util {
   }
 
   limpiarConsolaStorage() {
-    sessionStorage.clear();
-    sessionStorage.clear();
+    localStorage.clear();
     console.clear();
     return true;
-  }
-
-  getEnum(enumerado) {
-    if (enumerado === this.enums.sino.cod) {
-      return this.enums.sino.valores;
-    } else if (enumerado === this.enums.sexo.cod) {
-      return this.enums.sexo.valores;
-    } else if (enumerado === this.enums.tipoUsuario.cod) {
-      return this.enums.tipoUsuario.valores;
-    } else if (enumerado === this.enums.tipoDocumento.cod) {
-      return this.enums.tipoDocumento.valores;
-    } else if (enumerado === this.enums.tipoUbicacion.cod) {
-      return this.enums.tipoUbicacion.valores;
-    } else if (enumerado === this.enums.tipoFactura.cod) {
-      return this.enums.tipoUbicacion.valores;
-    } else if (enumerado === this.enums.tipoConcepto.cod) {
-      return this.enums.tipoUbicacion.valores;
-    }
-
-    else if (enumerado === null) {
-      return false;
-    }
-    return false;
   }
 
   getEnumValString(array) {

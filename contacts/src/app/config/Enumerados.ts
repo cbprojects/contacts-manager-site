@@ -75,6 +75,15 @@ export class Enumerados {
           { value: 2, label: properties.lbl_enum_tipo_concepto_material }
         ]
       },
+      unidad: {
+        cod: 8, valores: [
+          { value: 0, label: properties.lbl_enum_tipo_unidad_valor_seleccione },
+          { value: 1, label: properties.lbl_enum_tipo_unidad_valor_metro },
+          { value: 2, label: properties.lbl_enum_tipo_unidad_valor_metro_cuadrado },
+          { value: 1, label: properties.lbl_enum_tipo_unidad_valor_litro },
+          { value: 2, label: properties.lbl_enum_tipo_unidad_valor_hora }
+        ]
+      },
       //valorIva: {cod: 25},
     }
   };

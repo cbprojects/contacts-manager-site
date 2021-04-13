@@ -26,6 +26,7 @@ export class MConceptoFacturaComponent implements OnInit {
   concepto: ConceptoFacturaModel;
   esNuevoConcepto: boolean;
   enumTipoConcepto: any[];
+  enumUnidad: any[];
 
   // Utilidades
   msg: any;
@@ -48,6 +49,7 @@ export class MConceptoFacturaComponent implements OnInit {
     this.cargarEnumerados();
     this.concepto = this.objectModelInitializer.getDataConceptoFacturaModel();
     this.concepto.tipoConcepto = this.cargarValorEnumerado(0);
+    this.concepto.unidad = this.cargarValorEnumeradoUnidad(0);
     this.concepto.valorUnitario = null;
     this.esNuevoConcepto = true;
     if (this.sesionService.objConceptoFacturaCargado !== undefined && this.sesionService.objConceptoFacturaCargado !== null && this.sesionService.objConceptoFacturaCargado.idConcepto > 0) {
@@ -61,10 +63,15 @@ export class MConceptoFacturaComponent implements OnInit {
   cargarEnumerados() {
     let enums = this.enumerados.getEnumerados();
     this.enumTipoConcepto = enums.tipoConcepto.valores;
+    this.enumUnidad = enums.unidad.valores;
   }
 
   cargarValorEnumerado(i) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoConcepto.valores, i);
+  }
+
+  cargarValorEnumeradoUnidad(i) {
+    return this.util.getValorEnumerado(this.enumerados.getEnumerados().unidad.valores, i);
   }
 
   ngAfterViewChecked(): void {
@@ -72,6 +79,7 @@ export class MConceptoFacturaComponent implements OnInit {
     $($('#menu').children()[3]).addClass('active');
     $('ng-select').niceSelect();
     $($('select#selectTipoConcepto').siblings()[1]).children()[0].innerHTML = this.concepto.tipoConcepto.label;
+    $($('select#selectUnidad').siblings()[1]).children()[0].innerHTML = this.concepto.unidad.label;
     if (this.esNuevoConcepto) {
       $('.card').bootstrapMaterialDesign();
     }
@@ -80,6 +88,7 @@ export class MConceptoFacturaComponent implements OnInit {
   crearConcepto() {
     try {
       this.concepto.tipoConcepto = this.concepto.tipoConcepto.value;
+      this.concepto.unidad = this.concepto.unidad.value;
       this.restService.postREST(this.const.urlCrearConceptoFactura, this.concepto)
         .subscribe(resp => {
           let respuesta: ConceptoFacturaModel = JSON.parse(JSON.stringify(resp));
@@ -104,6 +113,7 @@ export class MConceptoFacturaComponent implements OnInit {
             });
             this.messageService.add(mensajeFinal);
             this.concepto.tipoConcepto = this.cargarValorEnumerado(this.concepto.tipoConcepto);
+            this.concepto.unidad = this.cargarValorEnumeradoUnidad(this.concepto.unidad);
 
             console.log(error, "error");
           })
@@ -115,6 +125,7 @@ export class MConceptoFacturaComponent implements OnInit {
   modificarConcepto() {
     try {
       this.concepto.tipoConcepto = this.concepto.tipoConcepto.value;
+      this.concepto.unidad = this.concepto.unidad.value;
       this.restService.putREST(this.const.urlModificarConceptoFactura, this.concepto)
         .subscribe(resp => {
           let respuesta: ConceptoFacturaModel = JSON.parse(JSON.stringify(resp));
@@ -138,6 +149,7 @@ export class MConceptoFacturaComponent implements OnInit {
             });
             this.messageService.add(mensajeFinal);
             this.concepto.tipoConcepto = this.cargarValorEnumerado(this.concepto.tipoConcepto);
+            this.concepto.unidad = this.cargarValorEnumeradoUnidad(this.concepto.unidad);
             if (this.concepto.estado === 0) {
               this.concepto.estado = 1;
             }

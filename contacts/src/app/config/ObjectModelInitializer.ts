@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-//export var HOST = 'http://localhost:9002';
+export var HOST = 'http://localhost:9002';
 //export var HOST = 'https://10.176.56.211:9002';
-export var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
+//export var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
 
-//export var SYSTEM = 'http://localhost:4200';
+export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'https://10.176.56.211:7001';
-export var SYSTEM = 'https://www.contact-manager.cbaeneprojects.com';
+//export var SYSTEM = 'https://www.contact-manager.cbaeneprojects.com';
 
 @Injectable()
 export class ObjectModelInitializer {
@@ -314,7 +314,9 @@ export class ObjectModelInitializer {
   getDataConceptoFacturaModel() {
     return {
       idConcepto: 0,
+      codigo: '',
       descripcion: '',
+      unidad: '',
       tipoConcepto: '',
       valorUnitario: 0,
 
@@ -358,5 +360,12 @@ export class ObjectModelInitializer {
       contactoTB: this.getDataContactoModel()
     }
   }
+  
+  getDataPorcentajeURIWeb(code: String, symbol: String) {
+    return {
+      codigo: code,
+      simbolo: symbol
+    }
+  };
 
 }

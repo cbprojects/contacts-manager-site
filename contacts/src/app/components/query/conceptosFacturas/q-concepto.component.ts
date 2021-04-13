@@ -72,7 +72,7 @@ export class QConceptoFacturaComponent implements OnInit {
           let listaTemp = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
             listaTemp.forEach(temp => {
-              let conceptoTemp = this.convertirTipoConceptoEnum(temp);
+              let conceptoTemp = this.convertirConceptoEnum(temp);
               this.listaConceptos.push(conceptoTemp);
             });
           }
@@ -106,7 +106,7 @@ export class QConceptoFacturaComponent implements OnInit {
           let listaTemp = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
             listaTemp.forEach(temp => {
-              let conceptoTemp = this.convertirTipoConceptoEnum(temp);
+              let conceptoTemp = this.convertirConceptoEnum(temp);
               this.listaConceptos.push(conceptoTemp);
             });
           }
@@ -130,12 +130,17 @@ export class QConceptoFacturaComponent implements OnInit {
     }
   }
 
-  convertirTipoConceptoEnum(concepto: ConceptoFacturaModel) {
+  convertirConceptoEnum(concepto: ConceptoFacturaModel) {
     concepto.tipoConcepto = this.cargarValorEnumerado(concepto.tipoConcepto);
+    concepto.unidad = this.cargarValorEnumeradoUnidad(concepto.unidad);
     return concepto;
   }
 
   cargarValorEnumerado(i) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoConcepto.valores, i);
+  }
+
+  cargarValorEnumeradoUnidad(i) {
+    return this.util.getValorEnumerado(this.enumerados.getEnumerados().unidad.valores, i);
   }
 }

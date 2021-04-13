@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 
-<div class="wrapper ">
+<div class="wrapper">
 	<!-- HEADER -->
 	<app-sidebar></app-sidebar>
 	<!-- HEADER -->
@@ -25,6 +25,12 @@
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_codigo}}</label>
+											<input type="text" class="form-control" [(ngModel)]="concepto.codigo">
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div class="form-group">
 											<label class="bmd-label-floating">{{msg.lbl_mtto_concepto}}</label>
 											<input type="text" class="form-control" [(ngModel)]="concepto.descripcion">
 										</div>
@@ -39,6 +45,17 @@
 												<option *ngFor="let tipoConcepto of enumTipoConcepto"
 													[ngValue]="tipoConcepto">
 													{{tipoConcepto.label}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label
+												class="bmd-label-floating {{esNuevoConcepto ? 'displayNone' : ''}}">{{msg.lbl_mtto_unidad}}</label>
+											<select id="selectUnidad" nice-select [attr.data-value]="concepto.unidad"
+												[(ngModel)]="concepto.unidad">
+												<option *ngFor="let unidad of enumUnidad" [ngValue]="unidad">
+													{{unidad.label}}</option>
 											</select>
 										</div>
 									</div>

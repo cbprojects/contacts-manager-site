@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.cargarTareas();
-    let user = sessionStorage.getItem("usuarioSesion");
+    let user = localStorage.getItem("usuarioSesion");
     if (user !== undefined && user !== null) {
       this.sesionService.objServiceSesion.usuarioSesion = JSON.parse(user);
       this.sesionService.objServiceSesion.esLogueado = true;
@@ -106,7 +106,7 @@ export class HeaderComponent implements OnInit {
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
             this.sesionService.objServiceSesion.usuarioSesion = respuesta;
-            sessionStorage.setItem("usuarioSesion", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
+            localStorage.setItem("usuarioSesion", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
             this.usuario = "";
             this.clave = "";
             this.sesionService.objServiceSesion.esLogueado = true;
@@ -146,7 +146,7 @@ export class HeaderComponent implements OnInit {
     this.clave = "";
     this.sesionService.objServiceSesion.usuarioSesion = undefined;
     this.sesionService.objServiceSesion.esLogueado = false;
-    sessionStorage.setItem("cerrarSesion", "1");
+    localStorage.setItem("cerrarSesion", "1");
     $('#cerrar-mobile').click();
     this.router.navigate(['/home']);
   }
@@ -185,7 +185,7 @@ export class HeaderComponent implements OnInit {
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
             this.sesionService.objServiceSesion.usuarioSesion = respuesta;
-            sessionStorage.setItem("usuarioSesion", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
+            localStorage.setItem("usuarioSesion", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
             this.usuario = "";
             this.clave = "";
             this.sesionService.objServiceSesion.esLogueado = true;
@@ -213,7 +213,7 @@ export class HeaderComponent implements OnInit {
   }
 
   actualizarLogin() {
-    let user = sessionStorage.getItem("usuarioSesion");
+    let user = localStorage.getItem("usuarioSesion");
     if (user !== undefined && user !== null && this.sesionService.objServiceSesion.usuarioSesion !== undefined && this.sesionService.objServiceSesion.usuarioSesion !== null) {
       this.sesionService.objServiceSesion.esLogueado = true;
     }
@@ -229,7 +229,7 @@ export class HeaderComponent implements OnInit {
           let listaTemp = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
             listaTemp.forEach(temp => {
-              if (temp.fechaRecordatorio !== undefined && temp.fechaRecordatorio !== null) {
+              if (temp.fechaRecordatorio !== undefined && temp.fechaRecordatorio !== null && !temp.realizado) {
                 let tareaDTO = this.objectModelInitializer.getDataDTOTareaModel();
                 tareaDTO.tareaTB = temp;
                 this.listaTareas.push(tareaDTO);

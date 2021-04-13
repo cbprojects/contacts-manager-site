@@ -51,6 +51,7 @@ export class MTareaComponent implements OnInit {
     if (this.sesionService.objTareaCargado !== undefined && this.sesionService.objTareaCargado !== null && this.sesionService.objTareaCargado.idTarea > 0) {
       this.tarea = this.sesionService.objTareaCargado;
       this.esNuevaTarea = false;
+      this.tarea.fechaRecordatorio = new Date(this.tarea.fechaRecordatorio);
     }
     $('html').removeClass('nav-open');
     //$('#toggleMenuMobile').click();

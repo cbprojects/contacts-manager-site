@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 
-<div class="wrapper ">
+<div class="wrapper">
 	<!-- HEADER -->
 	<app-sidebar></app-sidebar>
 	<!-- HEADER -->
@@ -39,6 +39,9 @@
 												#
 											</th>
 											<th class="text-center">
+												{{msg.lbl_table_header_codigo}}
+											</th>
+											<th class="text-center">
 												{{msg.lbl_table_header_descripcion}}
 											</th>
 											<th class="text-center">
@@ -52,6 +55,8 @@
 											<tr *ngFor="let concepto of listaConceptos; index as i;">
 												<td class="text-center" (click)="cargarConcepto(concepto)">
 													{{concepto.idConcepto}}</td>
+												<td (click)="cargarConcepto(concepto)">
+													{{concepto.codigo}}</td>
 												<td (click)="cargarConcepto(concepto)">
 													{{concepto.descripcion}}</td>
 												<td class="text-center" (click)="cargarConcepto(concepto)">
