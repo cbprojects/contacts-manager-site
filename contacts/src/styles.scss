@@ -429,3 +429,35 @@ p-checkbox {
     font-weight: bold;
     text-shadow: 1px 1px 1px whitesmoke;
 }
+
+.p-datatable .p-datatable-thead > tr > th {
+    text-align: left;
+    padding: inherit;
+    border: inherit;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+    border-width: 1px;
+    font-weight: bold;
+    color: inherit;
+    background: inherit;
+    transition: inherit;
+}
+
+.table th.td-actions .btn {
+    margin: -5px !important;
+}
+
+.p-column-filter-row .p-column-filter-menu-button,
+.p-column-filter-row .p-column-filter-clear-button {
+    display: none !important;
+}
+
+.p-inputtext {
+    height: 20px !important;
+    font-size: small;
+    padding: 0px 5px !important;
+}
+
+.p-datatable.p-datatable-sm .p-datatable-tbody > tr:hover {
+    font-weight: bold;
+    cursor: pointer;
+}

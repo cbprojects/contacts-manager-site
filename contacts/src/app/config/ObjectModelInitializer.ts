@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-export var HOST = 'http://localhost:9002';
+//export var HOST = 'http://localhost:9002';
 //export var HOST = 'https://10.176.56.211:9002';
-//export var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
+export var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
 
-export var SYSTEM = 'http://localhost:4200';
+//export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'https://10.176.56.211:7001';
-//export var SYSTEM = 'https://www.contact-manager.cbaeneprojects.com';
+export var SYSTEM = 'https://www.contact-manager.cbaeneprojects.com';
 
 @Injectable()
 export class ObjectModelInitializer {
@@ -143,14 +143,14 @@ export class ObjectModelInitializer {
       // Mensajes
       mensajeConfirmacion: ''
     }
-  }
+  };
 
   getTokenSesion() {
     return {
       name: '',
       token: ''
     }
-  }
+  };
 
   getDataModeloTablas() {
     return {
@@ -360,7 +360,7 @@ export class ObjectModelInitializer {
       contactoTB: this.getDataContactoModel()
     }
   }
-  
+
   getDataPorcentajeURIWeb(code: String, symbol: String) {
     return {
       codigo: code,

@@ -21,65 +21,83 @@
 								<p class="card-category">{{msg.lbl_contactos_consulta_subtitles}}</p>
 							</div>
 							<div class="card-body">
-								<div class="row pull-right" style="padding-right: 30px;">
-									<div class="input-group no-border">
-										<input type="text" [(ngModel)]="nombreFiltro" class="form-control"
-											placeholder="{{msg.lbl_btn_buscar}}">
-										<button type="submit" (click)="consultarContactoPorNombre()"
-											class="btn btn-white btn-round btn-just-icon">
-											<i class="material-icons">search</i>
-											<div class="ripple-container"></div>
-										</button>
-									</div>
-								</div>
 								<div class="table-responsive">
-									<table *ngIf="listaContactos.length > 0; else sinResultados" class="table">
-										<thead class="text-primary">
-											<th class="text-center">
-												<p-checkbox (click)="seleccionarTodosContactos()"
-													[(ngModel)]="seleccionarTodos" binary="true" inputId="binary">
-												</p-checkbox>
-											</th>
-											<th class="td-actions text-center">
-												<button type="button" [disabled]="!seleccionarTodos"
-													(click)="enviarEmailTodos($event)"
-													class="btn btn-primary btn-link btn-sm">
-													<i class="material-icons"
-														style="font-size: 28px;margin-top: -25px;">mark_as_unread</i>
-												</button>
-												<p-confirmPopup></p-confirmPopup>
-											</th>
-											<th class="text-center">
-												#
-											</th>
-											<th class="text-center">
-												{{msg.lbl_table_header_nombre_empresa}}
-											</th>
-											<th class="text-center">
-												{{msg.lbl_table_header_ciudad}}
-											</th>
-											<th class="text-center">
-												{{msg.lbl_table_header_nombre_contacto}}
-											</th>
-											<th class="text-center">
-												{{msg.lbl_table_header_correo_contacto}}
-											</th>
-											<th class="text-center">
-												{{msg.lbl_table_header_telefono_contacto}}
-											</th>
-											<th class="text-center">
-												{{msg.lbl_table_header_proceso}}
-											</th>
-										</thead>
-										<tbody>
-											<tr *ngFor="let contacto of listaContactos; index as i;">
+									<p-table *ngIf="listaContactos.length > 0; else sinResultados" #dt
+										[value]="listaContactos" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+										responsiveLayout="stack" [paginator]="true"
+										styleClass="table p-datatable-striped p-datatable-sm"
+										currentPageReportTemplate="Registros {first} al {last} de {totalRecords}">
+										<ng-template pTemplate="caption">
+											<div class="p-d-flex">
+												<button type="submit" class="btn btn-info" routerLink="/m-contacto"><i
+														class="pi pi-user-plus m-1"></i>{{msg.lbl_btn_crear}}</button>
+												<div class="clearfix"></div>
+												<button type="submit" class="btn btn-succes" (click)="dt.exportCSV()"
+													pTooltip="CSV" tooltipPosition="bottom"><i
+														class="pi pi-file-o m-1"></i>{{msg.lbl_btn_descargar}}</button>
+												<div class="clearfix"></div>
+											</div>
+										</ng-template>
+										<ng-template pTemplate="header">
+											<tr class="text-primary">
+												<th style="width: 40px;" class="text-center">
+													<p-checkbox (click)="seleccionarTodosContactos()"
+														[(ngModel)]="seleccionarTodos" binary="true" inputId="binary">
+													</p-checkbox>
+												</th>
+												<th style="width: 40px;" class="td-actions text-center">
+													<button type="button" [disabled]="!seleccionarTodos"
+														(click)="enviarEmailTodos($event)"
+														class="btn btn-primary btn-link btn-sm">
+														<i class="material-icons"
+															style="font-size: 28px;margin-top: -25px;">mark_as_unread</i>
+													</button>
+													<p-confirmPopup></p-confirmPopup>
+												</th>
+												<th style="width: 40px;" class="text-center">#</th>
+												<th style="width: 100px;" class="text-center">
+													{{msg.lbl_table_header_nombre_empresa}}
+													<p-columnFilter matchMode="contains" type="text"
+														field="contactoTB.nombreEmpresa"></p-columnFilter>
+												</th>
+												<th style="width: 100px;" class="text-center">
+													{{msg.lbl_table_header_ciudad}}
+													<p-columnFilter matchMode="contains" type="text"
+														field="contactoTB.ciudadContacto"></p-columnFilter>
+												</th>
+												<th style="width: 150px;" class="text-center">
+													{{msg.lbl_table_header_nombre_contacto}}
+													<p-columnFilter matchMode="contains" type="text"
+														field="contactoTB.nombreContacto"></p-columnFilter>
+												</th>
+												<th style="width: 220px;" class="text-center">
+													{{msg.lbl_table_header_correo_contacto}}
+													<p-columnFilter matchMode="contains" type="text"
+														field="contactoTB.correoContacto"></p-columnFilter>
+												</th>
+												<th style="width: 100px;" class="text-center">
+													{{msg.lbl_table_header_telefono_contacto}}
+													<p-columnFilter matchMode="contains" type="text"
+														field="contactoTB.telefonoContacto"></p-columnFilter>
+												</th>
+												<th style="width: 90px;" class="text-center">
+													{{msg.lbl_table_header_proceso}}
+													<p-columnFilter matchMode="contains" type="text"
+														field="contactoTB.procesoContacto.label">
+													</p-columnFilter>
+												</th>
+										</ng-template>
+										<ng-template pTemplate="body" let-contacto>
+											<tr>
 												<td class="text-center">
+													<span class="text-primary p-column-title">Seleccionar</span>
 													<p-checkbox (click)="validarSeleccionarTodos()"
 														[(ngModel)]="contacto.seleccionado" binary="true"
 														inputId="binary">
 													</p-checkbox>
 												</td>
 												<td class="td-actions text-center">
+													<span class="text-primary p-column-title">Contactar</span>
 													<button type="button" [disabled]="!contacto.seleccionado"
 														(click)="enviarEmail($event, contacto.contactoTB)"
 														class="btn btn-primary btn-link btn-sm">
@@ -89,25 +107,44 @@
 													<p-confirmPopup></p-confirmPopup>
 												</td>
 												<td class="text-center" (click)="cargarContacto(contacto.contactoTB)">
-													{{contacto.contactoTB.idContacto}}</td>
+													<span class="text-primary p-column-title">#</span>
+													{{contacto.contactoTB.idContacto}}
+												</td>
 												<td (click)="cargarContacto(contacto.contactoTB)">
-													{{contacto.contactoTB.nombreEmpresa}}</td>
+													<span
+														class="text-primary p-column-title">{{msg.lbl_table_header_nombre_empresa}}</span>
+													{{contacto.contactoTB.nombreEmpresa}}
+												</td>
 												<td class="text-center" (click)="cargarContacto(contacto.contactoTB)">
-													{{contacto.contactoTB.ciudadContacto}}</td>
+													<span
+														class="text-primary p-column-title">{{msg.lbl_table_header_ciudad}}</span>
+													{{contacto.contactoTB.ciudadContacto}}
+												</td>
 												<td (click)="cargarContacto(contacto.contactoTB)">
-													{{contacto.contactoTB.nombreContacto}}</td>
+													<span
+														class="text-primary p-column-title">{{msg.lbl_table_header_nombre_contacto}}</span>
+													{{contacto.contactoTB.nombreContacto}}
+												</td>
 												<td (click)="cargarContacto(contacto.contactoTB)">
-													{{contacto.contactoTB.correoContacto}}</td>
+													<span
+														class="text-primary p-column-title">{{msg.lbl_table_header_correo_contacto}}</span>
+													{{contacto.contactoTB.correoContacto}}
+												</td>
 												<td class="text-center" (click)="cargarContacto(contacto.contactoTB)">
-													{{contacto.contactoTB.telefonoContacto}}</td>
+													<span
+														class="text-primary p-column-title">{{msg.lbl_table_header_telefono_contacto}}</span>
+													{{contacto.contactoTB.telefonoContacto}}
+												</td>
 												<td class="text-primary text-center"
 													(click)="cargarContacto(contacto.contactoTB)">
+													<span
+														class="text-primary p-column-title">{{msg.lbl_table_header_proceso}}</span>
 													<span
 														class="badge badge-{{cargarColorBadge(contacto.contactoTB.procesoContacto.value)}}">{{contacto.contactoTB.procesoContacto.label}}</span>
 												</td>
 											</tr>
-										</tbody>
-									</table>
+										</ng-template>
+									</p-table>
 									<ng-template #sinResultados>
 										<div class="service-grids">
 											<div class="col-md-12 ser-grid">
@@ -117,11 +154,6 @@
 										</div>
 									</ng-template>
 								</div>
-							</div>
-							<div class="card-footer">
-								<button type="submit" class="btn btn-info"
-									routerLink="/m-contacto">{{msg.lbl_btn_crear}}</button>
-								<div class="clearfix"></div>
 							</div>
 						</div>
 
