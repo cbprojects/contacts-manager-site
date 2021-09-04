@@ -11,6 +11,8 @@ import { ContactoModel } from 'src/app/model/contacto-model';
 import { ContactoDTOModel } from 'src/app/model/dto/contacto-dto';
 import { ResponseEMailDTOModel } from 'src/app/model/dto/response-email-dto';
 import { RequestContactoEMailDTOModel } from 'src/app/model/dto/request-contacto-email-dto';
+import * as FileSaver from 'file-saver';
+import 'jspdf-autotable';
 
 declare var $: any;
 
@@ -31,6 +33,8 @@ export class QContactoComponent implements OnInit {
   seleccionarTodos: boolean = false;
   mailDTO: RequestContactoEMailDTOModel;
   mailResponseDTO: ResponseEMailDTOModel;
+  cols: any[];
+  exportColumns: any[];
 
   // Utilidades
   msg: any;
@@ -61,7 +65,15 @@ export class QContactoComponent implements OnInit {
     this.mailDTO = this.objectModelInitializer.getDataRequestContactoEmailDtoModel();
     this.mailDTO.destinatarios = [];
     $('html').removeClass('nav-open');
-    //$('#toggleMenuMobile').click();
+    this.cols = [
+      { field: 'nombreEmpresa', header: this.msg.lbl_table_header_nombre_empresa },
+      { field: 'ciudadContacto', header: this.msg.lbl_table_header_ciudad },
+      { field: 'nombreContacto', header: this.msg.lbl_table_header_nombre_contacto },
+      { field: 'correoContacto', header: this.msg.lbl_table_header_correo_contacto },
+      { field: 'telefonoContacto', header: this.msg.lbl_table_header_telefono },
+      { field: 'procesoContacto', header: this.msg.lbl_table_header_proceso }
+    ];
+    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
   }
 
   cargarContacto(contacto: ContactoModel) {
@@ -282,5 +294,57 @@ export class QContactoComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  obtenerListaExportar() {
+    let listaExportar: ContactoModel[] = [];
+    if (this.listaContactos !== undefined && this.listaContactos !== null && this.listaContactos.length > 0) {
+      this.listaContactos.forEach(contacto => {
+        let contact = this.objectModelInitializer.getDataContactoModel();
+        this.util.copiarElemento(contacto.contactoTB, contact);
+        contact.procesoContacto = contacto.contactoTB.procesoContacto.label;
+        listaExportar.push(contact);
+      });
+    }
+    return listaExportar;
+  }
+
+  exportPdf() {
+    let listaExportar: ContactoModel[] = [];
+    listaExportar = this.obtenerListaExportar();
+    import("jspdf").then(jsPDF => {
+      import("jspdf-autotable").then(x => {
+        const doc = new jsPDF.default('p', 'pt');
+        doc['autoTable'](this.exportColumns, listaExportar,
+          {
+            styles: { fillColor: [12, 180, 201] },
+            headStyles: { halign: 'center', fillColor: [12, 180, 201] },
+            bodyStyles: { fillColor: [255, 255, 255] },
+            footStyles: { fillColor: [12, 180, 201] },
+          }
+        );
+        doc.save('Contactos_' + new Date().getTime() + '.pdf');
+      })
+    });
+  }
+
+  exportExcel() {
+    let listaExportar: ContactoModel[] = [];
+    listaExportar = this.obtenerListaExportar();
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(listaExportar);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, "Contactos");
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 }

@@ -257,6 +257,7 @@ export class TextProperties {
       lbl_table_header_correo_empresa: idioma === constant.idiomaEs ? 'Correo Empresa' : 'Company E-Mail',
       lbl_table_header_cargo_contacto: idioma === constant.idiomaEs ? 'Cargo Contacto' : 'Contact Position',
       lbl_table_header_telefono_contacto: idioma === constant.idiomaEs ? 'Teléfono Contacto' : 'Contact Telephone',
+      lbl_table_header_telefono: idioma === constant.idiomaEs ? 'Teléfono' : 'Telephone',
       lbl_table_header_proceso: idioma === constant.idiomaEs ? 'Proceso' : 'Process',
       lbl_table_header_codigo: idioma === constant.idiomaEs ? 'Código' : 'Code',
       lbl_table_header_descripcion: idioma === constant.idiomaEs ? 'Descripción' : 'Description',

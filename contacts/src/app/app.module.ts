@@ -9,6 +9,7 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 //import { SliderModule } from 'primeng/slider';
 //import { FieldsetModule } from 'primeng/fieldset';
+import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -135,6 +136,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     //GMapModule,
     //ScrollPanelModule,
     //GalleriaModule,
+    TooltipModule,
     ConfirmPopupModule,
     CheckboxModule,
     ButtonModule,

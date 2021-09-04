@@ -8,6 +8,8 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { EmpresaModel } from 'src/app/model/empresa-model';
+import * as FileSaver from 'file-saver';
+import 'jspdf-autotable';
 
 declare var $: any;
 
@@ -25,6 +27,8 @@ export class QEmpresaComponent implements OnInit {
   // Objetos de datos
   listaEmpresas: EmpresaModel[];
   nombreFiltro: any = "";
+  cols: any[];
+  exportColumns: any[];
 
   // Utilidades
   msg: any;
@@ -53,7 +57,13 @@ export class QEmpresaComponent implements OnInit {
     this.sesionService.objEmpresaCargado = null;
     this.cargarEmpresas();
     $('html').removeClass('nav-open');
-    //$('#toggleMenuMobile').click();
+    this.cols = [
+      { field: 'nombre', header: this.msg.lbl_table_header_nombre_empresa },
+      { field: 'ciudad', header: this.msg.lbl_table_header_ciudad },
+      { field: 'correo', header: this.msg.lbl_table_header_correo_empresa },
+      { field: 'telefono', header: this.msg.lbl_table_header_telefono_empresa }
+    ];
+    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
   }
 
   cargarEmpresa(empresa: EmpresaModel) {
@@ -126,5 +136,40 @@ export class QEmpresaComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  exportPdf() {
+    import("jspdf").then(jsPDF => {
+      import("jspdf-autotable").then(x => {
+        const doc = new jsPDF.default('p', 'pt');
+        doc['autoTable'](this.exportColumns, this.listaEmpresas,
+          {
+            styles: { fillColor: [12, 180, 201] },
+            headStyles: { halign: 'center', fillColor: [12, 180, 201] },
+            bodyStyles: { fillColor: [255, 255, 255] },
+            footStyles: { fillColor: [12, 180, 201] },
+          }
+        );
+        doc.save('Empresas_' + new Date().getTime() + '.pdf');
+      })
+    });
+  }
+
+  exportExcel() {
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(this.listaEmpresas);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, "Empresas");
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 }

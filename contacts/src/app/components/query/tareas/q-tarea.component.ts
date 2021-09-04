@@ -8,6 +8,8 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { TareaModel } from 'src/app/model/tarea-model';
+import * as FileSaver from 'file-saver';
+import 'jspdf-autotable';
 
 declare var $: any;
 
@@ -25,6 +27,8 @@ export class QTareaComponent implements OnInit {
   // Objetos de datos
   listaTareas: TareaModel[];
   descripcionFiltro: any = "";
+  cols: any[];
+  exportColumns: any[];
 
   // Utilidades
   msg: any;
@@ -53,7 +57,11 @@ export class QTareaComponent implements OnInit {
     this.sesionService.objTareaCargado = null;
     this.cargarTareas();
     $('html').removeClass('nav-open');
-    //$('#toggleMenuMobile').click();
+    this.cols = [
+      { field: 'descripcion', header: this.msg.lbl_table_header_descripcion },
+      { field: 'fechaRecordatorio', header: this.msg.lbl_table_header_fecha_recordatorio }
+    ];
+    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
   }
 
   cargarTarea(tarea: TareaModel) {
@@ -132,9 +140,61 @@ export class QTareaComponent implements OnInit {
     let fechaFormateada = '';
 
     if (fecha !== undefined && fecha !== null) {
-      fechaFormateada = fecha.split('T')[0].replaceAll('-', '/');
+      fechaFormateada = fecha.split('T')[0];
     }
 
     return fechaFormateada;
+  }
+
+  obtenerListaExportar() {
+    let listaExportar: TareaModel[] = [];
+    if (this.listaTareas !== undefined && this.listaTareas !== null && this.listaTareas.length > 0) {
+      this.listaTareas.forEach(tarea => {
+        let task = this.objectModelInitializer.getDataTareaModel();
+        this.util.copiarElemento(tarea, task);
+        task.fechaRecordatorio = this.formatearFechaTabla(tarea.fechaRecordatorio);
+        listaExportar.push(task);
+      });
+    }
+    return listaExportar;
+  }
+
+  exportPdf() {
+    let listaExportar: TareaModel[] = [];
+    listaExportar = this.obtenerListaExportar();
+    import("jspdf").then(jsPDF => {
+      import("jspdf-autotable").then(x => {
+        const doc = new jsPDF.default('p', 'pt');
+        doc['autoTable'](this.exportColumns, listaExportar,
+          {
+            styles: { fillColor: [12, 180, 201] },
+            headStyles: { halign: 'center', fillColor: [12, 180, 201] },
+            bodyStyles: { fillColor: [255, 255, 255] },
+            footStyles: { fillColor: [12, 180, 201] },
+          }
+        );
+        doc.save('Contactos_' + new Date().getTime() + '.pdf');
+      })
+    });
+  }
+
+  exportExcel() {
+    let listaExportar: TareaModel[] = [];
+    listaExportar = this.obtenerListaExportar();
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(listaExportar);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, "Contactos");
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 }

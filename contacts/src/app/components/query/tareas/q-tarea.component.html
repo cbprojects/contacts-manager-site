@@ -21,50 +21,64 @@
 								<p class="card-category">{{msg.lbl_tareas_consulta_subtitles}}</p>
 							</div>
 							<div class="card-body">
-								<div class="row pull-right" style="padding-right: 30px;">
-									<div class="input-group no-border">
-										<input type="text" [(ngModel)]="descripcionFiltro" class="form-control"
-											placeholder="{{msg.lbl_btn_buscar}}">
-										<button type="submit" (click)="consultarTareaPorDescripcion()"
-											class="btn btn-white btn-round btn-just-icon">
-											<i class="material-icons">search</i>
-											<div class="ripple-container"></div>
-										</button>
-									</div>
-								</div>
-								<div class="table-responsive">
-									<table *ngIf="listaTareas.length > 0; else sinResultados" class="table">
-										<thead class="text-primary">
-											<th class="text-center">
-												#
-											</th>
-											<th class="text-center">
-												{{msg.lbl_table_header_descripcion}}
-											</th>
-											<th class="text-center">
-												{{msg.lbl_table_header_fecha_recordatorio}}
-											</th>
-										</thead>
-										<tbody>
-											<tr *ngFor="let tarea of listaTareas; index as i;">
-												<td class="text-center" (click)="cargarTarea(tarea)">
-													{{tarea.idTarea}}</td>
-												<td (click)="cargarTarea(tarea)">
-													{{tarea.descripcion}}</td>
-												<td class="text-center" (click)="cargarTarea(tarea)">
-													{{formatearFechaTabla(tarea.fechaRecordatorio)}}</td>
-											</tr>
-										</tbody>
-									</table>
-									<ng-template #sinResultados>
-										<div class="service-grids">
-											<div class="col-md-12 ser-grid">
-												<p class="sinResultados">
-													{{msg.lbl_info_sin_resultados}}</p>
-											</div>
+								<p-table *ngIf="listaTareas.length > 0; else sinResultados" #dt [columns]="cols"
+									[value]="listaTareas" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+									responsiveLayout="stack" [paginator]="true"
+									styleClass="table p-datatable-striped p-datatable-sm"
+									currentPageReportTemplate="Registros {first} al {last} de {totalRecords}">
+									<ng-template pTemplate="caption">
+										<div class="p-d-flex">
+											<button type="submit" class="btn btn-info" routerLink="/m-tarea"><i
+													class="pi pi-check-circle m-1"></i>{{msg.lbl_btn_crear}}</button>
+											<div class="clearfix"></div>
+											<button type="submit" class="btn" (click)="dt.exportCSV()"
+												pTooltip="Descargar CSV" tooltipPosition="bottom"><i
+													class="pi pi-file-o m-1"></i></button>
+											<div class="clearfix"></div>
+											<button type="submit" class="btn btn-danger" (click)="exportPdf()"
+												pTooltip="Descargar PDF" tooltipPosition="bottom"><i
+													class="pi pi-file-pdf m-1"></i></button>
+											<div class="clearfix"></div>
+											<button type="submit" class="btn btn-success" (click)="exportExcel()"
+												pTooltip="Descargar Excel" tooltipPosition="bottom"><i
+													class="pi pi-file-excel m-1"></i></button>
+											<div class="clearfix"></div>
 										</div>
 									</ng-template>
-								</div>
+									<ng-template pTemplate="header" let-columns>
+										<tr class="text-primary">
+											<th style="width: 40px;" class="text-center">#</th>
+											<th class="text-center" *ngFor="let col of columns">
+												{{col.header}}
+												<p-columnFilter matchMode="contains" type="text" field="{{col.field}}">
+												</p-columnFilter>
+											</th>
+									</ng-template>
+									<ng-template pTemplate="body" let-tarea let-columns="columns">
+										<tr>
+											<td class="text-center" (click)="cargarTarea(tarea)">
+												<span class="text-primary p-column-title">#</span>
+												{{tarea.idTarea}}
+											</td>
+											<td class="text-center" *ngFor="let col of columns"
+												(click)="cargarTarea(tarea)">
+												<span class="text-primary p-column-title">{{col.header}}</span>
+												<span
+													*ngIf="col.header !== msg.lbl_table_header_fecha_recordatorio">{{tarea[col.field]}}</span>
+												<span
+													*ngIf="col.header === msg.lbl_table_header_fecha_recordatorio">{{formatearFechaTabla(tarea.fechaRecordatorio)}}</span>
+											</td>
+										</tr>
+									</ng-template>
+								</p-table>
+								<ng-template #sinResultados>
+									<div class="service-grids">
+										<div class="col-md-12 ser-grid">
+											<p class="sinResultados">
+												{{msg.lbl_info_sin_resultados}}</p>
+										</div>
+									</div>
+								</ng-template>
 							</div>
 							<div class="card-footer">
 								<button type="submit" class="btn btn-info"
