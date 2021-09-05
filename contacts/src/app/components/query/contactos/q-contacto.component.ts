@@ -107,42 +107,6 @@ export class QContactoComponent implements OnInit {
     return color;
   }
 
-  consultarContactoPorNombre() {
-    this.listaContactos = [];
-    try {
-      let contactoFiltro = this.objectModelInitializer.getDataContactoModel();
-      contactoFiltro.nombreContacto = this.nombreFiltro;
-      this.restService.postREST(this.const.urlConsultarContactosPorFiltros, contactoFiltro)
-        .subscribe(resp => {
-          let listaContactosTemp = JSON.parse(JSON.stringify(resp));
-          if (listaContactosTemp !== undefined && listaContactosTemp.length > 0) {
-            listaContactosTemp.forEach(contacto => {
-              let contactoTemp = this.convertirProcesoContactoEnum(contacto);
-              let contactoDTO = this.objectModelInitializer.getDataDTOContactoModel();
-              contactoDTO.contactoTB = contactoTemp;
-              this.listaContactos.push(contactoDTO);
-            });
-          }
-        },
-          error => {
-            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
-            let titleError = listaMensajes[0];
-            listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
-            this.messageService.clear();
-
-            listaMensajes.forEach(mensaje => {
-              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
-            });
-            this.messageService.add(mensajeFinal);
-
-            console.log(error, "error");
-          })
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   cargarContactos() {
     this.listaContactos = [];
     try {

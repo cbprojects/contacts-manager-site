@@ -1,30 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from '../../../services/rest.service';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeIcons } from 'primeng/api';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
-import { EmpresaModel } from 'src/app/model/empresa-model';
+import { ContactoModel } from 'src/app/model/contacto-model';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-m-empresa',
-  templateUrl: './m-empresa.component.html',
-  styleUrls: ['./m-empresa.component.scss'],
+  selector: 'app-m-seguimiento',
+  templateUrl: './m-seguimiento.component.html',
+  styleUrls: ['./m-seguimiento.component.scss'],
   providers: [RestService, MessageService]
 })
 
-export class MEmpresaComponent implements OnInit {
+export class MSeguimientoComponent implements OnInit {
   // Objetos de Sesion
   sesion: any;
 
   // Objetos de datos
-  empresa: EmpresaModel;
-  esNuevaEmpresa: boolean;
+  contacto: ContactoModel;
+  enumProceso: any[];
+  events1: any[];
 
   // Utilidades
   msg: any;
@@ -44,29 +45,43 @@ export class MEmpresaComponent implements OnInit {
   }
 
   inicializar() {
-    this.empresa = this.objectModelInitializer.getDataEmpresaModel();
-    this.esNuevaEmpresa = true;
-    if (this.sesionService.objEmpresaCargado !== undefined && this.sesionService.objEmpresaCargado !== null && this.sesionService.objEmpresaCargado.idEmpresa > 0) {
-      this.empresa = this.sesionService.objEmpresaCargado;
-      this.esNuevaEmpresa = false;
+    this.cargarEnumerados();
+    this.contacto = this.objectModelInitializer.getDataContactoModel();
+    this.contacto.procesoContacto = this.cargarValorEnumerado(0);
+    if (this.sesionService.objContactoCargado !== undefined && this.sesionService.objContactoCargado !== null && this.sesionService.objContactoCargado.idContacto > 0) {
+      this.contacto = this.sesionService.objContactoCargado;
     }
     $('html').removeClass('nav-open');
-    //$('#toggleMenuMobile').click();
+    this.events1 = [
+      { status: 'Ordered', date: '15/10/2020 10:30', icon: PrimeIcons.SHOPPING_CART, color: '#9C27B0', agregarNuevo: false },
+      { status: 'Processing', date: '15/10/2020 14:00', icon: PrimeIcons.COG, color: '#673AB7', agregarNuevo: false },
+      { status: 'Shipped', date: '15/10/2020 16:15', icon: PrimeIcons.ENVELOPE, color: '#FF9800', agregarNuevo: false },
+      { status: 'Delivered', date: '16/10/2020 10:00', icon: PrimeIcons.CHECK, color: '#607D8B', agregarNuevo: true }
+    ];
+  }
+
+  cargarEnumerados() {
+    let enums = this.enumerados.getEnumerados();
+    this.enumProceso = enums.procesoContacto.valores;
+  }
+
+  cargarValorEnumerado(i) {
+    return this.util.getValorEnumerado(this.enumerados.getEnumerados().procesoContacto.valores, i);
   }
 
   ngAfterViewChecked(): void {
     $('#menu').children().removeClass('active');
-    $($('#menu').children()[3]).addClass('active');
-    if (this.esNuevaEmpresa) {
-      $('.card').bootstrapMaterialDesign();
-    }
+    $($('#menu').children()[2]).addClass('active');
+    $('ng-select').niceSelect();
+    $($('select#selectProceso').siblings()[1]).children()[0].innerHTML = this.contacto.procesoContacto.label;
   }
 
-  crearEmpresa() {
+  crearContacto() {
     try {
-      this.restService.postREST(this.const.urlCrearEmpresa, this.empresa)
+      this.contacto.procesoContacto = this.contacto.procesoContacto.value;
+      this.restService.postREST(this.const.urlCrearContacto, this.contacto)
         .subscribe(resp => {
-          let respuesta: EmpresaModel = JSON.parse(JSON.stringify(resp));
+          let respuesta: ContactoModel = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar comentarios de nuevo
             this.messageService.clear();
@@ -87,6 +102,7 @@ export class MEmpresaComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
+            this.contacto.procesoContacto = this.cargarValorEnumerado(this.contacto.procesoContacto);
 
             console.log(error, "error");
           })
@@ -95,11 +111,12 @@ export class MEmpresaComponent implements OnInit {
     }
   }
 
-  modificarEmpresa() {
+  modificarContacto() {
     try {
-      this.restService.putREST(this.const.urlModificarEmpresa, this.empresa)
+      this.contacto.procesoContacto = this.contacto.procesoContacto.value;
+      this.restService.putREST(this.const.urlModificarContacto, this.contacto)
         .subscribe(resp => {
-          let respuesta: EmpresaModel = JSON.parse(JSON.stringify(resp));
+          let respuesta: ContactoModel = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar comentarios de nuevo
             this.messageService.clear();
@@ -119,8 +136,9 @@ export class MEmpresaComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
-            if (this.empresa.estado === 0) {
-              this.empresa.estado = 1;
+            this.contacto.procesoContacto = this.cargarValorEnumerado(this.contacto.procesoContacto);
+            if (this.contacto.estado === 0) {
+              this.contacto.estado = 1;
             }
 
             console.log(error, "error");
@@ -130,13 +148,13 @@ export class MEmpresaComponent implements OnInit {
     }
   }
 
-  eliminarEmpresa() {
-    this.empresa.estado = 0;
-    this.modificarEmpresa();
+  eliminarContacto() {
+    this.contacto.estado = 0;
+    this.modificarContacto();
   }
 
   volverConsulta() {
-    this.router.navigate(['/q-empresa']);
+    this.router.navigate(['/q-seguimiento']);
   }
 
 }

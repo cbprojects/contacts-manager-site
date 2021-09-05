@@ -59,9 +59,21 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-seguimiento">
+                    <i class="material-icons">history</i>
+                    <p>{{msg.lbl_menu_seguimiento}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-empresa">
                     <i class="material-icons">store</i>
                     <p>{{msg.lbl_menu_empresas}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-tarea">
+                    <i class="material-icons">add_task</i>
+                    <p>{{msg.lbl_menu_tareas}}</p>
                 </a>
             </li>
             <!--<li class="nav-item">
@@ -76,12 +88,6 @@
                     <p>{{msg.lbl_menu_facturas}}</p>
                 </a>
             </li>-->
-            <li class="nav-item">
-                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-tarea">
-                    <i class="material-icons">add_task</i>
-                    <p>{{msg.lbl_menu_tareas}}</p>
-                </a>
-            </li>
         </ul>
     </div>
     <div class="sidebar-background" style="background-image: url(../assets/images/sidebar-1.jpg) "></div>

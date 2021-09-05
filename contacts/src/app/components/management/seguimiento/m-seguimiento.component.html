@@ -14,7 +14,7 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="{{esNuevoContacto ? 'displayNone' : 'col-md-4'}}">
+					<div class="col-md-4">
 						<div class="card card-profile">
 							<div class="card-avatar">
 								<a>
@@ -34,33 +34,32 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-{{esNuevoContacto ? '12' : '8'}}">
+					<div class="col-md-8">
 						<div class="card">
 							<div class="card-header card-header-primary">
 								<h4 class="card-title ">{{msg.lbl_contactos}}</h4>
-								<p class="card-category">{{esNuevoContacto ? msg.lbl_contactos_crea_subtitles :
-									msg.lbl_contactos_actualiza_subtitles}}</p>
 							</div>
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="bmd-label-floating">{{msg.lbl_mtto_nombre_empresa}}</label>
-											<input type="text" class="form-control"
+											<input disabled type="text" class="form-control"
 												[(ngModel)]="contacto.nombreEmpresa">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="bmd-label-floating">{{msg.lbl_mtto_ciudad}}</label>
-											<input type="text" class="form-control"
+											<input disabled type="text" class="form-control"
 												[(ngModel)]="contacto.ciudadContacto">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="bmd-label-floating">{{msg.lbl_mtto_telefono_empresa}}</label>
-											<input type="text" class="form-control" (keydown)="util.soloNumeros($event)"
+											<input disabled type="text" class="form-control"
+												(keydown)="util.soloNumeros($event)"
 												[(ngModel)]="contacto.telefonoEmpresa">
 										</div>
 									</div>
@@ -69,14 +68,15 @@
 									<div class="col-md-8">
 										<div class="form-group">
 											<label class="bmd-label-floating">{{msg.lbl_mtto_nombre_contacto}}</label>
-											<input type="text" class="form-control"
+											<input disabled type="text" class="form-control"
 												[(ngModel)]="contacto.nombreContacto">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="bmd-label-floating">{{msg.lbl_mtto_telefono_contacto}}</label>
-											<input type="text" class="form-control" (keydown)="util.soloNumeros($event)"
+											<input disabled type="text" class="form-control"
+												(keydown)="util.soloNumeros($event)"
 												[(ngModel)]="contacto.telefonoContacto">
 										</div>
 									</div>
@@ -85,22 +85,21 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="bmd-label-floating">{{msg.lbl_mtto_correo_contacto}}</label>
-											<input type="email" class="form-control"
+											<input disabled type="email" class="form-control"
 												[(ngModel)]="contacto.correoContacto">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="bmd-label-floating">{{msg.lbl_mtto_cargo_contacto}}</label>
-											<input type="text" class="form-control"
+											<input disabled type="text" class="form-control"
 												[(ngModel)]="contacto.cargoContacto">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<label
-												class="bmd-label-floating {{esNuevoContacto ? 'displayNone' : ''}}">{{msg.lbl_mtto_proceso}}</label>
-											<select id="selectProceso" nice-select
+											<label class="bmd-label-floating">{{msg.lbl_mtto_proceso}}</label>
+											<select id="selectProceso" disabled nice-select
 												[attr.data-value]="contacto.procesoContacto"
 												[(ngModel)]="contacto.procesoContacto">
 												<option *ngFor="let proceso of enumProceso" [ngValue]="proceso">
@@ -109,23 +108,55 @@
 										</div>
 									</div>
 								</div>
-								<div class="row {{esNuevoContacto ? 'mar-top-10px' : ''}}">
+								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
 											<div class="form-group">
 												<label
 													class="bmd-label-floating">{{msg.lbl_mtto_descripcion_empresa}}</label>
-												<textarea class="form-control" rows="2"
+												<textarea disabled class="form-control" rows="2"
 													[(ngModel)]="contacto.descripcionEmpresa"></textarea>
 											</div>
 										</div>
 									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header card-header-primary">
+								<h4 class="card-title ">{{msg.lbl_seguimiento}}</h4>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<p-timeline [value]="events1" align="alternate"
+											styleClass="customized-timeline">
+											<ng-template pTemplate="marker" let-event>
+												<span class="custom-marker p-shadow-2"
+													[style.backgroundColor]="event.color">
+													<i [ngClass]="event.icon"></i>
+												</span>
+											</ng-template>
+											<ng-template pTemplate="content" let-event>
+												<p-card [header]="event.status" [subheader]="event.date">
+													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+														Inventore
+														sed consequuntur error repudiandae numquam deserunt
+														quisquam repellat libero asperiores earum nam nobis, culpa
+														ratione
+														quam perferendis esse, cupiditate neque quas!</p>
+													<button *ngIf="event.agregarNuevo" pButton
+														label="{{msg.lbl_btn_crear}}" class="p-button-text"></button>
+												</p-card>
+											</ng-template>
+										</p-timeline>
+									</div>
+								</div>
 								<div>
-									<button type="submit"
-										(click)="esNuevoContacto ? crearContacto() : modificarContacto()"
-										class="btn btn-primary pull-right">{{esNuevoContacto ?
-										msg.lbl_btn_crear : msg.lbl_btn_actualizar}}</button>
 									<button type="submit" (click)="volverConsulta()"
 										class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
 									<div class="clearfix"></div>

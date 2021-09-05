@@ -14,6 +14,24 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="row">
+					<div class="{{esNuevaTarea ? 'displayNone' : 'col-md-4'}}">
+						<div class="card card-profile">
+							<div class="card-avatar">
+								<a>
+									<img class="img" src="../assets/images/logo.png" />
+								</a>
+							</div>
+							<div class="card-body">
+								<h2><span class="badge badge-pill badge-info"># {{tarea.idTarea}}</span></h2>
+								<h4 class="card-title">{{tarea.fechaRecordatorio}}</h4>
+								<p class="card-description">{{tarea.descripcion}}
+								</p>
+								<button type="submit" class="btn btn-danger"
+									(click)="eliminarTarea()">{{msg.lbl_btn_eliminar}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
 					<div class="col-md-{{esNuevaTarea ? '12' : '8'}}">
 						<div class="card">
 							<div class="card-header card-header-primary">
@@ -34,9 +52,8 @@
 									</p-checkbox>
 									<div class="col-md-5">
 										<div class="form-group">
-											<label
-												class="bmd-label-floating">{{msg.lbl_mtto_fecha_recordatorio}}</label>
-											<p-calendar id="fechaRecordatorio" [disabled]="!habilitarFecha"
+											<p-calendar placeholder="{{msg.lbl_mtto_fecha_recordatorio}}"
+												id="fechaRecordatorio" [disabled]="!habilitarFecha"
 												[dateFormat]="const.formatoFecha" [minDate]="const.actualDate"
 												[readonlyInput]="true" [(ngModel)]="tarea.fechaRecordatorio"
 												inputStyleClass="form-control">
@@ -52,24 +69,6 @@
 										class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
 									<div class="clearfix"></div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="{{esNuevaTarea ? 'displayNone' : 'col-md-4'}}">
-						<div class="card card-profile">
-							<div class="card-avatar">
-								<a>
-									<img class="img" src="../assets/images/logo.png" />
-								</a>
-							</div>
-							<div class="card-body">
-								<h2><span class="badge badge-pill badge-info"># {{tarea.idTarea}}</span></h2>
-								<h4 class="card-title">{{tarea.fechaRecordatorio}}</h4>
-								<p class="card-description">{{tarea.descripcion}}
-								</p>
-								<button type="submit" class="btn btn-danger"
-									(click)="eliminarTarea()">{{msg.lbl_btn_eliminar}}</button>
-								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>

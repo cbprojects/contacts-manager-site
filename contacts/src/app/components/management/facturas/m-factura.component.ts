@@ -97,7 +97,7 @@ export class MFacturaComponent implements OnInit {
 
   ngAfterViewChecked(): void {
     $('#menu').children().removeClass('active');
-    $($('#menu').children()[4]).addClass('active');
+    $($('#menu').children()[5]).addClass('active');
     $('ng-select').niceSelect();
     $($('select#selectTipoFactura').siblings()[1]).children()[0].innerHTML = this.factura.tipoFactura.label;
     if ($('select#selectConceptoFactura').siblings().length > 0) {

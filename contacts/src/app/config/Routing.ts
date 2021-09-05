@@ -15,6 +15,8 @@ import { QFacturaComponent } from '../components/query/facturas/q-factura.compon
 import { MFacturaComponent } from '../components/management/facturas/m-factura.component';
 import { QConceptoFacturaComponent } from '../components/query/conceptosFacturas/q-concepto.component';
 import { MConceptoFacturaComponent } from '../components/management/conceptosFacturas/m-concepto.component';
+import { QSeguimientoComponent } from '../components/query/seguimiento/q-seguimiento.component';
+import { MSeguimientoComponent } from '../components/management/seguimiento/m-seguimiento.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [Guardian] },
@@ -29,6 +31,8 @@ const routes: Routes = [
   { path: 'm-factura', component: MFacturaComponent, canActivate: [Guardian] },
   { path: 'q-concepto', component: QConceptoFacturaComponent, canActivate: [Guardian] },
   { path: 'm-concepto', component: MConceptoFacturaComponent, canActivate: [Guardian] },
+  { path: 'q-seguimiento', component: QSeguimientoComponent, canActivate: [Guardian] },
+  { path: 'm-seguimiento', component: MSeguimientoComponent, canActivate: [Guardian] },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' },

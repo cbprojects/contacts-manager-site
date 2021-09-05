@@ -59,7 +59,7 @@ export class MTareaComponent implements OnInit {
 
   ngAfterViewChecked(): void {
     $('#menu').children().removeClass('active');
-    $($('#menu').children()[5]).addClass('active');
+    $($('#menu').children()[4]).addClass('active');
     if (this.esNuevaTarea) {
       $('.card').bootstrapMaterialDesign();
     }

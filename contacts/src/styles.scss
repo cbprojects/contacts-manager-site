@@ -465,3 +465,68 @@ p-checkbox {
 .p-datatable .p-datatable-header {
     overflow: auto;
 }
+
+.p-calendar {
+    margin-top: 15px;
+}
+
+.p-datatable .p-datatable-tbody > tr > td,
+.p-datatable .p-datatable-thead > tr > th {
+    vertical-align: middle;
+}
+
+.p-paginator .p-paginator-current {
+    width: 100%;
+}
+
+.p-paginator .p-paginator-first,
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-next,
+.p-paginator .p-paginator-last,
+.p-paginator .p-paginator-pages .p-paginator-page {
+    min-width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+.info {
+    color: #17a2b8;
+}
+
+.success {
+    color: #28a745;
+}
+
+.warning {
+    color: #ffc107;
+}
+
+.danger {
+    color: #dc3545;
+}
+
+.custom-marker {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    padding: 3px 5px;
+    color: white;
+}
+
+.p-timeline-event {
+    margin: 10px 0px;
+}
+
+.p-card .p-card-title,
+.p-card .p-card-subtitle {
+    font-size: 1rem;
+}
+
+.p-card .p-card-content {
+    font-size: 12px;
+    text-align: justify;
+    padding: 0;
+}
+
+.p-dialog .p-dialog-content {
+    padding: 1rem;
+}

@@ -14,6 +14,26 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="row">
+					<div class="{{esNuevaEmpresa ? 'displayNone' : 'col-md-4'}}">
+						<div class="card card-profile">
+							<div class="card-avatar">
+								<a>
+									<img class="img" src="../assets/images/logo.png" />
+								</a>
+							</div>
+							<div class="card-body">
+								<h2><span class="badge badge-pill badge-info"># {{empresa.idEmpresa}}</span></h2>
+								<h6 class="card-category text-gray">{{empresa.nombre}} /
+									{{empresa.ciudad}}</h6>
+								<h4 class="card-title">{{empresa.correo}}</h4>
+								<p class="card-description">{{empresa.descripcion}}
+								</p>
+								<button type="submit" class="btn btn-danger"
+									(click)="eliminarEmpresa()">{{msg.lbl_btn_eliminar}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
 					<div class="col-md-{{esNuevaEmpresa ? '12' : '8'}}">
 						<div class="card">
 							<div class="card-header card-header-primary">
@@ -77,26 +97,6 @@
 										class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
 									<div class="clearfix"></div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="{{esNuevaEmpresa ? 'displayNone' : 'col-md-4'}}">
-						<div class="card card-profile">
-							<div class="card-avatar">
-								<a>
-									<img class="img" src="../assets/images/logo.png" />
-								</a>
-							</div>
-							<div class="card-body">
-								<h2><span class="badge badge-pill badge-info"># {{empresa.idEmpresa}}</span></h2>
-								<h6 class="card-category text-gray">{{empresa.nombre}} /
-									{{empresa.ciudad}}</h6>
-								<h4 class="card-title">{{empresa.correo}}</h4>
-								<p class="card-description">{{empresa.descripcion}}
-								</p>
-								<button type="submit" class="btn btn-danger"
-									(click)="eliminarEmpresa()">{{msg.lbl_btn_eliminar}}</button>
-								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>

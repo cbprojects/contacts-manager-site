@@ -9,6 +9,8 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 //import { SliderModule } from 'primeng/slider';
 //import { FieldsetModule } from 'primeng/fieldset';
+import { CardModule } from 'primeng/card';
+import { TimelineModule } from 'primeng/timeline';
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
@@ -47,6 +49,8 @@ import { HomeComponent } from './components/home/home.component';
 import { RestaurarClaveComponent } from './components/restaurarClave/restaurarClave.component';
 import { QContactoComponent } from './components/query/contactos/q-contacto.component';
 import { MContactoComponent } from './components/management/contactos/m-contacto.component';
+import { QSeguimientoComponent } from './components/query/seguimiento/q-seguimiento.component';
+import { MSeguimientoComponent } from './components/management/seguimiento/m-seguimiento.component';
 import { QTareaComponent } from './components/query/tareas/q-tarea.component';
 import { MTareaComponent } from './components/management/tareas/m-tarea.component';
 import { QEmpresaComponent } from './components/query/empresas/q-empresa.component';
@@ -111,7 +115,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     QFacturaComponent,
     MFacturaComponent,
     QConceptoFacturaComponent,
-    MConceptoFacturaComponent
+    MConceptoFacturaComponent,
+    QSeguimientoComponent,
+    MSeguimientoComponent
   ],
   imports: [
     AgmCoreModule.forRoot({ apiKey: 'AIzaSyBaNBQN5zBRz7h5lUKB4GGZQHhakKrajSA' }),
@@ -136,6 +142,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     //GMapModule,
     //ScrollPanelModule,
     //GalleriaModule,
+    CardModule,
+    TimelineModule,
     TooltipModule,
     ConfirmPopupModule,
     CheckboxModule,

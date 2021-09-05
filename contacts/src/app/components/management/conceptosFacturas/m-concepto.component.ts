@@ -76,7 +76,7 @@ export class MConceptoFacturaComponent implements OnInit {
 
   ngAfterViewChecked(): void {
     $('#menu').children().removeClass('active');
-    $($('#menu').children()[3]).addClass('active');
+    $($('#menu').children()[6]).addClass('active');
     $('ng-select').niceSelect();
     $($('select#selectTipoConcepto').siblings()[1]).children()[0].innerHTML = this.concepto.tipoConcepto.label;
     $($('select#selectUnidad').siblings()[1]).children()[0].innerHTML = this.concepto.unidad.label;

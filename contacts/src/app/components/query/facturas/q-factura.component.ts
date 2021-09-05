@@ -47,7 +47,7 @@ export class QFacturaComponent implements OnInit {
 
   ngAfterViewChecked(): void {
     $('#menu').children().removeClass('active');
-    $($('#menu').children()[4]).addClass('active');
+    $($('#menu').children()[5]).addClass('active');
     $('.card').bootstrapMaterialDesign();
   }
 

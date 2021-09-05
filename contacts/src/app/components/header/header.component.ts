@@ -23,10 +23,10 @@ declare var $: any;
   ]
 })
 export class HeaderComponent implements OnInit {
-  // Objetos de datos
-
   // Objetos de Animaciones
   fadeIn: any;
+
+  // Objetos de datos
   displayModalLogin: boolean = false;
   displayModalRestaurar: boolean = false;
   usuario: any = "";
@@ -78,6 +78,8 @@ export class HeaderComponent implements OnInit {
       ruta = this.msg.lbl_menu_facturas;
     } else if (url.includes('-tarea')) {
       ruta = this.msg.lbl_menu_tareas;
+    } else if (url.includes('-seguimiento')) {
+      ruta = this.msg.lbl_menu_seguimiento;
     }
 
     return ruta;

@@ -153,6 +153,7 @@ export class TextProperties {
       lbl_menu_empresas: idioma === constant.idiomaEs ? 'Empresas' : 'Companies',
       lbl_menu_conceptos: idioma === constant.idiomaEs ? 'Conceptos' : 'Concepts',
       lbl_menu_facturas: idioma === constant.idiomaEs ? 'Facturas' : 'Invoices',
+      lbl_menu_seguimiento: idioma === constant.idiomaEs ? 'Seguimiento' : 'Follow-Up',
       lbl_menu_tareas: idioma === constant.idiomaEs ? 'Tareas' : 'Tasks',
 
       // Acciones
@@ -392,6 +393,9 @@ export class TextProperties {
       lbl_mtto_tipo_concepto: idioma === constant.idiomaEs ? 'Tipo Concepto' : 'Concept Type',
       lbl_mtto_unidad: idioma === constant.idiomaEs ? 'Unidad' : 'Unit',
       lbl_mtto_valor_unitario: idioma === constant.idiomaEs ? 'Valor Unitario' : 'Unit Value',
+
+      lbl_seguimiento: idioma === constant.idiomaEs ? 'Seguimiento' : 'Follow-Up',
+      lbl_seguimiento_consulta_subtitles: idioma === constant.idiomaEs ? 'Realizar un seguimiento de tus Contactos' : 'Keep track of your Contacts',
 
     }
   };

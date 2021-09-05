@@ -231,18 +231,7 @@ export class HomeComponent implements OnInit {
 
   actualizarTareaRealizada(tarea: TareaModel) {
     try {
-      let date = new Date();
-      let day = date.getDate()
-      let month = date.getMonth() + 1
-      let year = date.getFullYear()
-      let fecha = "";
-
-      if (month < 10) {
-        fecha = year + "-0" + month + "-" + day + "T05:00:00.000Z";
-      } else {
-        fecha = year + "-" + month + "-" + day + "T05:00:00.000Z";
-      }
-      tarea.fechaRecordatorio = fecha;
+      tarea.fechaRecordatorio = new Date();
       this.restService.putREST(this.const.urlModificarTarea, tarea)
         .subscribe(resp => {
           let respuesta: TareaModel = JSON.parse(JSON.stringify(resp));
