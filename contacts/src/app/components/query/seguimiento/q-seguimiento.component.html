@@ -34,10 +34,15 @@
 											<th style="width: 40px;" class="text-center">
 												<i class="material-icons">tag</i>
 											</th>
-											<th pSortableColumn="contactoTB.{{[col.field]}}" class="text-center"
-												*ngFor="let col of columns">
-												{{col.header}} <p-sortIcon field="contactoTB.{{[col.field]}}">
-												</p-sortIcon>
+											<th class="text-center" *ngFor="let col of columns">
+												<div *ngIf="col.header !== msg.lbl_table_header_proceso"
+													pSortableColumn="contactoTB.{{[col.field]}}">{{col.header}}
+													<p-sortIcon field="contactoTB.{{[col.field]}}"></p-sortIcon>
+												</div>
+												<div *ngIf="col.header === msg.lbl_table_header_proceso"
+													pSortableColumn="contactoTB.{{[col.field]}}.label">{{col.header}}
+													<p-sortIcon field="contactoTB.{{[col.field]}}.label"></p-sortIcon>
+												</div>
 												<p-columnFilter *ngIf="col.header !== msg.lbl_table_header_proceso"
 													matchMode="contains" type="text" field="contactoTB.{{[col.field]}}">
 												</p-columnFilter>

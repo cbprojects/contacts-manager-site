@@ -50,10 +50,10 @@
 											<th style="width: 40px;" class="text-center">
 												<i class="material-icons">tag</i>
 											</th>
-											<th pSortableColumn="{{col.field}}" class="text-center"
-												*ngFor="let col of columns">
-												{{col.header}} <p-sortIcon field="{{col.field}}">
-												</p-sortIcon>
+											<th class="text-center" *ngFor="let col of columns">
+												<div pSortableColumn="{{col.field}}">{{col.header}}
+													<p-sortIcon field="{{col.field}}"></p-sortIcon>
+												</div>
 												<p-columnFilter matchMode="contains" type="text" field="{{col.field}}">
 												</p-columnFilter>
 											</th>
