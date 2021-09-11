@@ -33,11 +33,15 @@ export class QTareaComponent implements OnInit {
   // Utilidades
   msg: any;
   const: any;
+  rows: any;
+  enumRows: any[];
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, private confirmationService: ConfirmationService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
+    this.enumRows = [5, 10, 25, 50, 100];
+    this.rows = this.enumRows[0];
   }
 
   ngOnInit() {

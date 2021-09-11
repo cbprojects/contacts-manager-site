@@ -32,11 +32,15 @@ export class QSeguimientoComponent implements OnInit {
   // Utilidades
   msg: any;
   const: any;
+  rows: any;
+  enumRows: any[];
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, private confirmationService: ConfirmationService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
+    this.enumRows = [5, 10, 25, 50, 100];
+    this.rows = this.enumRows[0];
   }
 
   ngOnInit() {
@@ -60,7 +64,7 @@ export class QSeguimientoComponent implements OnInit {
       { field: 'nombreEmpresa', header: this.msg.lbl_table_header_nombre_empresa },
       { field: 'ciudadContacto', header: this.msg.lbl_table_header_ciudad },
       { field: 'nombreContacto', header: this.msg.lbl_table_header_nombre_contacto },
-      { field: 'correoContacto', header: this.msg.lbl_table_header_correo_contacto },
+      { field: 'correoContacto', header: this.msg.lbl_table_header_correo },
       { field: 'telefonoContacto', header: this.msg.lbl_table_header_telefono },
       { field: 'procesoContacto', header: this.msg.lbl_table_header_proceso }
     ];

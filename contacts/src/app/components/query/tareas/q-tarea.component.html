@@ -22,9 +22,9 @@
 							</div>
 							<div class="card-body">
 								<p-table *ngIf="listaTareas.length > 0; else sinResultados" #dt [columns]="cols"
-									[value]="listaTareas" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-									responsiveLayout="stack" [paginator]="true" paginatorPosition="both"
-									styleClass="table p-datatable-striped p-datatable-sm"
+									[value]="listaTareas" dataKey="id" [rows]="rows" [rowsPerPageOptions]="enumRows"
+									[showCurrentPageReport]="true" responsiveLayout="stack" [paginator]="true"
+									paginatorPosition="both" styleClass="table p-datatable-striped p-datatable-sm"
 									currentPageReportTemplate="Registros {first} al {last} de {totalRecords}">
 									<ng-template pTemplate="caption">
 										<div class="p-d-flex">
@@ -50,8 +50,10 @@
 											<th style="width: 40px;" class="text-center">
 												<i class="material-icons">tag</i>
 											</th>
-											<th class="text-center" *ngFor="let col of columns">
-												{{col.header}}
+											<th pSortableColumn="{{col.field}}" class="text-center"
+												*ngFor="let col of columns">
+												{{col.header}} <p-sortIcon field="{{col.field}}">
+												</p-sortIcon>
 												<p-columnFilter matchMode="contains" type="text" field="{{col.field}}">
 												</p-columnFilter>
 											</th>
