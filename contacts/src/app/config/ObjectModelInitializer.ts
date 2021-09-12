@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-export var HOST = 'http://localhost:9002';
+//export var HOST = 'http://localhost:9002';
 //export var HOST = 'https://10.176.56.211:9002';
-//aexport var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
+export var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
 
 //export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'https://10.176.56.211:7001';
