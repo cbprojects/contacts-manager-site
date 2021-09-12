@@ -336,6 +336,12 @@ export class TextProperties {
       lbl_enum_tipo_unidad_valor_litro: idioma === constant.idiomaEs ? 'Lt' : 'Lt',
       lbl_enum_tipo_unidad_valor_hora: idioma === constant.idiomaEs ? 'Hr' : 'Hr',
 
+      lbl_enum_nivel_seguimiento_valor_seleccione: idioma === constant.idiomaEs ? 'Seleccione un seguimiento' : 'Choose a Follow-Up',
+      lbl_enum_nivel_seguimiento_creado: idioma === constant.idiomaEs ? 'Creado' : 'Created',
+      lbl_enum_nivel_seguimiento_recordatorio: idioma === constant.idiomaEs ? 'Recordatorio' : 'Reminder',
+      lbl_enum_nivel_seguimiento_realizado: idioma === constant.idiomaEs ? 'Realizado' : 'Success',
+      lbl_enum_nivel_seguimiento_pendiente: idioma === constant.idiomaEs ? 'Pendiente' : 'Pending',
+
       // Mtto Contacto
       lbl_contactos: idioma === constant.idiomaEs ? 'Contactos' : 'Contacts',
       lbl_contactos_consulta_subtitles: idioma === constant.idiomaEs ? 'Consulta tus Contactos' : 'Check your Contacts',
@@ -395,8 +401,13 @@ export class TextProperties {
       lbl_mtto_unidad: idioma === constant.idiomaEs ? 'Unidad' : 'Unit',
       lbl_mtto_valor_unitario: idioma === constant.idiomaEs ? 'Valor Unitario' : 'Unit Value',
 
+      // Mtto Seguimiento
       lbl_seguimiento: idioma === constant.idiomaEs ? 'Seguimiento' : 'Follow-Up',
       lbl_seguimiento_consulta_subtitles: idioma === constant.idiomaEs ? 'Realizar un seguimiento de tus Contactos' : 'Keep track of your Contacts',
+      lbl_seguimiento_crea_subtitles: idioma === constant.idiomaEs ? 'Crear un seguimiento' : 'Create a follow-up',
+      lbl_seguimiento_actualiza_subtitles: idioma === constant.idiomaEs ? 'Actualiza un seguimiento' : 'Update a follow-up',
+      lbl_mtto_id_seguimiento: idioma === constant.idiomaEs ? 'ID Seguimiento' : 'Follow-Up ID',
+      lbl_mtto_fecha_seguimiento: idioma === constant.idiomaEs ? 'Fecha Recordatorio' : 'Notification Date',
 
     }
   };

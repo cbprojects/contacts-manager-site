@@ -27,7 +27,7 @@ export class Guardian implements CanActivate {
 
     let URLactual = window.location.href;
     let sesionOK = false;
-    let user = localStorage.getItem("usuarioSesion");
+    let user = localStorage.getItem("usuarioSesionContactM");
     if (URLactual.split("#").length === 1 || URLactual.split("#")[1].includes('home')
       || URLactual.split("#")[1].includes('q-contacto') || URLactual.split("#")[1].includes('m-contacto')
       || URLactual.split("#")[1].includes('q-tarea') || URLactual.split("#")[1].includes('m-tarea')

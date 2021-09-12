@@ -76,12 +76,21 @@ export class Enumerados {
         ]
       },
       unidad: {
-        cod: 8, valores: [
+        cod: 9, valores: [
           { value: 0, label: properties.lbl_enum_tipo_unidad_valor_seleccione },
           { value: 1, label: properties.lbl_enum_tipo_unidad_valor_metro },
           { value: 2, label: properties.lbl_enum_tipo_unidad_valor_metro_cuadrado },
           { value: 1, label: properties.lbl_enum_tipo_unidad_valor_litro },
           { value: 2, label: properties.lbl_enum_tipo_unidad_valor_hora }
+        ]
+      },
+      nivelSeguimiento: {
+        cod: 10, valores: [
+          { value: 0, label: properties.lbl_enum_nivel_seguimiento_valor_seleccione },
+          { value: 1, label: properties.lbl_enum_nivel_seguimiento_creado },
+          { value: 2, label: properties.lbl_enum_nivel_seguimiento_recordatorio },
+          { value: 3, label: properties.lbl_enum_nivel_seguimiento_realizado },
+          { value: 4, label: properties.lbl_enum_nivel_seguimiento_pendiente }
         ]
       },
       //valorIva: {cod: 25},

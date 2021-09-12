@@ -534,3 +534,22 @@ p-checkbox {
 .p-dialog .p-dialog-content {
     padding: 1rem;
 }
+
+.p-timeline-event-opposite {
+    display: none;
+}
+
+.p-timeline-event-content {
+    width: 100%;
+}
+
+.p-button.p-button-icon-only.p-button-rounded {
+    width: 1.75rem;
+    height: 1.75rem !important;
+    margin: 0px 1px;
+}
+
+.contact-link-home {
+    color: #9e9e9e;
+    padding-right: 10px;
+}

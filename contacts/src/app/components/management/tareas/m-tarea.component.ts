@@ -135,6 +135,7 @@ export class MTareaComponent implements OnInit {
 
   eliminarTarea() {
     this.tarea.estado = 0;
+    this.tarea.fechaRecordatorio = new Date();
     this.modificarTarea();
   }
 

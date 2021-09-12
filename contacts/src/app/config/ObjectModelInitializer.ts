@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-//export var HOST = 'http://localhost:9002';
+export var HOST = 'http://localhost:9002';
 //export var HOST = 'https://10.176.56.211:9002';
-export var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
+//aexport var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
 
 //export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'https://10.176.56.211:7001';
@@ -70,6 +70,11 @@ export class ObjectModelInitializer {
       urlConsultarTareasPorFiltros: `${HOST}/central/contactos/consultarTareasPorFiltros`,
       urlCrearTarea: `${HOST}/central/contactos/crearTarea`,
       urlModificarTarea: `${HOST}/central/contactos/modificarTarea`,
+      // Seguimiento
+      urlSeguimientoContacto: `${HOST}/central/contactos/seguimientoContacto`,
+      urlConsultarIdContactosSeg: `${HOST}/central/contactos/consultarIdContactosSeg`,
+      urlCrearSeguimiento: `${HOST}/central/contactos/crearSeguimiento`,
+      urlModificarSeguimiento: `${HOST}/central/contactos/modificarSeguimiento`,
       // Facturas
       urlContarFacturas: `${HOST}/central/contactos/contarFacturas`,
       urlConsultarFacturasPorFiltros: `${HOST}/central/contactos/consultarFacturasPorFiltros`,
@@ -365,6 +370,23 @@ export class ObjectModelInitializer {
     return {
       codigo: code,
       simbolo: symbol
+    }
+  };
+
+  getDataSeguimientoModel() {
+    return {
+      idSeguimiento: 0,
+      descripcion: '',
+      contactoTB: this.getDataContactoModel(),
+      fechaSeguimiento: '',
+      nivel: 0,
+
+      // Auditoria
+      estado: 0,
+      fechaCreacion: '',
+      fechaActualizacion: '',
+      usuarioCreacion: '',
+      usuarioActualizacion: ''
     }
   };
 

@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.reload();
     this.cargarTareas();
-    let user = localStorage.getItem("usuarioSesion");
+    let user = localStorage.getItem("usuarioSesionContactM");
     if (user !== undefined && user !== null) {
       this.sesionService.objServiceSesion.usuarioSesion = JSON.parse(user);
       this.sesionService.objServiceSesion.esLogueado = true;
@@ -97,7 +97,7 @@ export class SidebarComponent implements OnInit {
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
             this.sesionService.objServiceSesion.usuarioSesion = respuesta;
-            localStorage.setItem("usuarioSesion", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
+            localStorage.setItem("usuarioSesionContactM", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
             this.usuario = "";
             this.clave = "";
             this.sesionService.objServiceSesion.esLogueado = true;
@@ -176,7 +176,7 @@ export class SidebarComponent implements OnInit {
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
             this.sesionService.objServiceSesion.usuarioSesion = respuesta;
-            localStorage.setItem("usuarioSesion", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
+            localStorage.setItem("usuarioSesionContactM", JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
             this.usuario = "";
             this.clave = "";
             this.sesionService.objServiceSesion.esLogueado = true;
@@ -204,7 +204,7 @@ export class SidebarComponent implements OnInit {
   }
 
   actualizarLogin() {
-    let user = localStorage.getItem("usuarioSesion");
+    let user = localStorage.getItem("usuarioSesionContactM");
     if (user !== undefined && user !== null && this.sesionService.objServiceSesion.usuarioSesion !== undefined && this.sesionService.objServiceSesion.usuarioSesion !== null) {
       this.sesionService.objServiceSesion.esLogueado = true;
     }

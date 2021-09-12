@@ -28,9 +28,6 @@
 								<h4 class="card-title">{{contacto.nombreContacto}}</h4>
 								<p class="card-description">{{contacto.descripcionEmpresa}}
 								</p>
-								<button type="submit" class="btn btn-danger"
-									(click)="eliminarContacto()">{{msg.lbl_btn_eliminar}}</button>
-								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>
@@ -96,29 +93,6 @@
 												[(ngModel)]="contacto.cargoContacto">
 										</div>
 									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<label class="bmd-label-floating">{{msg.lbl_mtto_proceso}}</label>
-											<select id="selectProceso" disabled nice-select
-												[attr.data-value]="contacto.procesoContacto"
-												[(ngModel)]="contacto.procesoContacto">
-												<option *ngFor="let proceso of enumProceso" [ngValue]="proceso">
-													{{proceso.label}}</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<div class="form-group">
-												<label
-													class="bmd-label-floating">{{msg.lbl_mtto_descripcion_empresa}}</label>
-												<textarea disabled class="form-control" rows="2"
-													[(ngModel)]="contacto.descripcionEmpresa"></textarea>
-											</div>
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -133,7 +107,7 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-12">
-										<p-timeline [value]="events1" align="alternate"
+										<p-timeline [value]="eventsSeguimiento" align="right"
 											styleClass="customized-timeline">
 											<ng-template pTemplate="marker" let-event>
 												<span class="custom-marker p-shadow-2"
@@ -143,21 +117,56 @@
 											</ng-template>
 											<ng-template pTemplate="content" let-event>
 												<p-card [header]="event.status" [subheader]="event.date">
-													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-														Inventore
-														sed consequuntur error repudiandae numquam deserunt
-														quisquam repellat libero asperiores earum nam nobis, culpa
-														ratione
-														quam perferendis esse, cupiditate neque quas!</p>
-													<button *ngIf="event.agregarNuevo" pButton
-														label="{{msg.lbl_btn_crear}}" class="p-button-text"></button>
+													<div class="row">
+														<div class="col-md-12">
+															<p>{{event.description}}</p>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12"
+															style="display: flex;overflow: auto;margin: 10px;">
+															<button pButton pRipple (click)="irModificar(event.data)"
+																pTooltip="{{msg.lbl_btn_actualizar}}"
+																tooltipPosition="bottom" type="button"
+																icon="pi pi-undo"
+																class="p-button-rounded p-button-info"></button>
+															<div class="clearfix"></div>
+
+															<button pButton pRipple
+																(click)="actualizarNivel(2, event.data)"
+																pTooltip="{{msg.lbl_enum_nivel_seguimiento_recordatorio}}"
+																tooltipPosition="bottom" type="button"
+																icon="pi pi-exclamation-circle"
+																class="p-button-rounded p-button-warning"></button>
+															<div class="clearfix"></div>
+
+															<button pButton pRipple
+																(click)="actualizarNivel(3, event.data)"
+																pTooltip="{{msg.lbl_enum_nivel_seguimiento_realizado}}"
+																tooltipPosition="bottom" type="button"
+																icon="pi pi-check-circle"
+																class="p-button-rounded p-button-success"></button>
+															<div class="clearfix"></div>
+
+															<button pButton pRipple
+																(click)="actualizarNivel(4, event.data)"
+																pTooltip="{{msg.lbl_enum_nivel_seguimiento_pendiente}}"
+																tooltipPosition="bottom" type="button"
+																icon="pi pi-times-circle"
+																class="p-button-rounded p-button-danger"></button>
+															<div class="clearfix"></div>
+														</div>
+													</div>
 												</p-card>
 											</ng-template>
 										</p-timeline>
 									</div>
 								</div>
-								<div>
-									<button type="submit" (click)="volverConsulta()"
+								<div style="display: flex;">
+									<button type="submit" (click)="irCrear()"
+										class="btn btn-info pull-right">{{msg.lbl_btn_crear}}</button>
+									<div class="clearfix"></div>
+									<button type="submit" routerLink="/q-seguimiento"
 										class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
 									<div class="clearfix"></div>
 								</div>
@@ -172,5 +181,65 @@
 		<!-- FOOTER -->
 		<app-footer></app-footer>
 		<!-- FOOTER -->
+
+
+		<!-- Dialog crear seguimiento -->
+		<p-dialog id="crearSeguimiento" *ngIf="seguimientoCreado" [(visible)]="mostrarPanelCrear" [modal]="true"
+			[style]="{width: '30vw'}" [transitionOptions]="'150ms'" [showHeader]="false" (onShow)="aplicarMDBLogin()">
+
+			<div class="card">
+				<div class="card-header card-header-primary">
+					<h4 class="card-title ">{{msg.lbl_seguimiento}}</h4>
+				</div>
+				<div class="card-body">
+					<div class="row justify-content-center">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label class="bmd-label-floating">{{msg.lbl_mtto_descripcion}}</label>
+								<input type="text" class="form-control" [(ngModel)]="seguimientoCreado.descripcion">
+							</div>
+						</div>
+					</div>
+					<div>
+						<button type="submit" (click)="crearSeguimiento()"
+							class="btn btn-primary pull-right">{{msg.lbl_btn_crear}}</button>
+						<button type="submit" (click)="cancelarSeguimiento()"
+							class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+		</p-dialog>
+		<!-- End Dialog crear seguimiento -->
+
+		<!-- Dialog modificar seguimiento -->
+		<p-dialog id="modificarSeguimiento" *ngIf="seguimientoModificado" [(visible)]="mostrarPanelModificar"
+			[modal]="true" [style]="{width: '30vw'}" [transitionOptions]="'150ms'" [showHeader]="false"
+			(onShow)="aplicarMDBLogin()">
+
+			<div class="card">
+				<div class="card-header card-header-primary">
+					<h4 class="card-title ">{{msg.lbl_seguimiento}}</h4>
+				</div>
+				<div class="card-body">
+					<div class="row justify-content-center">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label class="bmd-label-floating">{{msg.lbl_mtto_descripcion}}</label>
+								<input type="text" class="form-control" [(ngModel)]="seguimientoModificado.descripcion">
+							</div>
+						</div>
+					</div>
+					<div>
+						<button type="submit" (click)="modificarSeguimiento()"
+							class="btn btn-primary pull-right">{{msg.lbl_btn_actualizar}}</button>
+						<button type="submit" (click)="cancelarSeguimiento()"
+							class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+		</p-dialog>
+		<!-- End Dialog modificar seguimiento -->
 	</div>
 </div>

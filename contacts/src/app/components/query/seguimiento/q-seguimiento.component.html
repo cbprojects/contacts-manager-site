@@ -21,7 +21,7 @@
 								<p class="card-category">{{msg.lbl_seguimiento_consulta_subtitles}}</p>
 							</div>
 							<div class="card-body">
-								<p-table *ngIf="listaContactos.length > 0; else sinResultados" #dt [columns]="cols"
+								<p-table *ngIf="listaContactos; else sinResultados" #dt [columns]="cols"
 									[value]="listaContactos" dataKey="id" [rows]="rows" [rowsPerPageOptions]="enumRows"
 									[showCurrentPageReport]="true" responsiveLayout="stack" [paginator]="true"
 									paginatorPosition="both" styleClass="table p-datatable-striped p-datatable-sm"
@@ -57,7 +57,7 @@
 											<td class="text-center">
 												<span class="text-primary p-column-title">Alerta</span>
 												<i class="pi pi-spin pi-star warning"
-													*ngIf="!contacto.seleccionado"></i>
+													*ngIf="contacto.seleccionado"></i>
 											</td>
 											<td class="text-center" (click)="cargarContacto(contacto.contactoTB)">
 												<span class="text-primary p-column-title">#</span>

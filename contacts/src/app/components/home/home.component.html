@@ -143,6 +143,7 @@
 					</p-footer>
 				</p-dialog>
 				<!-- End Dialog Facturas -->
+
 				<!-- Empresas -->
 				<div class="row" *ngIf="listaEmpresas.length > 0; else sinResultados">
 					<div *ngFor="let empresa of listaEmpresas; index as i;" class="col-md-6">
@@ -163,9 +164,15 @@
 							</div>
 							<div class="card-footer">
 								<div class="stats">
-									<i class="material-icons">location_on</i> {{empresa.ciudad}}
-									<i class="material-icons">phone</i> {{empresa.telefono}}
-									<i class="material-icons">mail</i> {{empresa.correo}}
+									<a class="contact-link-home"><i style="top: -1px"
+											class="material-icons">location_on</i>
+										{{empresa.ciudad}}</a>
+									<a class="contact-link-home" href="tel:{{empresa.telefono}}"><i style="top: -1px"
+											class="material-icons">phone</i>
+										{{empresa.telefono}}</a>
+									<a class="contact-link-home" href="mailto:{{empresa.correo}}"><i style="top: -1px"
+											class="material-icons">mail</i>
+										{{empresa.correo}}</a>
 								</div>
 							</div>
 						</div>

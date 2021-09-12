@@ -28,6 +28,7 @@ export class QSeguimientoComponent implements OnInit {
   nombreFiltro: any = "";
   cols: any[];
   exportColumns: any[];
+  listaIdsContactosSeg: any[];
 
   // Utilidades
   msg: any;
@@ -58,7 +59,7 @@ export class QSeguimientoComponent implements OnInit {
 
   inicializar() {
     this.sesionService.objContactoCargado = null;
-    this.cargarContactos();
+    this.consultarIdContactosSeg();
     $('html').removeClass('nav-open');
     this.cols = [
       { field: 'nombreEmpresa', header: this.msg.lbl_table_header_nombre_empresa },
@@ -102,6 +103,33 @@ export class QSeguimientoComponent implements OnInit {
     return color;
   }
 
+  consultarIdContactosSeg() {
+    this.listaIdsContactosSeg = [];
+    try {
+      this.restService.getREST(this.const.urlConsultarIdContactosSeg)
+        .subscribe(resp => {
+          this.listaIdsContactosSeg = JSON.parse(JSON.stringify(resp));
+          this.cargarContactos();
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   cargarContactos() {
     this.listaContactos = [];
     try {
@@ -115,6 +143,9 @@ export class QSeguimientoComponent implements OnInit {
               let contactoTemp = this.convertirProcesoContactoEnum(contacto);
               let contactoDTO = this.objectModelInitializer.getDataDTOContactoModel();
               contactoDTO.contactoTB = contactoTemp;
+              if (this.listaIdsContactosSeg.includes(contactoDTO.contactoTB.idContacto)) {
+                contactoDTO.seleccionado = true;
+              }
               this.listaContactos.push(contactoDTO);
             });
           }
