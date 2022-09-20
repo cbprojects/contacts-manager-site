@@ -46,15 +46,13 @@ jobs:
           ls
     - name: 8. MV Folder HTML
       run: mv dist/contacts dist/html
-    - name: 9. CD new DIST
-      run: cd dist
-    - name: 10. Test ls DIST (2)
-      run: ls dist
-    - name: 11. Compress ZIP of new DIST
-      run: zip -r html.zip html
-    - name: 12. Test ls DIST (3)
-      run: ls dist
-    - name: 13. Transfer DIST SSH
+    - name: 9. CD new DIST and Compress ZIP of new DIST
+      run: |
+           cd dist
+           ls
+           zip -r html.zip html
+           ls
+    - name: 10. Transfer DIST SSH
       uses: garygrossgarten/github-action-scp@v0.7.3
       with:
         local: html.zip
@@ -63,7 +61,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
-    - name: 14. Deploy DIST SSH
+    - name: 11. Deploy DIST SSH
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
