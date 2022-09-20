@@ -44,16 +44,18 @@ jobs:
           cd /var/www/contact-manager.cbaeneprojects.com
           rm -r html
           ls
-    - name: 8. CD new DIST
+    - name: 8. MV Folder HTML
       run: mv dist/contacts dist/html
-    - name: 9. Compress ZIP of new DIST
-      run: zip -r dist/html.zip dist/html
-    - name: 10. Test ls DIST (2)
+    - name: 9. CD new DIST
+      run: cd dist
+    - name: 10. Compress ZIP of new DIST
+      run: zip -r html.zip html
+    - name: 11. Test ls DIST (2)
       run: ls dist
-    - name: 11. Transfer DIST SSH
+    - name: 12. Transfer DIST SSH
       uses: garygrossgarten/github-action-scp@v0.7.3
       with:
-        local: dist/html.zip
+        local: html.zip
         remote: /var/www/contact-manager.cbaeneprojects.com/html.zip
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
