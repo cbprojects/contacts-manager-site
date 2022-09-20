@@ -47,7 +47,7 @@ jobs:
           rm -r html
           ls
     - name: 9. CD new DIST
-      run: mv dist/contacts /dist/html
+      run: mv dist/contacts dist/html
     - name: 10. Compress ZIP of new DIST
       run: zip -r hml.zip /dist/html
     - name: 11. Transfer DIST SSH
