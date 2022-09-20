@@ -30,11 +30,7 @@ jobs:
     - name: 4. Install Dependencies
       run: npm install
     - name: 5. SonarQube Scan
-      run: sonar-scanner 
-        -Dsonar.projectKey=contact-manager-eaf 
-        -Dsonar.sources=. 
-        -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
-        -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      run: npm run sonar
     - name: 6. Build DIST
       run: npm run build --if-present --production
     - name: 7. Delete prev DIST
