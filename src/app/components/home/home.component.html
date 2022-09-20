@@ -1,0 +1,326 @@
+<p-toast></p-toast>
+
+<div class="top" onclick="$('html, body').animate( { scrollTop : 0 }, 800 );">
+	<i class="material-icons">arrow_upward</i>
+</div>
+
+<div class="wrapper">
+	<!-- HEADER -->
+	<app-sidebar></app-sidebar>
+	<!-- HEADER -->
+
+	<div class="main-panel">
+		<!-- HEADER -->
+		<app-header></app-header>
+		<!-- HEADER -->
+
+		<!-- CONTENT -->
+		<div class="content">
+			<div class="container-fluid">
+				<!-- Contadores -->
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="card card-stats">
+							<div class="card-header card-header-info card-header-icon">
+								<div class="card-icon">
+									<i class="material-icons">support_agent</i>
+								</div>
+								<p class="card-category">{{msg.lbl_resumen}}</p>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<i class="material-icons text-info">search</i>
+									<a routerLink="/q-contacto">{{msg.lbl_gestiona_contactos}}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="card card-stats">
+							<div class="card-header card-header-danger card-header-icon">
+								<div class="card-icon">
+									<i class="material-icons">store</i>
+								</div>
+								<p class="card-category">{{msg.lbl_empresas}}</p>
+								<h3 class="card-title">+{{empresasActivas}}</h3>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<i class="material-icons">update</i>{{msg.lbl_actualizado_ahora}}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<div class="card card-stats">
+							<div class="card-header card-header-success card-header-icon">
+								<div class="card-icon">
+									<i class="fa fa-users"></i>
+								</div>
+								<p class="card-category">{{msg.lbl_contactos}}</p>
+								<h3 class="card-title">+{{contactosActivos}}</h3>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<i class="material-icons">update</i>{{msg.lbl_actualizado_ahora}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Dialog Facturas -->
+				<p-dialog [(visible)]="displayModalFactura" [modal]="true" [style]="{width: '80vw'}"
+					[transitionOptions]="'150ms'" [showHeader]="false" (onShow)="aplicarMDB()">
+
+					<!-- Facturas -->
+					<div id="facturacion" class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<div class="card card-stats">
+								<div class="card-header card-header-info card-header-icon">
+									<div class="card-icon">
+										<i class="material-icons">receipt</i>
+									</div>
+									<p class="card-category">{{msg.lbl_facturas}}</p>
+									<h4 class="card-category">{{msg.lbl_mtto_numero_factura}}:
+										{{numeroFactura > 0 ? numeroFactura : msg.lbl_mtto_no_hay_factura_seleccionada}}
+									</h4>
+								</div>
+								<div class="card-body">
+									<div class="table-responsive">
+										<table *ngIf="listaFacturas.length > 0; else sinResultados" class="table">
+											<thead class="text-primary">
+												<th class="text-center">
+													{{msg.lbl_table_header_numero_factura}}
+												</th>
+												<th class="text-center">
+													{{msg.lbl_table_header_tipo_factura}}
+												</th>
+												<th class="text-center">
+													{{msg.lbl_table_header_valor_total}}
+												</th>
+											</thead>
+											<tbody id="facts">
+												<tr id="fact-{{factura.numeroFactura}}"
+													(click)="seleccionarFactura(factura)"
+													*ngFor="let factura of listaFacturas; index as i;">
+													<td class="text-center">
+														{{factura.numeroFactura}}</td>
+													<td class="text-center">
+														{{factura.tipoFactura.label}}</td>
+													<td class="text-center">
+														{{factura.total | currency: 'USD'}}</td>
+												</tr>
+											</tbody>
+										</table>
+										<ng-template #sinResultados>
+											<div class="service-grids">
+												<div class="col-md-12 ser-grid">
+													<p class="sinResultados">
+														{{msg.lbl_info_sin_resultados}}</p>
+												</div>
+											</div>
+										</ng-template>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<p-footer>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<button type="submit" class="btn btn-secondary"
+									(click)="cerrarDialogFactura()">{{msg.lbl_btn_cancelar}}</button>
+								<button type="submit" [disabled]="numeroFactura <= 0"
+									(click)="enviarRestEmailFactura(empresaSeleccionadaTB)"
+									class="btn btn-danger">{{msg.lbl_btn_enviar_factura}}</button>
+								<button type="submit" [disabled]="numeroFactura <= 0" class="btn btn-primary"
+									(click)="solicitarInformacionEmpresa(empresaSeleccionadaTB)">{{msg.lbl_btn_solicitar_informacion}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</p-footer>
+				</p-dialog>
+				<!-- End Dialog Facturas -->
+
+				<!-- Empresas -->
+				<div class="row" *ngIf="listaEmpresas.length > 0; else sinResultados">
+					<div *ngFor="let empresa of listaEmpresas; index as i;" class="col-md-6">
+						<div class="card card-chart">
+							<div [style]="getSombra(empresa.color)"
+								class="card-header card-header-danger cursorPointer">
+								<div class="ct-chart">
+									{{empresa.paginaWeb}}
+									<a href="https://{{empresa.paginaWeb}}" target="_blank"><img width="100%"
+											height="200px" src="assets/images/empresas/{{empresa.idEmpresa}}.jpg" /></a>
+								</div>
+							</div>
+							<div class="card-body">
+								<h4 class="card-title">{{empresa.nombre}}</h4>
+								<p class="card-category">{{empresa.descripcion}}</p>
+								<button *ngIf="contactoEnSesionTB !== undefined && contactoEnSesionTB !== null"
+									type="submit" (click)="mostrarDialogFactura(empresa)"
+									class="btn btn-danger">{{msg.lbl_home_opciones}}</button>
+								<div class="clearfix"></div>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<a class="contact-link-home"><i style="top: -1px"
+											class="material-icons">location_on</i>
+										{{empresa.ciudad}}</a>
+									<a class="contact-link-home" href="tel:{{empresa.telefono}}"><i style="top: -1px"
+											class="material-icons">phone</i>
+										{{empresa.telefono}}</a>
+									<a class="contact-link-home" href="mailto:{{empresa.correo}}"><i style="top: -1px"
+											class="material-icons">mail</i>
+										{{empresa.correo}}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<ng-template #sinResultados>
+					<div class="service-grids">
+						<div class="col-md-12 ser-grid">
+							<p class="sinResultados">
+								{{msg.lbl_info_sin_resultados}}</p>
+						</div>
+					</div>
+				</ng-template>
+				<!-- Graficas -->
+				<div class="row displayNone">
+					<div class="col-md-6">
+						<div class="card card-chart">
+							<div class="card-header card-header-success">
+								<div class="ct-chart" id="chart1">
+									<p-chart type="line" [data]="dataChart1" [options]="basicOptions"></p-chart>
+								</div>
+							</div>
+							<div class="card-body">
+								<h4 class="card-title">Daily Sales</h4>
+								<p class="card-category">
+									<span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase
+									in today sales.
+								</p>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<i class="material-icons">access_time</i> updated 4 minutes ago
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card card-chart">
+							<div class="card-header card-header-warning">
+								<div class="ct-chart" id="chart2">
+									<p-chart type="bar" [data]="dataChart2" [options]="basicOptions"></p-chart>
+								</div>
+							</div>
+							<div class="card-body">
+								<h4 class="card-title">Email Subscriptions</h4>
+								<p class="card-category">Last Campaign Performance</p>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<i class="material-icons">access_time</i> campaign sent 2 days ago
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card card-chart">
+							<div class="card-header card-header-danger">
+								<div class="ct-chart" id="chart3">
+									<p-chart type="line" [data]="dataChart3" [options]="basicOptions"></p-chart>
+								</div>
+							</div>
+							<div class="card-body">
+								<h4 class="card-title">Completed Tasks</h4>
+								<p class="card-category">Last Campaign Performance</p>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<i class="material-icons">access_time</i> campaign sent 2 days ago
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card card-chart">
+							<div class="card-header card-header-info">
+								<div class="ct-chart" id="chart4">
+									<p-chart type="bar" [data]="dataChart4" [options]="basicOptions"></p-chart>
+								</div>
+							</div>
+							<div class="card-body">
+								<h4 class="card-title">Completed Tasks</h4>
+								<p class="card-category">Last Campaign Performance</p>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<i class="material-icons">access_time</i> campaign sent 2 days ago
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Tareas -->
+				<div *ngIf="sesionService.objServiceSesion.esLogueado" class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="card">
+							<div class="card-header card-header-tabs card-header-primary">
+								<div class="nav-tabs-navigation">
+									<div class="nav-tabs-wrapper">
+										<ul class="nav nav-tabs" data-tabs="tabs">
+											<li class="nav-item">
+												<a class="nav-link active" href="#" data-toggle="tab">
+													<i class="material-icons">add_task</i> {{msg.lbl_tareas}}
+													<div class="ripple-container"></div>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="tab-content">
+									<div class="tab-pane active" id="profile">
+										<table class="table" *ngIf="listaTareas.length > 0; else sinResultados"
+											class="table">
+											<tbody>
+												<tr *ngFor="let tarea of listaTareas; index as i;">
+													<td style="width: 50px;" class="text-center">
+														<p-checkbox (onChange)="actualizarTareaRealizada(tarea.tareaTB)"
+															[(ngModel)]="tarea.tareaTB.realizado" binary="true"
+															inputId="binary">
+														</p-checkbox>
+													</td>
+													<td>{{tarea.tareaTB.descripcion}}</td>
+												</tr>
+											</tbody>
+										</table>
+										<ng-template #sinResultados>
+											<div class="service-grids">
+												<div class="col-md-12 ser-grid">
+													<p class="sinResultados">
+														{{msg.lbl_info_sin_resultados}}</p>
+												</div>
+											</div>
+										</ng-template>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CONTENT -->
+
+		<!-- FOOTER -->
+		<app-footer></app-footer>
+		<!-- FOOTER -->
+	</div>
+</div>

@@ -1,0 +1,57 @@
+<p-toast></p-toast>
+
+<div class="wrapper">
+	<!-- CONTENT -->
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<div class="card card-stats">
+						<div class="card-header card-header-info card-header-icon">
+							<div class="card-icon">
+								<i class="material-icons">vpn_key</i>
+							</div>
+							<p class="card-category">{{msg.lbl_header_restore_password}}</p>
+							<h3 class="card-title" style="text-transform: uppercase;">
+								<small> {{(usuario.usuario !== undefined &&
+									usuario.usuario !== null && usuario.usuario
+									!== '') ? usuario.usuario : msg.lbl_header_usuario_no_existe}}</small>
+							</h3>
+						</div>
+					</div>
+					<div *ngIf="usuario.usuario !== undefined && usuario.usuario !== null && usuario.usuario !== ''"
+						class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="bmd-label-floating">{{msg.lbl_header_password}}</label>
+										<input type="password" class="form-control" [(ngModel)]="usuario.clave"
+											(keydown)="loginEnter($event)">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="bmd-label-floating">{{msg.lbl_header_repeat_password}}</label>
+										<input type="password" class="form-control" [(ngModel)]="confirmarClave"
+											(keydown)="loginEnter($event)">
+									</div>
+								</div>
+							</div>
+							<div>
+								<button type="submit" (click)="restaurarClave()"
+									class="btn btn-primary pull-right">{{msg.lbl_header_restore_password}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- CONTENT -->
+
+	<!-- FOOTER -->
+	<app-footer></app-footer>
+	<!-- FOOTER -->
+</div>

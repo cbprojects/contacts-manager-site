@@ -1,0 +1,164 @@
+<p-toast></p-toast>
+
+<div class="sidebar" data-color="azure" data-background-color="black" data-image="../assets/images/sidebar-1.jpg">
+    <div class="logo">
+        <a href="https://www.contact-manager.cbaeneprojects.com" class="simple-text logo-normal">
+            <img src="assets/images/logo.png" width="40px">
+            Contacts Manager
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <ul class="nav hidden-desktop">
+            <li *ngIf="listaTareas.length > 0 && sesionService.objServiceSesion.esLogueado" class="nav-item dropdown">
+                <a id="btnDDNotysMobile" class="nav-link cursorPointer" (click)="toggleDropdown('dropdownNotysMobile')">
+                    <i class="material-icons">notifications</i>
+                    <p class="notification">{{listaTareas.length}} {{msg.lbl_menu_notificaciones}}</p>
+                </a>
+                <div id="dropdownNotysMobile" class="dropdown-menu dropdown-menu-right DD-mobile">
+                    <a *ngFor="let tarea of listaTareas; index as i;" class="dropdown-item color-DD-mobile" href="#">
+                        {{tarea.tareaTB.descripcion}}
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a id="btnDDProfileMobile" class="nav-link cursorPointer"
+                    (click)="toggleDropdown('dropdownProfileMobile')">
+                    <i class="material-icons">person</i>
+                    <p>{{sesionService.objServiceSesion.esLogueado ?
+                        sesionService.objServiceSesion.usuarioSesion.usuario :
+                        'No Logueado'}}</p>
+                </a>
+                <div id="dropdownProfileMobile" class="dropdown-menu dropdown-menu-right DD-mobile">
+                    <a *ngIf="!sesionService.objServiceSesion.esLogueado"
+                        class="dropdown-item color-DD-mobile hover-info" style="margin-top: 0;"
+                        (click)="showDialogLogin()">
+                        <i class="material-icons color-DD-mobile">login</i>
+                        Log In
+                    </a>
+                    <div *ngIf="!sesionService.objServiceSesion.esLogueado" class="dropdown-divider"></div>
+                    <a id="cerrar-mobile"
+                        class="dropdown-item color-DD-mobile hover-danger {{!sesionService.objServiceSesion.esLogueado ? 'noClick' : ''}}"
+                        style="margin-top: 0;" (click)="cerrarSesion()">
+                        <i class="material-icons color-DD-mobile">logout</i>
+                        Log out
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <ul id="menu" class="nav">
+            <li class="nav-item">
+                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/home">
+                    <i class="material-icons">dashboard</i>
+                    <p>{{msg.lbl_menu_inicio}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-contacto">
+                    <i class="material-icons">person</i>
+                    <p>{{msg.lbl_menu_contactos}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-seguimiento">
+                    <i class="material-icons">history</i>
+                    <p>{{msg.lbl_menu_seguimiento}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-empresa">
+                    <i class="material-icons">store</i>
+                    <p>{{msg.lbl_menu_empresas}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-tarea">
+                    <i class="material-icons">add_task</i>
+                    <p>{{msg.lbl_menu_tareas}}</p>
+                </a>
+            </li>
+            <!--<li class="nav-item">
+                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-concepto">
+                    <i class="material-icons">library_books</i>
+                    <p>{{msg.lbl_menu_conceptos}}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="util.toggleMenu()" routerLink="/q-factura">
+                    <i class="material-icons">monetization_on</i>
+                    <p>{{msg.lbl_menu_facturas}}</p>
+                </a>
+            </li>-->
+        </ul>
+    </div>
+    <div class="sidebar-background" style="background-image: url(../assets/images/sidebar-1.jpg) "></div>
+</div>
+
+<!-- Dialog Login -->
+<p-dialog [(visible)]="displayModalLogin" [modal]="true" [style]="{width: '50vw'}" [transitionOptions]="'150ms'"
+    [showHeader]="false" (onShow)="aplicarMDBLogin()">
+
+    <div id="loginMobile" class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="bmd-label-floating">{{msg.lbl_header_usuario}}</label>
+                <input type="text" class="form-control" [(ngModel)]="usuario" (keydown)="loginEnter($event)">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="bmd-label-floating">{{msg.lbl_header_password}}</label>
+                <input type="password" class="form-control" [(ngModel)]="clave" (keydown)="loginEnter($event)">
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-left font-forgot">
+                    <a class="font-black cursorPointer"
+                        (click)="irRecordarClave()">{{msg.lbl_btn_olvidaste_tu_clave}}</a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-secondary"
+                    (click)="cerrarModalLogin()">{{msg.lbl_btn_cancelar}}</button>
+                <button type="submit" class="btn btn-primary" (click)="login()">{{msg.lbl_login}}</button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </p-footer>
+</p-dialog>
+<!-- End Dialog Login -->
+
+<!-- Dialog Restaurar Clave -->
+<p-dialog [(visible)]="displayModalRestaurar" [modal]="true" [style]="{width: '50vw'}" [transitionOptions]="'150ms'"
+    [showHeader]="false" (onShow)="aplicarMDBLogin()">
+
+    <div id="restaurarClaveMobile" class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="bmd-label-floating">{{msg.lbl_header_usuario}}</label>
+                <input type="text" class="form-control" [(ngModel)]="usuarioRecordar" (keydown)="recordarEnter($event)">
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-left font-forgot">
+                    <a class="font-black cursorPointer" (click)="irLogin()">{{msg.lbl_login}}</a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-secondary"
+                    (click)="cerrarModalRestaurar()">{{msg.lbl_btn_cancelar}}</button>
+                <button type="submit" class="btn btn-primary"
+                    (click)="restaurarClaveUsuario()">{{msg.lbl_header_restore_password}}</button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </p-footer>
+</p-dialog>
+<!-- End Dialog Login -->

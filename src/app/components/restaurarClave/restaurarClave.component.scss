@@ -1,0 +1,130 @@
+.containerGallery {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    height: 100vh;
+    max-height: 580px;
+}
+
+.boxGallery {
+    flex: 1;
+    overflow: hidden;
+    transition: 0.5s;
+    margin: 0 2%;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+    line-height: 0;
+}
+
+.boxGallery > img {
+    width: 200%;
+    height: calc(100% - 10vh);
+    object-fit: fill;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.boxGallery > span {
+    font-size: 3.8vh;
+    display: block;
+    text-align: center;
+    height: 10vh;
+    line-height: 2.6;
+    background: #020202;
+    color: white;
+    text-shadow: 3px 3px 1px #761e0e;
+}
+
+.boxGallery:hover {
+    flex: 1 1 30%;
+}
+.boxGallery:hover > img {
+    width: 100%;
+    height: 100%;
+}
+
+.box-legend {
+    position: absolute;
+    width: 500px;
+    word-wrap: break-word;
+    height: calc(100% - 149px);
+    padding: 10px;
+    text-align: justify;
+    color: transparent;
+    line-height: 20px;
+    opacity: 0;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.boxGallery:hover > .box-legend {
+    color: white;
+    backdrop-filter: opacity(20%);
+    opacity: 1;
+}
+
+// Galleria
+:host ::ng-deep .custom-galleria {
+    &.p-galleria {
+        &.fullscreen {
+            display: flex;
+            flex-direction: column;
+
+            .p-galleria-content {
+                flex-grow: 1;
+                justify-content: center;
+            }
+        }
+
+        .p-galleria-content {
+            position: relative;
+        }
+
+        .p-galleria-thumbnail-wrapper {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .p-galleria-thumbnail-items-container {
+            width: 100%;
+        }
+
+        .custom-galleria-footer {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #ffffff;
+
+            > button {
+                background-color: transparent;
+                color: #ffffff;
+                border: 0 none;
+                border-radius: 0;
+                margin: 0.2rem 0;
+
+                &.fullscreen-button {
+                    margin-left: auto;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+            }
+        }
+
+        .title-container {
+            > span {
+                font-size: 0.9rem;
+                padding-left: 0.829rem;
+
+                &.title {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,123 @@
+<p-toast></p-toast>
+
+<div class="wrapper">
+	<!-- HEADER -->
+	<app-sidebar></app-sidebar>
+	<!-- HEADER -->
+
+	<div class="main-panel">
+		<!-- HEADER -->
+		<app-header></app-header>
+		<!-- HEADER -->
+
+		<!-- CONTENT -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header card-header-primary">
+								<h4 class="card-title ">{{msg.lbl_seguimiento}}</h4>
+								<p class="card-category">{{msg.lbl_seguimiento_consulta_subtitles}}</p>
+							</div>
+							<div class="card-body">
+								<p-table *ngIf="listaContactos && listaContactos.length > 0; else sinResultados" #dt
+									[columns]="cols" [value]="listaContactos" dataKey="id" [rows]="rows"
+									[rowsPerPageOptions]="enumRows" [showCurrentPageReport]="true"
+									responsiveLayout="stack" [paginator]="true" paginatorPosition="both"
+									styleClass="table p-datatable-striped p-datatable-sm"
+									currentPageReportTemplate="Registros {first} al {last} de {totalRecords}">
+									<ng-template pTemplate="header" let-columns>
+										<tr class="text-primary">
+											<th style="width: 40px;" class="text-center">
+												<i class="material-icons">star</i>
+											</th>
+											<th style="width: 40px;" class="text-center">
+												<i class="material-icons">tag</i>
+											</th>
+											<th class="text-center" *ngFor="let col of columns">
+												<div *ngIf="col.header !== msg.lbl_table_header_proceso && col.header !== msg.lbl_table_header_industria"
+													pSortableColumn="contactoTB.{{[col.field]}}">{{col.header}}
+													<p-sortIcon field="contactoTB.{{[col.field]}}"></p-sortIcon>
+												</div>
+												<div *ngIf="col.header === msg.lbl_table_header_proceso || col.header === msg.lbl_table_header_industria"
+													pSortableColumn="contactoTB.{{[col.field]}}.label">{{col.header}}
+													<p-sortIcon field="contactoTB.{{[col.field]}}.label"></p-sortIcon>
+												</div>
+												<p-columnFilter
+													*ngIf="col.header !== msg.lbl_table_header_proceso && col.header !== msg.lbl_table_header_industria"
+													matchMode="contains" type="text" field="contactoTB.{{[col.field]}}">
+												</p-columnFilter>
+												<p-columnFilter
+													*ngIf="col.header === msg.lbl_table_header_proceso || col.header === msg.lbl_table_header_industria"
+													matchMode="contains" type="text"
+													field="contactoTB.{{[col.field]}}.label">
+												</p-columnFilter>
+											</th>
+									</ng-template>
+									<ng-template pTemplate="body" let-contacto let-columns="columns">
+										<tr>
+											<td class="text-center">
+												<span class="text-primary p-column-title">Alerta</span>
+												<i class="pi pi-spin pi-star warning" *ngIf="contacto.seleccionado"></i>
+											</td>
+											<td class="text-center" (click)="cargarContacto(contacto.contactoTB)">
+												<span class="text-primary p-column-title">#</span>
+												{{contacto.contactoTB.idContacto}}
+											</td>
+											<td class="text-center" *ngFor="let col of columns"
+												(click)="cargarContacto(contacto.contactoTB)">
+												<span class="text-primary p-column-title">{{col.header}}</span>
+
+												<span
+													*ngIf="col.header !== msg.lbl_table_header_proceso && col.header !== msg.lbl_table_header_industria">{{contacto.contactoTB[col.field]}}</span>
+												<span *ngIf="col.header === msg.lbl_table_header_proceso"
+													class="badge badge-{{cargarColorBadge(contacto.contactoTB[col.field].value)}}">{{contacto.contactoTB[col.field].label}}</span>
+												<span
+													*ngIf="col.header === msg.lbl_table_header_industria">{{contacto.contactoTB[col.field].label}}</span>
+											</td>
+										</tr>
+									</ng-template>
+								</p-table>
+								<ng-template #sinResultados>
+									<div class="service-grids">
+										<div class="col-md-12 ser-grid">
+											<p class="sinResultados">
+												{{msg.lbl_info_sin_resultados}}</p>
+										</div>
+									</div>
+								</ng-template>
+							</div>
+						</div>
+
+						<div class="card card-stats">
+							<div class="card-header card-header-info card-header-icon">
+								<div class="card-icon">
+									<i class="material-icons">nat</i>
+								</div>
+								<p class="card-category">{{msg.lbl_procesos}}</p>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<div class="row" style="padding: 0 10px;">
+										<span class="badge badge-secondary margin-5px">Prospecto</span>
+										<span class="badge badge-primary margin-5px">Contacto</span>
+										<span class="badge badge-success margin-5px">Cliente</span>
+										<span class="badge badge-danger margin-5px">Cliente Perdido</span>
+										<span class="badge badge-warning margin-5px">Potencial Pérdida</span>
+										<span class="badge badge-info margin-5px">Cambio Info.</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CONTENT -->
+
+		<!-- FOOTER -->
+		<app-footer></app-footer>
+		<!-- FOOTER -->
+	</div>
+</div>

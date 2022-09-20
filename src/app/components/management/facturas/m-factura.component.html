@@ -1,0 +1,329 @@
+<p-toast></p-toast>
+
+<div class="wrapper">
+	<!-- HEADER -->
+	<app-sidebar></app-sidebar>
+	<!-- HEADER -->
+
+	<div class="main-panel">
+		<!-- HEADER -->
+		<app-header></app-header>
+		<!-- HEADER -->
+
+		<!-- CONTENT -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header card-header-primary">
+								<h4 class="card-title ">{{msg.lbl_facturas}}</h4>
+								<p class="card-category">{{esNuevaFactura ? msg.lbl_facturas_crea_subtitles :
+									msg.lbl_facturas_actualiza_subtitles}}</p>
+							</div>
+							<div *ngIf="esNuevaFactura" class="card-body">
+								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_numero_factura}}</label>
+											<input type="text" class="form-control" disabled
+												[(ngModel)]="factura.numeroFactura">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label
+												class="bmd-label-floating displayNone">{{msg.lbl_mtto_tipo_factura}}</label>
+											<select id="selectTipoFactura" nice-select
+												[attr.data-value]="factura.tipoFactura"
+												[(ngModel)]="factura.tipoFactura">
+												<option *ngFor="let tipoFactura of enumTipoFactura"
+													[ngValue]="tipoFactura">
+													{{tipoFactura.label}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="card table-responsive" style="box-shadow: none;">
+											<table *ngIf="listaFacturacion.length > 0; else sinResultados"
+												class="table">
+												<thead class="text-primary">
+													<th class="text-center">#</th>
+													<th class="text-center">{{msg.lbl_table_header_concepto}}</th>
+													<th class="text-center">{{msg.lbl_table_header_cantidad}}</th>
+													<th class="text-center">{{msg.lbl_table_header_valor_unitario}}
+													</th>
+													<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
+													</th>
+													<th class="text-center"></th>
+												</thead>
+												<tbody>
+													<tr *ngFor="let facturacion of listaFacturacion; index as i;">
+														<td class="text-center" style="padding: 5px 10px">
+															{{i + 1}}
+														</td>
+														<td style="width: 260px; padding: 5px 10px"
+															*ngIf="facturacion.facturaTB.conceptoFacturaTB !== undefined">
+															<select id="selectConceptoFactura" nice-select
+																[attr.data-value]="facturacion.conceptoTempTB.label"
+																(ngModelChange)="cargarConceptoDeTabla($event, facturacion)"
+																[(ngModel)]="facturacion.conceptoTempTB">
+																<option *ngFor="let concepto of listaConceptos"
+																	[ngValue]="concepto">
+																	{{concepto.label}}</option>
+															</select>
+														</td>
+														<td style="padding: 5px 10px">
+															<input pInputText (keydown)="util.soloNumeros($event)"
+																class="form-control"
+																[disabled]="facturacion.conceptoTempTB.value <= 0"
+																(ngModelChange)="calcularPrecioTotal($event, facturacion)"
+																[(ngModel)]="facturacion.facturaTB.cantidad">
+														</td>
+														<td class="text-center"
+															style="min-width: 150px; padding: 5px 10px">
+															{{facturacion.facturaTB.conceptoFacturaTB.valorUnitario
+															| currency: 'USD'}}
+														</td>
+														<td class="text-center"
+															style="min-width: 150px; padding: 5px 10px">
+															{{facturacion.facturaTB.valorTotal | currency: 'USD'}}
+														</td>
+														<td class="td-actions text-center">
+															<button type="button" (click)="removerItemFactura(i)"
+																class="btn btn-danger btn-link btn-sm">
+																<i class="material-icons">close</i>
+															</button>
+														</td>
+													</tr>
+												</tbody>
+												<tfoot>
+													<tr>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td class="totalFactura text-center">
+															{{msg.lbl_table_header_valor_total}}
+														</td>
+														<td class="totalFactura text-center">{{valorTotalFactura |
+															currency:
+															'USD'}}</td>
+														<td></td>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+										<div>
+											<button type="submit" (click)="anadirItemFactura()"
+												class="btn btn-success pull-right">{{msg.lbl_btn_ite_agregar}}</button>
+											<div class="clearfix"></div>
+										</div>
+										<ng-template #sinResultados>
+											<div class="service-grids">
+												<div class="col-md-12 ser-grid">
+													<p class="sinResultados">
+														{{msg.lbl_info_sin_resultados}}</p>
+												</div>
+											</div>
+										</ng-template>
+									</div>
+								</div>
+								<div>
+									<button type="submit" (click)="crearFactura()"
+										class="btn btn-primary pull-right">{{msg.lbl_btn_crear}}</button>
+									<button type="submit" (click)="volverConsulta()"
+										class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+
+							<div *ngIf="!esNuevaFactura" class="card-body">
+								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_numero_factura}}</label>
+											<input type="text" class="form-control" disabled
+												[(ngModel)]="factura.numeroFactura">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="bmd-label-floating}}">{{msg.lbl_mtto_tipo_factura}}</label>
+											<select id="selectTipoFactura" nice-select
+												[attr.data-value]="factura.tipoFactura"
+												[(ngModel)]="factura.tipoFactura">
+												<option *ngFor="let tipoFactura of enumTipoFactura"
+													[ngValue]="tipoFactura">
+													{{tipoFactura.label}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="card table-responsive" style="box-shadow: none;">
+													<table *ngIf="listaFacturacion.length > 0; else sinResultados"
+														class="table">
+														<thead class="text-primary">
+															<th class="text-center">#</th>
+															<th class="text-center">
+																{{msg.lbl_table_header_concepto}}</th>
+															<th class="text-center">
+																{{msg.lbl_table_header_cantidad}}</th>
+															<th class="text-center">
+																{{msg.lbl_table_header_valor_unitario}}
+															</th>
+															<th class="text-center">{{msg.lbl_mtto_valor_sub_total}}
+															</th>
+															<th class="text-center"></th>
+														</thead>
+														<tbody>
+															<tr
+																*ngFor="let facturacion of listaFacturacion; index as i;">
+																<td class="text-center" style="padding: 5px 10px">
+																	{{i + 1}}
+																</td>
+																<td style="width: 260px; padding: 5px 10px"
+																	*ngIf="facturacion.facturaTB.conceptoFacturaTB !== undefined">
+																	<select id="selectConceptoFactura" nice-select
+																		[attr.data-value]="facturacion.conceptoTempTB.label"
+																		(ngModelChange)="cargarConceptoDeTabla($event, facturacion)"
+																		[(ngModel)]="facturacion.conceptoTempTB">
+																		<option *ngFor="let concepto of listaConceptos"
+																			[ngValue]="concepto">
+																			{{concepto.label}}</option>
+																	</select>
+																</td>
+																<td style="padding: 5px 10px">
+																	<input pInputText
+																		(keydown)="util.soloNumeros($event)"
+																		class="form-control"
+																		[disabled]="facturacion.conceptoTempTB.value <= 0"
+																		(ngModelChange)="calcularPrecioTotal($event, facturacion)"
+																		[(ngModel)]="facturacion.facturaTB.cantidad">
+																</td>
+																<td class="text-center"
+																	style="min-width: 150px; padding: 5px 10px">
+																	{{facturacion.facturaTB.conceptoFacturaTB.valorUnitario
+																	| currency: 'USD'}}
+																</td>
+																<td class="text-center"
+																	style="min-width: 150px; padding: 5px 10px">
+																	{{facturacion.facturaTB.valorTotal | currency:
+																	'USD'}}
+																</td>
+																<td class="td-actions text-center">
+																	<button type="button"
+																		(click)="removerItemFactura(i)"
+																		class="btn btn-danger btn-link btn-sm">
+																		<i class="material-icons">close</i>
+																	</button>
+																</td>
+															</tr>
+														</tbody>
+														<tfoot>
+															<tr>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td class="totalFactura text-center">
+																	{{msg.lbl_table_header_valor_total}}
+																</td>
+																<td class="totalFactura text-center">{{valorTotalFactura
+																	|
+																	currency:
+																	'USD'}}</td>
+																<td></td>
+															</tr>
+														</tfoot>
+													</table>
+												</div>
+												<div>
+													<button type="submit" (click)="anadirItemFactura()"
+														class="btn btn-success pull-right">{{msg.lbl_btn_ite_agregar}}</button>
+													<div class="clearfix"></div>
+												</div>
+												<ng-template #sinResultados>
+													<div class="service-grids">
+														<div class="col-md-12 ser-grid">
+															<p class="sinResultados">
+																{{msg.lbl_info_sin_resultados}}</p>
+														</div>
+													</div>
+												</ng-template>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<button type="submit" (click)="modificarFactura()"
+										class="btn btn-primary pull-right">{{msg.lbl_btn_actualizar}}</button>
+									<button type="submit" (click)="volverConsulta()"
+										class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
+									<button type="submit" class="btn btn-danger"
+										(click)="eliminarFactura()">{{msg.lbl_btn_eliminar}}</button>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+
+						<div *ngIf="!esNuevaFactura" class="card card-stats">
+							<div class="card-header card-header-info card-header-icon">
+								<div class="card-icon">
+									<i class="material-icons">mail</i>
+								</div>
+								<p class="card-category">{{msg.lbl_btn_enviar_correo}} - {{msg.lbl_btn_descargar}}</p>
+							</div>
+							<div class="card-footer">
+								<div class="stats">
+									<div class="row" style="padding: 0 10px;">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label
+													class="bmd-label-floating}}">{{msg.lbl_mtto_nombre_empresa}}</label>
+												<select id="selectEmpresa" nice-select [attr.data-value]="empresaTB"
+													[(ngModel)]="empresaTB">
+													<option *ngFor="let empresa of enumEmpresas" [ngValue]="empresa">
+														{{empresa.label}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label
+													class="bmd-label-floating}}">{{msg.lbl_mtto_nombre_contacto}}</label>
+												<select id="selectContacto" nice-select [attr.data-value]="contactoTB"
+													[(ngModel)]="contactoTB">
+													<option *ngFor="let contacto of enumContactos" [ngValue]="contacto">
+														{{contacto.label}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<button type="submit" class="btn btn-info"
+												(click)="enviarRestEmailFactura()">
+												{{msg.lbl_btn_enviar_correo}}</button>
+											<button type="submit" class="btn btn-danger"
+												(click)="descargarReporteFactura()">
+												{{msg.lbl_btn_descargar}}</button>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CONTENT -->
+
+		<!-- FOOTER -->
+		<app-footer></app-footer>
+		<!-- FOOTER -->
+	</div>
+</div>

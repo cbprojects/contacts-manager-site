@@ -1,0 +1,200 @@
+<p-toast></p-toast>
+
+<!-- WPP -->
+<div id="WPPButton"></div>
+
+<div class="bodyAnim">
+    <div class="is-boxed has-animations" *ngIf="contactoModel">
+        <!-- Industria seleccionada -->
+        <div *ngIf="!verMasIndustrias" class="body-wrap">
+            <header class="site-header">
+            </header>
+
+            <main>
+                <section class="hero">
+                    <div class="container">
+                        <div class="hero-inner">
+                            <div class="hero-copy">
+                                <h1 class="hero-title mt-0">{{tituloIndustria}}</h1>
+                                <!-- <p class="hero-paragraph">{{descripcionIndustria}}</p> -->
+                                <div class="hero-cta">
+                                    <a *ngIf="contactoModel" class="button button-primary"
+                                        (click)="enviarEmailContactoOK()">Contactar</a>
+                                    <!-- Dialog Contactar -->
+                                    <p-dialog [(visible)]="displayContactoOK" [modal]="true" [style]="{width: '80vw'}"
+                                        [transitionOptions]="'150ms'" [showHeader]="false" styleClass="dialogCM">
+                                        <section class="pricing section">
+                                            <div class="container-sm">
+                                                <div class="pricing-inner section-inner no-padding">
+                                                    <div class="pricing-header text-center no-margin">
+                                                        <h2 class="section-title mt-0 pb-24">¡Gracias por Contactarnos!
+                                                        </h2>
+                                                        <p class="section-paragraph mb-0">En breve uno de nuestros
+                                                            asesores se comunicará con usted para más información.</p>
+                                                        <p class="section-paragraph mb-0">
+                                                            "Vamos a cualquier parte de la República, donde
+                                                            usted lo requiera"
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="false" class="pricing-tables-wrap">
+                                                        <div class="pricing-table">
+                                                            <div class="pricing-table-inner is-revealing">
+                                                                <div class="pricing-table-main">
+                                                                    <div
+                                                                        class="pricing-table-features-title text-center text-xs pb-24">
+                                                                        Somos proveedores de las siguientes empresas en
+                                                                        la Industria Automotriz</div>
+                                                                    <ul
+                                                                        class="pricing-table-features list-reset text-xs">
+                                                                        <li class="text-white">
+                                                                            <span>Ronal Group</span>
+                                                                        </li>
+                                                                        <li class="text-white">
+                                                                            <span>Valeo</span>
+                                                                        </li>
+                                                                        <li class="text-white">
+                                                                            <span>Kirchhoff Automotive</span>
+                                                                        </li>
+                                                                        <li class="text-white">
+                                                                            <span>ACPS Automotive</span>
+                                                                        </li>
+                                                                        <li class="text-white">
+                                                                            <span>FEG Automotive</span>
+                                                                        </li>
+                                                                        <li class="text-white">
+                                                                            <span>Cazel</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <div class="pricing-table-header">
+                                                                        <div class="pricing-table-price text-r">
+                                                                            <span
+                                                                                class="pricing-table-price-currency text-xs">Francisco
+                                                                                Javier Pérez
+                                                                            </span>
+                                                                            <span
+                                                                                class="text-xs text-white">/81-2124-6155</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </p-dialog>
+
+                                    <a class="button" (click)="descargarCV('cv.pdf')">Currículum Vitae</a>
+                                </div>
+                            </div>
+                            <div class="hero-figure anime-element">
+                                <svg class="placeholder" width="528" height="396" viewBox="0 0 528 396">
+                                    <rect width="528" height="396" style="fill:transparent;" />
+                                </svg>
+                                <div class="hero-figure-box hero-figure-box-01" data-rotation="45deg"></div>
+                                <div class="hero-figure-box hero-figure-box-02" data-rotation="-45deg"></div>
+                                <div class="hero-figure-box hero-figure-box-03" data-rotation="0deg"></div>
+                                <div class="hero-figure-box hero-figure-box-04" data-rotation="-135deg"></div>
+                                <div class="hero-figure-box hero-figure-box-05"></div>
+                                <div class="hero-figure-box hero-figure-box-06"></div>
+                                <div class="hero-figure-box hero-figure-box-07"></div>
+                                <div class="hero-figure-box hero-figure-box-08" data-rotation="-22deg"></div>
+                                <div class="hero-figure-box hero-figure-box-09" data-rotation="-52deg"></div>
+                                <div class="hero-figure-box hero-figure-box-10" data-rotation="-50deg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="features section">
+                    <div class="container">
+                        <div class="features-inner section-inner has-bottom-divider">
+                            <div *ngIf="false" class="outerArbol">
+                                <div class="feature text-center is-revealing innerArbol">
+                                    <p-organizationChart [value]="arbolIndustria" selectionMode="single"
+                                        [(selection)]="nodoIndustriaSelect" (onNodeSelect)="onNodeSelect($event)"
+                                        styleClass="company">
+                                        <ng-template let-industria pTemplate="industry">
+                                            <div class="node-header p-corner-top">{{industria.label}}</div>
+                                            <div class="node-content">
+                                                <img src="/assets/images/industrias/{{industria.data.avatar}}">
+                                                <div>{{industria.data.name}}</div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-industria pTemplate="industryNoImg">
+                                            <div class="node-header p-corner-top">{{industria.label}}</div>
+                                            <div class="node-content">
+                                                <div>{{industria.data.name}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-organizationChart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cta section">
+                    <div class="container">
+                        <div class="cta-inner section-inner">
+                            <h3 class="section-title mt-0">¿Quieres ver nuestro portafolio para todas las industrias?
+                            </h3>
+                            <div class="cta-cta">
+                                <a class="button button-primary button-wide-mobile"
+                                    (click)="mostrarOtrasIndustrias()">Ver otras industrias</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="site-footer">
+                <div class="container">
+                    <div class="site-footer-inner">
+                        <div class="footer-copyright">&copy; 2019 Solid, all rights reserved
+                        </div>
+                        Edited by <a href="https://www.cbaeneprojects.com" target="_blank"> CBaeneProjects</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Todas las industrias -->
+        <div *ngIf="verMasIndustrias" class="body-wrap">
+            <main>
+                <section class="features section">
+                    <div class="container">
+                        <div class="features-inner section-inner has-bottom-divider">
+                            <div style="margin-top:50px;" class="features-wrap backIndustries">
+                                <div *ngFor="let industry of industries" style="padding:10px" class="feature text-center is-revealing">
+                                    <div class="feature-inner">
+                                        <div class="feature-icon">
+                                            <img src="/assets/images/industrias/{{industry.imagen}}"
+                                                class="imgIndustriaVM" alt="Industria {{industry.nombre}}">
+                                        </div>
+                                        <h4 class="feature-title mt-24 text-sm">{{industry.nombre}}</h4>
+                                        <p class="text-xs mb-0">{{industry.descripcion}}</p>
+                                        <a class="button button-primary button-wide-mobile"
+                                            (click)="seleccionarIndustria(industry)">Ver Servicios</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="site-footer">
+                <div class="container">
+                    <div class="site-footer-inner">
+                        <div class="footer-copyright">&copy; 2019 Solid, all rights reserved
+                        </div>
+                        Edited by <a href="https://www.cbaeneprojects.com" target="_blank"> CBaeneProjects</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/jquery.min.js"></script>

@@ -1,0 +1,85 @@
+<p-toast></p-toast>
+
+<div class="wrapper">
+	<!-- HEADER -->
+	<app-sidebar></app-sidebar>
+	<!-- HEADER -->
+
+	<div class="main-panel">
+		<!-- HEADER -->
+		<app-header></app-header>
+		<!-- HEADER -->
+
+		<!-- CONTENT -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header card-header-primary">
+								<h4 class="card-title ">{{msg.lbl_facturas}}</h4>
+								<p class="card-category">{{msg.lbl_facturas_consulta_subtitles}}</p>
+							</div>
+							<div class="card-body">
+								<div class="row pull-right" style="padding-right: 30px;">
+									<div class="input-group no-border">
+										<input type="text" [(ngModel)]="numeroFacturaFiltro" class="form-control"
+											placeholder="{{msg.lbl_btn_buscar}}">
+										<button type="submit" (click)="consultarFacturaPorNumero()"
+											class="btn btn-white btn-round btn-just-icon">
+											<i class="material-icons">search</i>
+											<div class="ripple-container"></div>
+										</button>
+									</div>
+								</div>
+								<div class="table-responsive">
+									<table *ngIf="listaFacturas.length > 0; else sinResultados" class="table">
+										<thead class="text-primary">
+											<th class="text-center">
+												{{msg.lbl_table_header_numero_factura}}
+											</th>
+											<th class="text-center">
+												{{msg.lbl_table_header_tipo_factura}}
+											</th>
+											<th class="text-center">
+												{{msg.lbl_table_header_valor_total}}
+											</th>
+										</thead>
+										<tbody>
+											<tr *ngFor="let factura of listaFacturasConsulta; index as i;">
+												<td class="text-center" (click)="cargarFactura(factura)">
+													{{factura.numeroFactura}}</td>
+												<td (click)="cargarFactura(factura)">
+													{{factura.tipoFactura.label}}</td>
+												<td class="text-center" (click)="cargarFactura(factura)">
+													{{factura.total | currency: 'USD'}}</td>
+											</tr>
+										</tbody>
+									</table>
+									<ng-template #sinResultados>
+										<div class="service-grids">
+											<div class="col-md-12 ser-grid">
+												<p class="sinResultados">
+													{{msg.lbl_info_sin_resultados}}</p>
+											</div>
+										</div>
+									</ng-template>
+								</div>
+							</div>
+							<div class="card-footer">
+								<button type="submit" class="btn btn-info"
+									routerLink="/m-factura">{{msg.lbl_btn_crear}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CONTENT -->
+
+		<!-- FOOTER -->
+		<app-footer></app-footer>
+		<!-- FOOTER -->
+	</div>
+</div>

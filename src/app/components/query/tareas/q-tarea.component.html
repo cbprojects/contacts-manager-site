@@ -1,0 +1,103 @@
+<p-toast></p-toast>
+
+<div class="wrapper">
+	<!-- HEADER -->
+	<app-sidebar></app-sidebar>
+	<!-- HEADER -->
+
+	<div class="main-panel">
+		<!-- HEADER -->
+		<app-header></app-header>
+		<!-- HEADER -->
+
+		<!-- CONTENT -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header card-header-primary">
+								<h4 class="card-title ">{{msg.lbl_tareas}}</h4>
+								<p class="card-category">{{msg.lbl_tareas_consulta_subtitles}}</p>
+							</div>
+							<div class="card-body">
+								<p-table *ngIf="listaTareas.length > 0; else sinResultados" #dt [columns]="cols"
+									[value]="listaTareas" dataKey="id" [rows]="rows" [rowsPerPageOptions]="enumRows"
+									[showCurrentPageReport]="true" responsiveLayout="stack" [paginator]="true"
+									paginatorPosition="both" styleClass="table p-datatable-striped p-datatable-sm"
+									currentPageReportTemplate="Registros {first} al {last} de {totalRecords}">
+									<ng-template pTemplate="caption">
+										<div class="p-d-flex">
+											<button type="submit" class="btn btn-info" routerLink="/m-tarea"><i
+													class="pi pi-check-circle m-1"></i>{{msg.lbl_btn_crear}}</button>
+											<div class="clearfix"></div>
+											<button type="submit" class="btn" (click)="dt.exportCSV()"
+												pTooltip="Descargar CSV" tooltipPosition="bottom"><i
+													class="pi pi-file-o m-1"></i></button>
+											<div class="clearfix"></div>
+											<button type="submit" class="btn btn-danger" (click)="exportPdf()"
+												pTooltip="Descargar PDF" tooltipPosition="bottom"><i
+													class="pi pi-file-pdf m-1"></i></button>
+											<div class="clearfix"></div>
+											<button type="submit" class="btn btn-success" (click)="exportExcel()"
+												pTooltip="Descargar Excel" tooltipPosition="bottom"><i
+													class="pi pi-file-excel m-1"></i></button>
+											<div class="clearfix"></div>
+										</div>
+									</ng-template>
+									<ng-template pTemplate="header" let-columns>
+										<tr class="text-primary">
+											<th style="width: 40px;" class="text-center">
+												<i class="material-icons">tag</i>
+											</th>
+											<th class="text-center" *ngFor="let col of columns">
+												<div pSortableColumn="{{col.field}}">{{col.header}}
+													<p-sortIcon field="{{col.field}}"></p-sortIcon>
+												</div>
+												<p-columnFilter matchMode="contains" type="text" field="{{col.field}}">
+												</p-columnFilter>
+											</th>
+									</ng-template>
+									<ng-template pTemplate="body" let-tarea let-columns="columns">
+										<tr>
+											<td class="text-center" (click)="cargarTarea(tarea)">
+												<span class="text-primary p-column-title">#</span>
+												{{tarea.idTarea}}
+											</td>
+											<td class="text-center" *ngFor="let col of columns"
+												(click)="cargarTarea(tarea)">
+												<span class="text-primary p-column-title">{{col.header}}</span>
+												<span
+													*ngIf="col.header !== msg.lbl_table_header_fecha_recordatorio">{{tarea[col.field]}}</span>
+												<span
+													*ngIf="col.header === msg.lbl_table_header_fecha_recordatorio">{{formatearFechaTabla(tarea.fechaRecordatorio)}}</span>
+											</td>
+										</tr>
+									</ng-template>
+								</p-table>
+								<ng-template #sinResultados>
+									<div class="service-grids">
+										<div class="col-md-12 ser-grid">
+											<p class="sinResultados">
+												{{msg.lbl_info_sin_resultados}}</p>
+										</div>
+									</div>
+								</ng-template>
+							</div>
+							<div class="card-footer">
+								<button type="submit" class="btn btn-info"
+									routerLink="/m-tarea">{{msg.lbl_btn_crear}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CONTENT -->
+
+		<!-- FOOTER -->
+		<app-footer></app-footer>
+		<!-- FOOTER -->
+	</div>
+</div>

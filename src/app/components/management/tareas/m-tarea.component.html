@@ -1,0 +1,84 @@
+<p-toast></p-toast>
+
+<div class="wrapper">
+	<!-- HEADER -->
+	<app-sidebar></app-sidebar>
+	<!-- HEADER -->
+
+	<div class="main-panel">
+		<!-- HEADER -->
+		<app-header></app-header>
+		<!-- HEADER -->
+
+		<!-- CONTENT -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="{{esNuevaTarea ? 'displayNone' : 'col-md-4'}}">
+						<div class="card card-profile">
+							<div class="card-avatar">
+								<a>
+									<img class="img" src="../assets/images/logo.png" />
+								</a>
+							</div>
+							<div class="card-body">
+								<h2><span class="badge badge-pill badge-info"># {{tarea.idTarea}}</span></h2>
+								<h4 class="card-title">{{tarea.fechaRecordatorio}}</h4>
+								<p class="card-description">{{tarea.descripcion}}
+								</p>
+								<button type="submit" class="btn btn-danger"
+									(click)="eliminarTarea()">{{msg.lbl_btn_eliminar}}</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-{{esNuevaTarea ? '12' : '8'}}">
+						<div class="card">
+							<div class="card-header card-header-primary">
+								<h4 class="card-title ">{{msg.lbl_tareas}}</h4>
+								<p class="card-category">{{esNuevaTarea ? msg.lbl_tareas_crea_subtitles :
+									msg.lbl_tareas_actualiza_subtitles}}</p>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="bmd-label-floating">{{msg.lbl_mtto_descripcion}}</label>
+											<input type="text" class="form-control" [(ngModel)]="tarea.descripcion">
+										</div>
+									</div>
+									<p-checkbox (click)="habilitarFechaRecordatorio()" [(ngModel)]="habilitarFecha"
+										binary="true" inputId="binary">
+									</p-checkbox>
+									<div class="col-md-5">
+										<div class="form-group">
+											<p-calendar placeholder="{{msg.lbl_mtto_fecha_recordatorio}}"
+												id="fechaRecordatorio" [disabled]="!habilitarFecha"
+												[dateFormat]="const.formatoFecha" [minDate]="const.actualDate"
+												[readonlyInput]="true" [(ngModel)]="tarea.fechaRecordatorio"
+												inputStyleClass="form-control">
+											</p-calendar>
+										</div>
+									</div>
+								</div>
+								<div>
+									<button type="submit" (click)="esNuevaTarea ? crearTarea() : modificarTarea()"
+										class="btn btn-primary pull-right">{{esNuevaTarea ?
+										msg.lbl_btn_crear : msg.lbl_btn_actualizar}}</button>
+									<button type="submit" (click)="volverConsulta()"
+										class="btn btn-secondary pull-right">{{msg.lbl_btn_atras}}</button>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- CONTENT -->
+
+		<!-- FOOTER -->
+		<app-footer></app-footer>
+		<!-- FOOTER -->
+	</div>
+</div>

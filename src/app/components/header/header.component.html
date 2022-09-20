@@ -1,0 +1,130 @@
+<p-toast></p-toast>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top no-padding">
+    <div class="container-fluid">
+        <div class="navbar-wrapper" style="min-width: 200px;">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a routerLink="/home">{{msg.lbl_menu_inicio}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{obtenerBreadcrumb(router.url)}}</li>
+                </ol>
+            </nav>
+        </div>
+
+        <button id="toggleMenuMobile" class="navbar-toggler" type="button" data-toggle="collapse"
+            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li *ngIf="listaTareas.length > 0 && sesionService.objServiceSesion.esLogueado"
+                    class="nav-item dropdown">
+                    <a id="btnDDNotys" class="nav-link cursorPointer" (click)="toggleDropdown('dropdownNotys')">
+                        <i class="material-icons">notifications</i>
+                        <span class="notification">{{listaTareas.length}}</span>
+                    </a>
+                    <div id="dropdownNotys" class="dropdown-menu dropdown-menu-right">
+                        <a *ngFor="let tarea of listaTareas; index as i;" class="dropdown-item" href="#">
+                            {{tarea.tareaTB.descripcion}}
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a id="btnDDProfile" class="nav-link cursorPointer" (click)="toggleDropdown('dropdownProfile')">
+                        <i class="material-icons">person</i><span
+                            *ngIf="sesionService.objServiceSesion.esLogueado">{{sesionService.objServiceSesion.usuarioSesion.usuario}}</span>
+                    </a>
+                    <div id="dropdownProfile" class="dropdown-menu dropdown-menu-right">
+                        <a *ngIf="!sesionService.objServiceSesion.esLogueado" class="dropdown-item"
+                            (click)="showDialogLogin()">
+                            <i class="material-icons">login</i>
+                            Log In
+                        </a>
+                        <div *ngIf="!sesionService.objServiceSesion.esLogueado" class="dropdown-divider"></div>
+                        <a id="cerrar-desktop"
+                            class="dropdown-item hover-danger {{!sesionService.objServiceSesion.esLogueado ? 'noClick' : ''}}"
+                            (click)="cerrarSesion()">
+                            <i class="material-icons">logout</i>
+                            Log out
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End Navbar -->
+
+<!-- Dialog Login -->
+<p-dialog [(visible)]="displayModalLogin" [modal]="true" [style]="{width: '50vw'}" [transitionOptions]="'150ms'"
+    [showHeader]="false" (onShow)="aplicarMDBLogin()">
+
+    <div id="login" class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="bmd-label-floating">{{msg.lbl_header_usuario}}</label>
+                <input type="text" class="form-control" [(ngModel)]="usuario" (keydown)="loginEnter($event)">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="bmd-label-floating">{{msg.lbl_header_password}}</label>
+                <input type="password" class="form-control" [(ngModel)]="clave" (keydown)="loginEnter($event)">
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-left font-forgot">
+                    <a class="font-black cursorPointer"
+                        (click)="irRecordarClave()">{{msg.lbl_btn_olvidaste_tu_clave}}</a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-secondary"
+                    (click)="cerrarModalLogin()">{{msg.lbl_btn_cancelar}}</button>
+                <button type="submit" class="btn btn-primary" (click)="login()">{{msg.lbl_login}}</button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </p-footer>
+</p-dialog>
+<!-- End Dialog Login -->
+
+<!-- Dialog Restaurar Clave -->
+<p-dialog [(visible)]="displayModalRestaurar" [modal]="true" [style]="{width: '50vw'}" [transitionOptions]="'150ms'"
+    [showHeader]="false" (onShow)="aplicarMDBLogin()">
+
+    <div id="restaurarClave" class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="bmd-label-floating">{{msg.lbl_header_usuario}}</label>
+                <input type="text" class="form-control" [(ngModel)]="usuarioRecordar" (keydown)="recordarEnter($event)">
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-left font-forgot">
+                    <a class="font-black cursorPointer" (click)="irLogin()">{{msg.lbl_login}}</a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-secondary"
+                    (click)="cerrarModalRestaurar()">{{msg.lbl_btn_cancelar}}</button>
+                <button type="submit" class="btn btn-primary"
+                    (click)="restaurarClaveUsuario()">{{msg.lbl_header_restore_password}}</button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </p-footer>
+</p-dialog>
+<!-- End Dialog Login -->
