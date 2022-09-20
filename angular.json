@@ -51,7 +51,7 @@
               "./src/assets/js/bootstrap-material-design.min.js",
               "./src/assets/js/perfect-scrollbar.jquery.min.js",
               "./src/assets/js/material-dashboard.js",
-              "./node_modules/chart.js/dist/char.min.js",
+              "./node_modules/chart.js/dist/chart.min.js",
               "./src/assets/js/wpp.js",
               "./src/assets/js/main.js"
             ]
@@ -139,7 +139,7 @@
               "./src/assets/js/bootstrap-material-design.min.js",
               "./src/assets/js/perfect-scrollbar.jquery.min.js",
               "./src/assets/js/material-dashboard.js",
-              "./node_modules/chart.js/dist/char.min.js",
+              "./node_modules/chart.js/dist/chart.min.js",
               "./src/assets/js/wpp.js",
               "./src/assets/js/main.js"
             ]
