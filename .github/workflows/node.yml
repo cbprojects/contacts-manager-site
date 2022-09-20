@@ -33,9 +33,7 @@ jobs:
     #   run: npm test
     - name: 6. Build DIST
       run: npm run build --if-present --production
-    - name: 7. Test ls DIST (2)
-      run: ls dist
-    - name: 8. Delete prev DIST
+    - name: 7. Delete prev DIST
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
@@ -46,10 +44,12 @@ jobs:
           cd /var/www/contact-manager.cbaeneprojects.com
           rm -r html
           ls
-    - name: 9. CD new DIST
+    - name: 8. CD new DIST
       run: mv dist/contacts dist/html
-    - name: 10. Compress ZIP of new DIST
+    - name: 9. Compress ZIP of new DIST
       run: zip -r html.zip dist/html
+    - name: 10. Test ls DIST (2)
+      run: ls dist
     - name: 11. Transfer DIST SSH
       uses: garygrossgarten/github-action-scp@v0.7.3
       with:
