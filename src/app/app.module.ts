@@ -1,24 +1,19 @@
 // Imports PrimeNG
-import { DialogModule } from 'primeng/dialog';
-import { MessageModule } from 'primeng/message';
-import { MessagesModule } from 'primeng/messages';
-//import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { ToastModule } from 'primeng/toast';
-//import { GMapModule } from 'primeng/gmap';
-//import { GalleriaModule } from 'primeng/galleria';
-import { ButtonModule } from 'primeng/button';
-//import { SliderModule } from 'primeng/slider';
-//import { FieldsetModule } from 'primeng/fieldset';
 import { ConfirmationService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { DialogModule } from 'primeng/dialog';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import { TableModule } from 'primeng/table';
 import { TimelineModule } from 'primeng/timeline';
+import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
 
@@ -32,7 +27,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -126,7 +121,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpModule,
     HttpClientModule,
     NgSelectModule,
     NiceSelectModule,
