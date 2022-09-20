@@ -1,0 +1,6 @@
+projectKey=contacts-manager-eaf
+serverUrl=https://sonarqube.cbaeneprojects.com
+serverVersion=7.5.0.20543
+dashboardUrl=https://sonarqube.cbaeneprojects.com/dashboard?id=contacts-manager-eaf
+ceTaskId=AYNbvIOgDfHcTD4OSmRV
+ceTaskUrl=https://sonarqube.cbaeneprojects.com/api/ce/task?id=AYNbvIOgDfHcTD4OSmRV
