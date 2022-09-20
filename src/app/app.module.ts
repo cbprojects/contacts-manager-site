@@ -1,5 +1,5 @@
 // Imports PrimeNG
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
@@ -56,7 +56,6 @@ import { RestaurarClaveComponent } from './components/restaurarClave/restaurarCl
 import { Guardian } from './config/Guardian';
 
 // Imports Componentes Internos
-import { MessageService } from 'primeng/api';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LandComponent } from './components/land/land.component';

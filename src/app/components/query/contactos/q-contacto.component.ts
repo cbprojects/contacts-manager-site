@@ -15,7 +15,7 @@ import { EmpresaModel } from 'src/app/model/empresa-model';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { RestService } from '../../../services/rest.service';
 
-declare var $: any;
+declare let $: any;
 
 @Component({
   selector: 'app-q-contacto',
@@ -55,9 +55,6 @@ export class QContactoComponent implements OnInit {
 
   ngOnInit() {
     this.inicializar();
-  }
-
-  ngOnDestroy() {
   }
 
   ngAfterViewChecked(): void {
