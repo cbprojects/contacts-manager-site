@@ -30,7 +30,7 @@ jobs:
     - name: 4. Install Dependencies
       run: npm install
     - name: 5. SonarQube Scan
-      run: mvn clean verify sonar:sonar 
+      run: sonar-scanner 
         -Dsonar.projectKey=contact-manager-eaf 
         -Dsonar.sources=. 
         -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
