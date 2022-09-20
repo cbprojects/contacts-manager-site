@@ -53,7 +53,7 @@ jobs:
     - name: 11. Transfer DIST SSH
       uses: garygrossgarten/github-action-scp@v0.7.3
       with:
-        local: ./dist/html.zip
+        local: dist/html.zip
         remote: /var/www/contact-manager.cbaeneprojects.com/html.zip
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
