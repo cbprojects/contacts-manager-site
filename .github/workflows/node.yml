@@ -45,7 +45,7 @@ jobs:
           rm -r html
           ls
     - name: 8. MV Folder HTML
-      run: mv dist/contacts dist/html
+      run: mv dist/contacts-manager-site dist/html
     - name: 9. CD new DIST and Compress ZIP of new DIST
       run: |
            cd dist
