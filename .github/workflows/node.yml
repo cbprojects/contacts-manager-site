@@ -6,9 +6,7 @@ name: Deploy to Digital Ocean
 on:
   push:
     tags:
-      - '2.*'
-    tags-ignore:
-      - '1.*'
+      - '*'
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
