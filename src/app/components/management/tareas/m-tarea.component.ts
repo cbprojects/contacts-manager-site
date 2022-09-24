@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
 import { MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { TareaModel } from 'src/app/model/tarea-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -23,8 +23,8 @@ export class MTareaComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  tarea: TareaModel;
-  esNuevaTarea: boolean;
+  tarea: TareaModel | undefined;
+  esNuevaTarea: boolean = false;
   habilitarFecha: boolean = false;
   locale: any;
 
@@ -122,7 +122,7 @@ export class MTareaComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
-            if (this.tarea.estado === 0) {
+            if (this.tarea && this.tarea.estado === 0) {
               this.tarea.estado = 1;
             }
 
@@ -134,9 +134,11 @@ export class MTareaComponent implements OnInit {
   }
 
   eliminarTarea() {
-    this.tarea.estado = 0;
-    this.tarea.fechaRecordatorio = new Date();
-    this.modificarTarea();
+    if (this.tarea) {
+      this.tarea.estado = 0;
+      this.tarea.fechaRecordatorio = new Date();
+      this.modificarTarea();
+    }
   }
 
   volverConsulta() {
@@ -144,8 +146,10 @@ export class MTareaComponent implements OnInit {
   }
 
   habilitarFechaRecordatorio() {
-    this.tarea.fechaRecordatorio = undefined;
-    $('#fechaRecordatorio > span > input')[0].click();
+    if (this.tarea) {
+      this.tarea.fechaRecordatorio = undefined;
+      $('#fechaRecordatorio > span > input')[0].click();
+    }
   }
 
 }

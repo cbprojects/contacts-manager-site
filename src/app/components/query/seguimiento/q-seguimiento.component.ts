@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { ContactoModel } from 'src/app/model/contacto-model';
 import { ContactoDTOModel } from 'src/app/model/dto/contacto-dto';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -24,11 +24,11 @@ export class QSeguimientoComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  listaContactos: ContactoDTOModel[];
+  listaContactos: ContactoDTOModel[] = [];
   nombreFiltro: any = "";
-  cols: any[];
-  exportColumns: any[];
-  listaIdsContactosSeg: any[];
+  cols: any[] = [];
+  exportColumns: any[] = [];
+  listaIdsContactosSeg: any[] = [];
 
   // Utilidades
   msg: any;
@@ -63,7 +63,7 @@ export class QSeguimientoComponent implements OnInit {
     } else {
       this.rows = this.enumRows[0];
     }
-    this.sesionService.objContactoCargado = null;
+    this.sesionService.objContactoCargado = undefined;
     this.consultarIdContactosSeg();
     $('html').removeClass('nav-open');
     this.cols = [
@@ -85,7 +85,7 @@ export class QSeguimientoComponent implements OnInit {
     this.router.navigate(['/m-seguimiento']);
   }
 
-  cargarColorBadge(i) {
+  cargarColorBadge(i: number) {
     let color = "dark";
     switch (i) {
       case 1:
@@ -146,7 +146,7 @@ export class QSeguimientoComponent implements OnInit {
         .subscribe(resp => {
           let listaContactosTemp = JSON.parse(JSON.stringify(resp));
           if (listaContactosTemp !== undefined && listaContactosTemp.length > 0) {
-            listaContactosTemp.forEach(contacto => {
+            listaContactosTemp.forEach((contacto: ContactoModel) => {
               let contactoTemp = this.convertirEnums(contacto);
               let contactoDTO = this.objectModelInitializer.getDataDTOContactoModel();
               contactoDTO.contactoTB = contactoTemp;
@@ -182,11 +182,11 @@ export class QSeguimientoComponent implements OnInit {
     return contacto;
   }
 
-  cargarValorEnumerado(i) {
+  cargarValorEnumerado(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().procesoContacto.valores, i);
   }
 
-  cargarValorEnumeradoIndustria(i) {
+  cargarValorEnumeradoIndustria(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().industria.valores, i);
   }
 

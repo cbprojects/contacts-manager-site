@@ -23,10 +23,10 @@ export class MContactoComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  contacto: ContactoModel;
-  esNuevoContacto: boolean;
-  enumProceso: any[];
-  enumIndustria: any[];
+  contacto: ContactoModel = this.objectModelInitializer.getDataContactoModel();
+  esNuevoContacto: boolean = false;
+  enumProceso: any[] = [];
+  enumIndustria: any[] = [];
 
   // Utilidades
   msg: any;
@@ -65,11 +65,11 @@ export class MContactoComponent implements OnInit {
     this.enumIndustria = enums.industria.valores;
   }
 
-  cargarValorEnumerado(i) {
+  cargarValorEnumerado(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().procesoContacto.valores, i);
   }
 
-  cargarValorEnumeradoIndustria(i) {
+  cargarValorEnumeradoIndustria(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().industria.valores, i);
   }
 

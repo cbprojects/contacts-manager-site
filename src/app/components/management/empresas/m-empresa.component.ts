@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
 import { MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { EmpresaModel } from 'src/app/model/empresa-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -23,10 +23,10 @@ export class MEmpresaComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  empresa: EmpresaModel;
-  esNuevaEmpresa: boolean;
+  empresa: EmpresaModel = this.objectModelInitializer.getDataEmpresaModel();
+  esNuevaEmpresa: boolean = false;
 
-  enumIndustria: any[];
+  enumIndustria: any[] = [];
 
   // Utilidades
   msg: any;
@@ -72,7 +72,7 @@ export class MEmpresaComponent implements OnInit {
     this.enumIndustria = enums.industria.valores;
   }
 
-  cargarValorEnumeradoIndustria(i) {
+  cargarValorEnumeradoIndustria(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().industria.valores, i);
   }
 

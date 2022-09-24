@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { TextProperties } from 'src/app/config/TextProperties';
-import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
-import { EmpresaModel } from 'src/app/model/empresa-model';
 import * as FileSaver from 'file-saver';
 import 'jspdf-autotable';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
+import { TextProperties } from 'src/app/config/TextProperties';
+import { Util } from 'src/app/config/Util';
+import { EmpresaModel } from 'src/app/model/empresa-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -25,10 +25,10 @@ export class QEmpresaComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  listaEmpresas: EmpresaModel[];
+  listaEmpresas: EmpresaModel[] = [];
   nombreFiltro: any = "";
-  cols: any[];
-  exportColumns: any[];
+  cols: any[] = [];
+  exportColumns: any[] = [];
 
   // Utilidades
   msg: any;
@@ -63,7 +63,7 @@ export class QEmpresaComponent implements OnInit {
     } else {
       this.rows = this.enumRows[0];
     }
-    this.sesionService.objEmpresaCargado = null;
+    this.sesionService.objEmpresaCargado = undefined;
     this.cargarEmpresas();
     $('html').removeClass('nav-open');
     this.cols = [
@@ -90,9 +90,9 @@ export class QEmpresaComponent implements OnInit {
       empresaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarEmpresasPorFiltros, empresaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: EmpresaModel) => {
               let empresaTemp = this.convertirEnums(temp);
               this.listaEmpresas.push(empresaTemp);
             });
@@ -122,7 +122,7 @@ export class QEmpresaComponent implements OnInit {
     return empresa;
   }
 
-  cargarValorEnumeradoIndustria(i) {
+  cargarValorEnumeradoIndustria(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().industria.valores, i);
   }
 
@@ -145,7 +145,7 @@ export class QEmpresaComponent implements OnInit {
     listaExportar = this.obtenerListaExportar();
     import("jspdf").then(jsPDF => {
       import("jspdf-autotable").then(x => {
-        const doc = new jsPDF.default('p', 'pt');
+        const doc: any = new jsPDF.default('p', 'pt');
         doc['autoTable'](this.exportColumns, listaExportar,
           {
             styles: { fillColor: [12, 180, 201] },

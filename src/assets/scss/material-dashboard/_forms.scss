@@ -23,8 +23,8 @@ form {
 // -----
 // Inputs
 //
-// Reference https://www.google.com/design/spec/components/text-fields.html
-// MDL implementation: https://www.getmdl.io/components/index.html#textfields-section
+// Reference http://www.google.com/design/spec/components/text-fields.html
+// MDL implementation: http://www.getmdl.io/components/index.html#textfields-section
 .form-control {
   background: $bmd-form-control-bg-repeat-y $bmd-form-control-bg-position;
   background-size: $bmd-form-control-bg-size;
@@ -46,9 +46,9 @@ form {
   }
 
   @include material-placeholder() {
-    color: $mdb-input-placeholder-color;
-    font-weight: 400;
-    font-size: $mdb-input-font-size-base;
+      color: $mdb-input-placeholder-color;
+      font-weight: 400;
+      font-size: $mdb-input-font-size-base;
 }
 
   .has-white &{
@@ -125,8 +125,8 @@ form {
   @include bmd-form-color($brand-rose, $brand-rose, $brand-rose, $input-border-color);
 }
 
-// Reference https://www.google.com/design/spec/components/text-fields.html
-// MDL implementation: https://www.getmdl.io/components/index.html#textfields-section
+// Reference http://www.google.com/design/spec/components/text-fields.html
+// MDL implementation: http://www.getmdl.io/components/index.html#textfields-section
 //.variations(unquote(" label"), color, $bmd-input-placeholder-color);  // default label color variations
 
 // Whereas .form-group adds structure, bmd-form-group just needs to make sure we have enough padding for our labels to work.  That's the only purpose.
@@ -136,8 +136,8 @@ form {
   // -----
   // Labels
   //
-  // Reference https://www.google.com/design/spec/components/text-fields.html
-  // MDL implementation: https://www.getmdl.io/components/index.html#textfields-section
+  // Reference http://www.google.com/design/spec/components/text-fields.html
+  // MDL implementation: http://www.getmdl.io/components/index.html#textfields-section
 
     &:not(.has-success):not(.has-danger){
         [class^='bmd-label'],
@@ -170,7 +170,7 @@ form {
   // Optional class to make the text field inline collapsible/expandable (collapsed by default)
   //    This uses the BS collapse js to make the width expand.
   //    `width` class must also be on the element FIXME: do this with JS, it is a marker class and should be implicit because after all, we are an bmd-collapse-inline
-  //    FIXME: js needs to do the focus on shown.bs.collapse event https://v4-alpha.getbootstrap.com/components/collapse/#events
+  //    FIXME: js needs to do the focus on shown.bs.collapse event http://v4-alpha.getbootstrap.com/components/collapse/#events
   &.bmd-collapse-inline {
     display: flex;
     align-items: center;

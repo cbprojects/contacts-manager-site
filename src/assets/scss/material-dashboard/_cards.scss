@@ -23,7 +23,7 @@
   }
 
   .form-check {
-      margin-top: 5px;
+      margin-top: 15px;
   }
 
     .card-title{
@@ -167,7 +167,7 @@
     &.bg-primary,
     &.card-rotate.bg-primary .front,
     &.card-rotate.bg-primary .back{
-      background: linear-gradient(60deg, $cyan-400, $cyan-600);
+      background: linear-gradient(60deg, $purple-400, $purple-600);
     }
     .card-header-info .card-icon,
     .card-header-info .card-text,
@@ -345,7 +345,7 @@
 
   .card-title{
     margin-top: 0;
-    margin-bottom: 3px;
+    margin-bottom: 15px;
   }
 
   .card-body{
@@ -353,7 +353,7 @@
     position: relative;
 
     .form-group {
-      margin: 8px 0 0;
+      margin: 27px 0 0;
     }
   }
 
@@ -487,7 +487,7 @@
       padding: 0;
 
       .card-title + .card-category{
-        color: rgba(255, 255, 255, 0.8);
+        color: rgba(255, 255, 255, 0.62);
         a {
           color: $white-color;
         }

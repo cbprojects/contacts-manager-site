@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
 import { MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { ConceptoFacturaModel } from 'src/app/model/concepto-factura-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -23,10 +23,10 @@ export class MConceptoFacturaComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  concepto: ConceptoFacturaModel;
-  esNuevoConcepto: boolean;
-  enumTipoConcepto: any[];
-  enumUnidad: any[];
+  concepto: ConceptoFacturaModel = this.objectModelInitializer.getDataConceptoFacturaModel();
+  esNuevoConcepto: boolean = false;
+  enumTipoConcepto: any[] = [];
+  enumUnidad: any[] = [];
 
   // Utilidades
   msg: any;
@@ -66,11 +66,11 @@ export class MConceptoFacturaComponent implements OnInit {
     this.enumUnidad = enums.unidad.valores;
   }
 
-  cargarValorEnumerado(i) {
+  cargarValorEnumerado(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoConcepto.valores, i);
   }
 
-  cargarValorEnumeradoUnidad(i) {
+  cargarValorEnumeradoUnidad(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().unidad.valores, i);
   }
 

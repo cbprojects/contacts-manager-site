@@ -1,4 +1,25 @@
-// Imports PrimeNG
+// Imports - Config and Utilities
+import { Enumerados } from './config/Enumerados';
+import { Functions } from './config/Functions';
+import { Guardian } from './config/Guardian';
+import { ObjectModelInitializer } from './config/ObjectModelInitializer';
+import { AppRoutingModule } from './config/Routing';
+import { TextProperties } from './config/TextProperties';
+import { Util } from './config/Util';
+
+// Imports - General
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
+import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
+import { SesionService } from './services/sesionService/sesion.service';
+
+// Imports - PrimeNG Modules
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -16,30 +37,14 @@ import { TimelineModule } from 'primeng/timeline';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
-
-// Imports Utilidades
-import { Functions } from './config/Functions';
-import { TextProperties } from './config/TextProperties';
-import { Util } from './config/Util';
-
-// Imports Esenciales
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
+// Imports - Components
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NiceSelectModule } from "ng-nice-select";
-import { NgxJsonViewerModule } from 'ngx-json-viewer';
-import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
-import { AppRoutingModule } from './config/Routing';
-
-// Imports Componentes
 import { AppComponent } from './app.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
+import { LandComponent } from './components/land/land.component';
 import { MConceptoFacturaComponent } from './components/management/conceptosFacturas/m-concepto.component';
 import { MContactoComponent } from './components/management/contactos/m-contacto.component';
 import { MEmpresaComponent } from './components/management/empresas/m-empresa.component';
@@ -53,18 +58,9 @@ import { QFacturaComponent } from './components/query/facturas/q-factura.compone
 import { QSeguimientoComponent } from './components/query/seguimiento/q-seguimiento.component';
 import { QTareaComponent } from './components/query/tareas/q-tarea.component';
 import { RestaurarClaveComponent } from './components/restaurarClave/restaurarClave.component';
-import { Guardian } from './config/Guardian';
-
-// Imports Componentes Internos
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
-import { LandComponent } from './components/land/land.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { Enumerados } from './config/Enumerados';
-import { ObjectModelInitializer } from './config/ObjectModelInitializer';
-import { SesionService } from './services/sesionService/sesion.service';
 
-// Constantes
+// Constants
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "bgsColor": "#fff",
   "bgsOpacity": 0.5,
@@ -82,7 +78,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "masterLoaderId": "master",
   "overlayBorderRadius": "0",
   "overlayColor": "rgba(40, 40, 40, 0.8)",
-  "pbColor": "#761e0e",
+  "pbColor": "#00acc1",
   "pbDirection": "ltr",
   "pbThickness": 3,
   "hasProgressBar": true,
@@ -91,8 +87,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "textPosition": "center-center"
 };
 
-
-// Componentes
 @NgModule({
   declarations: [
     AppComponent,
@@ -116,6 +110,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     LandComponent
   ],
   imports: [
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgxUiLoaderRouterModule,
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -123,18 +120,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HttpClientModule,
     NgSelectModule,
     NiceSelectModule,
-    RouterModule,
-
-    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    NgxUiLoaderRouterModule,
-    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
     MessagesModule,
     MessageModule,
     ToastModule,
+    RouterModule,
     NgxJsonViewerModule,
-    //GMapModule,
-    //ScrollPanelModule,
-    //GalleriaModule,
     CardModule,
     TimelineModule,
     TooltipModule,
@@ -144,8 +134,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ChartModule,
     CalendarModule,
     TableModule,
-    //SliderModule,
-    //FieldsetModule,
     DialogModule,
     OrganizationChartModule,
     ColorPickerModule

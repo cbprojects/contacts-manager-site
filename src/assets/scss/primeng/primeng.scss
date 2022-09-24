@@ -71,14 +71,17 @@
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
 }
+
 @keyframes p-fadein {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -102,6 +105,10 @@ button {
     user-select: none;
 }
 
+.p-link:disabled {
+    cursor: default;
+}
+
 .p-sr-only {
     border: 0;
     clip: rect(1px, 1px, 1px, 1px);
@@ -119,7 +126,7 @@ button {
 .p-connected-overlay {
     opacity: 0;
     transform: scaleY(0.8);
-    transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1), opacity 0.12s cubic-bezier(0, 0, 0.2, 1);
+    transition: transform .12s cubic-bezier(0, 0, 0.2, 1), opacity .12s cubic-bezier(0, 0, 0.2, 1);
 }
 
 .p-connected-overlay-visible {
@@ -130,18 +137,19 @@ button {
 .p-connected-overlay-hidden {
     opacity: 0;
     transform: scaleY(1);
-    transition: opacity 0.1s linear;
+    transition: opacity .1s linear;
 }
 
 .p-toggleable-content.ng-animating {
     overflow: hidden;
 }
 
+
 .p-badge {
     display: inline-block;
     border-radius: 10px;
     text-align: center;
-    padding: 0 0.5rem;
+    padding: 0 .5rem;
 }
 
 .p-overlay-badge {
@@ -158,9 +166,9 @@ button {
 }
 
 .p-badge-dot {
-    width: 0.5rem;
-    min-width: 0.5rem;
-    height: 0.5rem;
+    width: .5rem;
+    min-width: .5rem;
+    height: .5rem;
     border-radius: 50%;
     padding: 0;
 }
@@ -169,6 +177,7 @@ button {
     padding: 0;
     border-radius: 50%;
 }
+
 .p-button {
     margin: 0;
     display: inline-flex;
@@ -238,14 +247,12 @@ button {
     z-index: 1;
 }
 
-.p-button-label {
-    transition: all 0.2s;
-}
 .p-checkbox {
     display: inline-flex;
     cursor: pointer;
     user-select: none;
     vertical-align: bottom;
+    position: relative;
 }
 
 .p-checkbox-disabled {
@@ -268,13 +275,15 @@ p-checkbox {
 .p-checkbox-label {
     line-height: 1;
 }
+
 .p-colorpicker-panel .p-colorpicker-color {
-    background: transparent url("./images/color.png") no-repeat left top;
+    background: transparent url("../../images/color.png") no-repeat left top;
 }
 
 .p-colorpicker-panel .p-colorpicker-hue {
-    background: transparent url("./images/hue.png") no-repeat left top;
+    background: transparent url("../../images/hue.png") no-repeat left top;
 }
+
 .p-inputtext {
     margin: 0;
 }
@@ -303,7 +312,9 @@ p-checkbox {
 }
 
 .p-inputgroup .p-inputtext,
-.p-fluid .p-inputgroup .p-inputtext {
+.p-fluid .p-inputgroup .p-inputtext,
+.p-inputgroup .p-inputwrapper,
+.p-inputgroup .p-inputwrapper>.p-component {
     flex: 1 1 auto;
     width: 1%;
 }
@@ -318,29 +329,45 @@ p-checkbox {
     position: absolute;
     pointer-events: none;
     top: 50%;
-    margin-top: -0.5rem;
+    margin-top: -.5rem;
     transition-property: all;
     transition-timing-function: ease;
     line-height: 1;
 }
 
-.p-float-label textarea ~ label {
+.p-float-label textarea~label {
     top: 1rem;
 }
 
-.p-float-label input:focus ~ label,
-.p-float-label input.p-filled ~ label,
-.p-float-label textarea:focus ~ label,
-.p-float-label textarea.p-filled ~ label,
-.p-float-label .p-inputwrapper-focus ~ label,
-.p-float-label .p-inputwrapper-filled ~ label {
-    top: -0.75rem;
+.p-float-label input:focus~label,
+.p-float-label input.p-filled~label,
+.p-float-label textarea:focus~label,
+.p-float-label textarea.p-filled~label,
+.p-float-label .p-inputwrapper-focus~label,
+.p-float-label .p-inputwrapper-filled~label {
+    top: -.75rem;
     font-size: 12px;
 }
 
-.p-float-label .input:-webkit-autofill ~ label {
+.p-float-label .input:-webkit-autofill~label {
     top: -20px;
     font-size: 12px;
+}
+
+.p-float-label .p-placeholder,
+.p-float-label input::placeholder,
+.p-float-label .p-inputtext::placeholder {
+    opacity: 0;
+    transition-property: all;
+    transition-timing-function: ease;
+}
+
+.p-float-label .p-focus .p-placeholder,
+.p-float-label input:focus::placeholder,
+.p-float-label .p-inputtext:focus::placeholder {
+    opacity: 1;
+    transition-property: all;
+    transition-timing-function: ease;
 }
 
 .p-input-icon-left,
@@ -349,11 +376,11 @@ p-checkbox {
     display: inline-block;
 }
 
-.p-input-icon-left > i,
-.p-input-icon-right > i {
+.p-input-icon-left>i,
+.p-input-icon-right>i {
     position: absolute;
     top: 50%;
-    margin-top: -0.5rem;
+    margin-top: -.5rem;
 }
 
 .p-fluid .p-input-icon-left,
@@ -361,6 +388,7 @@ p-checkbox {
     display: block;
     width: 100%;
 }
+
 .p-inputtextarea-resizable {
     overflow: hidden;
     resize: none;
@@ -369,6 +397,7 @@ p-checkbox {
 .p-fluid .p-inputtextarea {
     width: 100%;
 }
+
 .p-password {
     position: relative;
     display: inline-flex;
@@ -376,6 +405,8 @@ p-checkbox {
 
 .p-password-panel {
     position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .p-password .p-password-panel {
@@ -395,11 +426,24 @@ p-checkbox {
 .p-fluid .p-password {
     display: flex;
 }
+
+.p-password-clear-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5rem;
+    cursor: pointer;
+}
+
+.p-password-clearable {
+    position: relative;
+}
+
 .p-radiobutton {
     display: inline-flex;
     cursor: pointer;
     user-select: none;
     vertical-align: bottom;
+    position: relative;
 }
 
 .p-radiobutton-box {
@@ -411,13 +455,13 @@ p-checkbox {
 .p-radiobutton-icon {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    transform: translateZ(0) scale(0.1);
+    transform: translateZ(0) scale(.1);
     border-radius: 50%;
     visibility: hidden;
 }
 
 .p-radiobutton-box.p-highlight .p-radiobutton-icon {
-    transform: translateZ(0) scale(1, 1);
+    transform: translateZ(0) scale(1.0, 1.0);
     visibility: visible;
 }
 
@@ -430,6 +474,7 @@ p-radiobutton {
 .p-radiobutton-label {
     line-height: 1;
 }
+
 .p-ripple {
     overflow: hidden;
     position: relative;
@@ -457,25 +502,27 @@ p-radiobutton {
         transform: scale(2.5);
     }
 }
+
 .p-tooltip {
     position: absolute;
     display: none;
-    padding: 0.25em 0.5rem;
+    padding: .25em .5rem;
     max-width: 12.5rem;
 }
 
 .p-tooltip.p-tooltip-right,
 .p-tooltip.p-tooltip-left {
-    padding: 0 0.25rem;
+    padding: 0 .25rem;
 }
 
 .p-tooltip.p-tooltip-top,
 .p-tooltip.p-tooltip-bottom {
-    padding: 0.25em 0;
+    padding: .25em 0;
 }
 
 .p-tooltip .p-tooltip-text {
     white-space: pre-line;
+    word-break: break-word;
 }
 
 .p-tooltip-arrow {
@@ -489,31 +536,31 @@ p-radiobutton {
 .p-tooltip-right .p-tooltip-arrow {
     top: 50%;
     left: 0;
-    margin-top: -0.25rem;
-    border-width: 0.25em 0.25em 0.25em 0;
+    margin-top: -.25rem;
+    border-width: .25em .25em .25em 0;
 }
 
 .p-tooltip-left .p-tooltip-arrow {
     top: 50%;
     right: 0;
-    margin-top: -0.25rem;
-    border-width: 0.25em 0 0.25em 0.25rem;
+    margin-top: -.25rem;
+    border-width: .25em 0 .25em .25rem;
 }
 
 .p-tooltip.p-tooltip-top {
-    padding: 0.25em 0;
+    padding: .25em 0;
 }
 
 .p-tooltip-top .p-tooltip-arrow {
     bottom: 0;
     left: 50%;
-    margin-left: -0.25rem;
-    border-width: 0.25em 0.25em 0;
+    margin-left: -.25rem;
+    border-width: .25em .25em 0;
 }
 
 .p-tooltip-bottom .p-tooltip-arrow {
     top: 0;
     left: 50%;
-    margin-left: -0.25rem;
-    border-width: 0 0.25em 0.25rem;
+    margin-left: -.25rem;
+    border-width: 0 .25em .25rem;
 }

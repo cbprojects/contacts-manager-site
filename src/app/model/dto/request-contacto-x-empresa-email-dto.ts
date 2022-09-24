@@ -2,9 +2,9 @@ import { ContactoModel } from "../contacto-model";
 import { EmpresaModel } from "../empresa-model";
 
 export interface RequestContactoXEmpresaEMailDTOModel {
-    desde;
+    desde: any;
     empresa: EmpresaModel;
     destinatarios: ContactoModel[];
-    asunto;
-    template;
+    asunto: any;
+    template: any;
 }

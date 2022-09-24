@@ -1,7 +1,7 @@
 import { ContactoModel } from "../contacto-model";
 
 export interface RequestContactoEMailDTOModel {
-    desde;
+    desde: any;
     destinatarios: ContactoModel[];
-    asunto;
+    asunto: any;
 }

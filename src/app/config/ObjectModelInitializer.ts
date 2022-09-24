@@ -178,7 +178,7 @@ export class ObjectModelInitializer {
     }
   };
 
-  getDataImagenGalleria(nombreImagen, rutaImagen) {
+  getDataImagenGalleria(nombreImagen: string, rutaImagen: string) {
     return {
       previewImageSrc: rutaImagen,
       thumbnailImageSrc: rutaImagen,

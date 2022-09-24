@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Functions } from './Functions';
-import { TextProperties } from './TextProperties';
-import { ObjectModelInitializer } from './ObjectModelInitializer';
-import { Enumerados } from './Enumerados';
-import { SesionService } from '../services/sesionService/sesion.service';
 import { MessageService } from 'primeng/api';
+import { SesionService } from '../services/sesionService/sesion.service';
+import { Enumerados } from './Enumerados';
+import { Functions } from './Functions';
+import { ObjectModelInitializer } from './ObjectModelInitializer';
+import { TextProperties } from './TextProperties';
 
 declare var $: any;
 
@@ -128,7 +128,7 @@ export class Util {
     return listaRefPorcentajesUri;
   }
 
-  transformarSimboloUri(uriSimbolos, listaRefPorcentajesUri) {
+  transformarSimboloUri(uriSimbolos: string, listaRefPorcentajesUri: any[]) {
     for (let uriObject of listaRefPorcentajesUri) {
       uriSimbolos = uriSimbolos.split(uriObject.codigo).join(uriObject.simbolo);
     }
@@ -141,13 +141,13 @@ export class Util {
     this.messageService.clear();
   }
 
-  actualizarLista(listaRemover, listaActualizar) {
+  actualizarLista(listaRemover: any[], listaActualizar: any[]) {
     if (listaRemover.length <= 0) {
       return listaActualizar;
     }
-    let nuevaLista = [];
+    let nuevaLista: any[] = [];
     let lista = listaRemover;
-    listaActualizar.forEach(function (element, index) {
+    listaActualizar.forEach(function (element: any, index: number) {
       if (listaRemover.indexOf(index) < 0) {
         nuevaLista.push(element);
       }
@@ -155,7 +155,7 @@ export class Util {
     return nuevaLista;
   }
 
-  llenarListaRemover(listaRemover, indiceLista) {
+  llenarListaRemover(listaRemover: any[], indiceLista: number) {
     let p = listaRemover.indexOf(indiceLista)
     if (p < 0) {
       listaRemover.push(indiceLista);
@@ -164,7 +164,7 @@ export class Util {
     }
   }
 
-  readOnlyXphase(listaPhases) {
+  readOnlyXphase(listaPhases: any[]) {
     if (listaPhases === null || listaPhases.length <= 0) {
       return false;
     }
@@ -176,12 +176,7 @@ export class Util {
     return false;
   }
 
-  readOnlyXpermiso(accion) {
-
-    return false;
-  }
-
-  visebleXphase(listaPhases) {
+  visebleXphase(listaPhases: any[]) {
     if (listaPhases === null || listaPhases.length <= 0) {
       return false;
     }
@@ -199,7 +194,7 @@ export class Util {
     return true;
   }
 
-  getEnumValString(array) {
+  getEnumValString(array: any[]) {
     let lis = [];
     for (let ind in array) {
       let obj = { value: 0, label: '' };
@@ -210,7 +205,7 @@ export class Util {
     return lis;
   }
 
-  getEmunName(enumerado, id) {
+  getEmunName(enumerado: any[], id: number) {
     let name = '';
     enumerado.forEach(function (obj) {
       if (obj.value === id) {
@@ -220,10 +215,10 @@ export class Util {
     return name;
   }
 
-  getValorEnumerado(enumerado, id) {
+  getValorEnumerado(enumerado: any, id: number) {
     let valor = { value: 0, label: '' };
 
-    for (var obj of enumerado) {
+    for (let obj of enumerado) {
       if (obj.value === id) {
         valor = obj;
         break;
@@ -233,10 +228,10 @@ export class Util {
     return valor;
   }
 
-  getLabelEnumerado(enumerado, idLabel) {
+  getLabelEnumerado(enumerado: any, idLabel: string) {
     let valor = { value: 0, label: '' };
 
-    for (var obj of enumerado) {
+    for (let obj of enumerado) {
       if (obj.label === idLabel) {
         valor = obj;
         break;
@@ -247,31 +242,40 @@ export class Util {
   }
 
   //mostrar o ocultar un modal
-  ocultarMostrarModal(idModal, cuerpoModal) {
+  ocultarMostrarModal(idModal: string, cuerpoModal: string) {
     if (cuerpoModal !== null) {
       this.cambiarTextoModal(idModal, cuerpoModal)
     }
     this.classToggleModalParam(idModal);
   }
-  classToggleModal(idModal) {
+  classToggleModal(idModal: string) {
     $('#' + idModal).toggleClass('show');
     $('#' + idModal).toggleClass('modalVisible');
   }
-  classToggleModalParam(id) {
+  classToggleModalParam(id: string) {
     $('#' + id).toggleClass('show');
     $('#' + id).toggleClass('modalVisible');
     return true;
   }
-  tipoDeVariable(obj) {
-    return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
+  tipoDeVariable(obj: any) {
+    try {
+      let x = ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/);
+      if (x) {
+        return x[1].toLowerCase();
+      } else {
+        return "Type not mapped";
+      }
+    } catch (e) {
+      return "Type not mapped";
+    }
   }
-  cambiarTextoModal(idModal, cuerpoModal) {
-    $('#' + idModal + ' .replc').html(function (buscayreemplaza, reemplaza) {
+  cambiarTextoModal(idModal: string, cuerpoModal: string) {
+    $('#' + idModal + ' .replc').html(function (reemplaza: string) {
       return reemplaza.replace('XXX', cuerpoModal);
     });
   }
 
-  clonarObj(obj) {
+  clonarObj(obj: any) {
     if (obj === null || typeof obj !== 'object') {
       return obj;
     }
@@ -284,7 +288,7 @@ export class Util {
     return temp;
   }
 
-  abrirNav(event) {
+  abrirNav(event: any) {
     let element = $(event.target);
     while (element.get(0).tagName.toString().toUpperCase() !== 'LI') {
       element = $(element).parent();
@@ -292,7 +296,7 @@ export class Util {
     element.toggleClass('open');
   }
 
-  abrirDropMenu(event) {
+  abrirDropMenu(event: any) {
     let element = $(event.target);
     let isOpened = element.get(0).getAttribute('aria-expanded');
     if (isOpened === 'true') {
@@ -304,7 +308,7 @@ export class Util {
     $(element).parent().toggleClass('open');
   }
 
-  abrirDropButton(event) {
+  abrirDropButton(event: any) {
     let element = $(event.target);
 
     while (element.get(0).tagName.toString().toUpperCase() !== 'BUTTON') {
@@ -325,20 +329,20 @@ export class Util {
     return url.split('4200')[1];
   }
 
-  showPopUpById(id) {
+  showPopUpById(id: string) {
     $('#' + id).fadeIn();
     $('#' + id).toggleClass('in');
     $('body').append($('<div>', { class: 'modal-backdrop fade in' }));
   }
 
-  hidePopUpById(id) {
+  hidePopUpById(id: string) {
     $('#' + id).fadeOut();
     $('#' + id).toggleClass('in');
     $('.modal-backdrop').remove();
   }
 
   // Función que arma el enumerado de Ubicaciones desde la lista
-  obtenerEnumeradoDeListaUbicacion(lista, tipoUbicacion) {
+  obtenerEnumeradoDeListaUbicacion(lista: any[], tipoUbicacion: number) {
     let enumerado = [];
     for (let i in lista) {
       let ubicacion = lista[i];
@@ -351,7 +355,7 @@ export class Util {
   }
 
   // Función que arma el enumerado de Terceros desde la lista
-  obtenerEnumeradoDeListaTercero(lista) {
+  obtenerEnumeradoDeListaTercero(lista: any[]) {
     let enumerado = [];
     for (let i in lista) {
       let tercero = lista[i];
@@ -364,7 +368,7 @@ export class Util {
   }
 
   // Función que arma el model de las tablas de la aplicación
-  armarTabla(cabeceras, lista) {
+  armarTabla(cabeceras: any[], lista: any[]) {
     let cols = [];
 
     if (lista !== null && lista.length > 0) {
@@ -389,7 +393,7 @@ export class Util {
   }
 
   // Funcion que muestra notificaciones de errores, advertencias o informativos
-  mostrarNotificacion(exc) {
+  mostrarNotificacion(exc: any) {
     let listaMensajes: any = [];
     if (exc !== null && exc.mensaje !== null && typeof exc.mensaje !== 'undefined' && exc.mensaje.length > 0) {
       let title = exc.mensaje.split(":")[0];
@@ -448,7 +452,7 @@ export class Util {
   }
 
   // Función para obtener el objeto ubicacion de una lista con el Id que está en un combo
-  obtenerUbicacionDeEnum(idUbicacionEnum, listaUbicaciones) {
+  obtenerUbicacionDeEnum(idUbicacionEnum: number, listaUbicaciones: any[]) {
     let ubicacion: any;
     for (let i in listaUbicaciones) {
       let ubi = listaUbicaciones[i];
@@ -461,7 +465,7 @@ export class Util {
   }
 
   // Función para obtener el objeto ubicacion de una lista con el código
-  obtenerUbicacionPorCodigo(codigoUbicacion, listaUbicaciones, tipoUbicacion) {
+  obtenerUbicacionPorCodigo(codigoUbicacion: string, listaUbicaciones: any[], tipoUbicacion: number) {
     let ubicacion: any;
     let label = "";
 
@@ -494,7 +498,7 @@ export class Util {
   }
 
   // Función para obtener el objeto Tercero de una lista con el Id que está en un combo
-  obtenerTerceroDeEnum(idTerceroEnum, listaTerceros) {
+  obtenerTerceroDeEnum(idTerceroEnum: number, listaTerceros: any[]) {
     let tercero: any;
     for (let i in listaTerceros) {
       let ter = listaTerceros[i];
@@ -507,14 +511,14 @@ export class Util {
   }
 
   // Función que permite validar la estructura de un Email de acuerdo a un patrón REGEX
-  validarEstructuraEmail(email) {
+  validarEstructuraEmail(email: string) {
     let emailRegex = new RegExp('^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$');
 
     return emailRegex.test(email);
   }
 
   // Función para buscar el código de un usuario en una lista de usuarios
-  usuarioInLista(usuario, listaUsuarios) {
+  usuarioInLista(usuario: string, listaUsuarios: any[]) {
     let result = false;
     for (let i in listaUsuarios) {
       let user = listaUsuarios[i];
@@ -527,7 +531,7 @@ export class Util {
   }
 
   // Función para buscar el email de un usuario en una lista de usuarios
-  emailInLista(email, listaUsuarios) {
+  emailInLista(email: string, listaUsuarios: any[]) {
     let result = false;
     for (let i in listaUsuarios) {
       let user = listaUsuarios[i];
@@ -540,7 +544,7 @@ export class Util {
   }
 
   // Función para buscar el numero de documento y tipo de documento de un usuario en una lista de usuarios
-  documentoInLista(tipoDocumento, numeroDocumento, listaUsuarios) {
+  documentoInLista(tipoDocumento: number, numeroDocumento: string, listaUsuarios: any[]) {
     let result = false;
     for (let i in listaUsuarios) {
       let user = listaUsuarios[i];
@@ -553,22 +557,22 @@ export class Util {
   }
 
   // Función que simula un click en un componente dado su ID
-  simularClick(id) {
-    document.getElementById(id).click();
+  simularClick(id: string) {
+    $(`#${id}`).click();
   }
 
   // Función que copia de uno a otro elemento
-  copiarElemento(source, target) {
+  copiarElemento(source: any, target: any) {
     return Object.assign(target, source);
   }
 
-  construirMensajeExcepcion(error, summary) {
+  construirMensajeExcepcion(error: any, summary: string) {
     let listaMensajes = [];
 
     if (error !== undefined && error !== null && error.mensaje !== undefined && error.mensaje !== null) {
       // Extraemos por el split de mensajes |
       let listaErrores = error.mensaje.split('|');
-      listaErrores.forEach(errorMSG => {
+      listaErrores.forEach((errorMSG: string) => {
         let mensaje = { severity: '', summary: '', detail: '', sticky: true };
         Object.assign(this.mensaje, mensaje);
         mensaje.severity = this.const.severity[3];
@@ -588,7 +592,7 @@ export class Util {
     return listaMensajes;
   }
 
-  soloNumeros(e) {
+  soloNumeros(e: any) {
     let key = window.Event ? e.which : e.keyCode;
     return (key >= 37 && key <= 40) || (key >= 48 && key <= 57) || (key === 46) || (key === 8) || (e.shiftKey === 1);
   }

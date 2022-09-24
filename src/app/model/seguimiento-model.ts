@@ -1,16 +1,16 @@
 import { ContactoModel } from "./contacto-model";
 
 export interface SeguimientoModel {
-    idSeguimiento;
+    idSeguimiento: any;
     contactoTB: ContactoModel;
-    descripcion;
-    fechaSeguimiento;
-    nivel;
+    descripcion: any;
+    fechaSeguimiento: any;
+    nivel: any;
 
     // Auditoria
-    estado;
-    fechaCreacion;
-    fechaActualizacion;
-    usuarioCreacion;
-    usuarioActualizacion;
+    estado: any;
+    fechaCreacion: any;
+    fechaActualizacion: any;
+    usuarioCreacion: any;
+    usuarioActualizacion: any;
 }

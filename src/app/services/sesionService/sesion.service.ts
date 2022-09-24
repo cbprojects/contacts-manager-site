@@ -4,7 +4,6 @@ import { ConceptoFacturaModel } from 'src/app/model/concepto-factura-model';
 import { ContactoModel } from 'src/app/model/contacto-model';
 import { FacturaConsultaDTOModel } from 'src/app/model/dto/factura-consulta-dto';
 import { EmpresaModel } from 'src/app/model/empresa-model';
-import { FacturaModel } from 'src/app/model/factura-model';
 import { TareaModel } from 'src/app/model/tarea-model';
 
 declare var $: any;
@@ -15,28 +14,28 @@ declare var $: any;
 export class SesionService {
   // Fases
   objServiceSesion: any;
-  objContactoCargado: ContactoModel;
-  objEmpresaCargado: EmpresaModel;
-  objTareaCargado: TareaModel;
-  objFacturaCargado: FacturaConsultaDTOModel;
-  objConceptoFacturaCargado: ConceptoFacturaModel;
-  contactoEnSesionTB: ContactoModel;
+  objContactoCargado: ContactoModel | undefined;
+  objEmpresaCargado: EmpresaModel | undefined;
+  objTareaCargado: TareaModel | undefined;
+  objFacturaCargado: FacturaConsultaDTOModel | undefined;
+  objConceptoFacturaCargado: ConceptoFacturaModel | undefined;
+  contactoEnSesionTB: ContactoModel | undefined;
   usuarioRestaurarClave: any;
   esLogueado: boolean = false;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
     this.inicializar();
     if (localStorage.getItem('objServiceSesion') !== undefined && localStorage.getItem('objServiceSesion') !== null) {
-      this.objServiceSesion = JSON.parse(localStorage.getItem('objServiceSesion'));
+      this.objServiceSesion = JSON.parse(JSON.stringify(localStorage.getItem('objServiceSesion')));
     }
   }
 
   inicializar() {
-    this.objContactoCargado = null;
-    this.objEmpresaCargado = null;
-    this.objTareaCargado = null;
-    this.objFacturaCargado = null;
-    this.objConceptoFacturaCargado = null;
+    this.objContactoCargado = undefined;
+    this.objEmpresaCargado = undefined;
+    this.objTareaCargado = undefined;
+    this.objFacturaCargado = undefined;
+    this.objConceptoFacturaCargado = undefined;
 
     this.objServiceSesion = this.objectModelInitializer.getDataServiceSesion();
     this.objServiceSesion.phase = undefined;

@@ -17,7 +17,7 @@
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-header {{empresa && empresa.idEmpresa > 0 ? 'header-color-custom' : 'card-header-primary'}}"
-								[ngStyle]="{'background-color': empresa.color}">
+								[ngStyle]="{'background-color': empresa ? empresa.color : 'black'}">
 								<div class="row justify-content-right">
 									<div class="col-md-6">
 										<h4 class="card-title {{empresa && empresa.idEmpresa > 0 ? 'text-white' : ''}}">
@@ -27,7 +27,7 @@
 											{{msg.lbl_contactos_consulta_subtitles}}</p>
 									</div>
 									<div class="col-md-2">
-										<img *ngIf="empresa && empresa.idEmpresa > 0" class="imgMiniEmpresa"
+										<img alt="img" *ngIf="empresa && empresa.idEmpresa > 0" class="imgMiniEmpresa"
 											src="../assets/images/empresas/{{empresa.idEmpresa}}.jpg" />
 									</div>
 									<div class="col-md-4">
@@ -54,7 +54,7 @@
 											<button type="submit" class="btn btn-info" routerLink="/m-contacto"><i
 													class="pi pi-user-plus m-1"></i>{{msg.lbl_btn_crear}}</button>
 											<div class="clearfix"></div>
-											<button type="submit" class="btn" (click)="dt.exportCSV()"
+											<button type="submit" class="btn btn-default" (click)="dt.exportCSV()"
 												pTooltip="Descargar CSV" tooltipPosition="bottom"><i
 													class="pi pi-file-o m-1"></i></button>
 											<div class="clearfix"></div>
@@ -72,7 +72,7 @@
 										<tr class="text-primary">
 											<th style="width: 40px;" class="text-center">
 												<p-checkbox (click)="seleccionarTodosContactos()"
-													[(ngModel)]="seleccionarTodos" binary="true" inputId="binary">
+													[(ngModel)]="seleccionarTodos" [binary]="true" inputId="binary">
 												</p-checkbox>
 											</th>
 											<th style="width: 40px;" class="td-actions text-center">
@@ -111,7 +111,8 @@
 											<td class="text-center">
 												<span class="text-primary p-column-title">Seleccionar</span>
 												<p-checkbox (click)="validarSeleccionarTodos()"
-													[(ngModel)]="contacto.seleccionado" binary="true" inputId="binary">
+													[(ngModel)]="contacto.seleccionado" [binary]="true"
+													inputId="binary">
 												</p-checkbox>
 											</td>
 											<td class="td-actions text-center">

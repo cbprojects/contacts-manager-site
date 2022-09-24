@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { ConceptoFacturaModel } from 'src/app/model/concepto-factura-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -23,7 +23,7 @@ export class QConceptoFacturaComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  listaConceptos: ConceptoFacturaModel[];
+  listaConceptos: ConceptoFacturaModel[] = [];
   descripcionFiltro: any = "";
 
   // Utilidades
@@ -50,7 +50,7 @@ export class QConceptoFacturaComponent implements OnInit {
   }
 
   inicializar() {
-    this.sesionService.objConceptoFacturaCargado = null;
+    this.sesionService.objConceptoFacturaCargado = undefined;
     this.cargarConceptos();
     $('html').removeClass('nav-open');
     //$('#toggleMenuMobile').click();
@@ -69,9 +69,9 @@ export class QConceptoFacturaComponent implements OnInit {
       conceptoFiltro.descripcion = this.descripcionFiltro;
       this.restService.postREST(this.const.urlConsultarConceptosFacturasPorFiltros, conceptoFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: ConceptoFacturaModel) => {
               let conceptoTemp = this.convertirConceptoEnum(temp);
               this.listaConceptos.push(conceptoTemp);
             });
@@ -103,9 +103,9 @@ export class QConceptoFacturaComponent implements OnInit {
       conceptoFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarConceptosFacturasPorFiltros, conceptoFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: ConceptoFacturaModel) => {
               let conceptoTemp = this.convertirConceptoEnum(temp);
               this.listaConceptos.push(conceptoTemp);
             });
@@ -136,11 +136,11 @@ export class QConceptoFacturaComponent implements OnInit {
     return concepto;
   }
 
-  cargarValorEnumerado(i) {
+  cargarValorEnumerado(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoConcepto.valores, i);
   }
 
-  cargarValorEnumeradoUnidad(i) {
+  cargarValorEnumeradoUnidad(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().unidad.valores, i);
   }
 }

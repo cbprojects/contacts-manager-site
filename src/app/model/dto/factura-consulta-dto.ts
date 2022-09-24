@@ -1,6 +1,8 @@
+import { FacturaModel } from "../factura-model";
+
 export interface FacturaConsultaDTOModel {
-    numeroFactura;
-    total;
-    tipoFactura;
-    listaFacturas;
+    numeroFactura: any;
+    total: any;
+    tipoFactura: any;
+    listaFacturas: FacturaModel[];
 }

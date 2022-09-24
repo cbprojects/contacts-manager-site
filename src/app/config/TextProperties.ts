@@ -8,7 +8,7 @@ export class TextProperties {
   constructor(public objectModelInitializer: ObjectModelInitializer) {
   }
 
-  getProperties(idioma) {
+  getProperties(idioma: number) {
     let constant = this.objectModelInitializer.getConst();
     return {
       // Labels

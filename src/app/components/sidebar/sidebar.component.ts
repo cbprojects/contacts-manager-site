@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
@@ -74,7 +74,7 @@ export class SidebarComponent implements OnInit {
     }, 10);
   }
 
-  toggleDropdown(id) {
+  toggleDropdown(id: string) {
     if (id === 'dropdownProfileMobile' && $('#dropdownNotysMobile').hasClass('show')) {
       $('#dropdownNotysMobile').removeClass('show');
     }
@@ -142,13 +142,13 @@ export class SidebarComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  loginEnter(event) {
+  loginEnter(event: any) {
     if (event.keyCode === 13) {
       this.login();
     }
   }
 
-  recordarEnter(event) {
+  recordarEnter(event: any) {
     if (event.keyCode === 13) {
       this.restaurarClaveUsuario();
     }
@@ -217,7 +217,7 @@ export class SidebarComponent implements OnInit {
       tareaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarTareasPorFiltros, tareaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any[] = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
             listaTemp.forEach(temp => {
               if (temp.fechaRecordatorio !== undefined && temp.fechaRecordatorio !== null && !temp.realizado) {

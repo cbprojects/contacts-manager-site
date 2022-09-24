@@ -1,6 +1,6 @@
 export interface RequestEMailDTOModel {
-    desde;
-    para: string[];
-    asunto;
-    parametros: string[];
+    desde: any;
+    para: string[]: any;
+    asunto: any;
+    parametros: string[]: any;
 }

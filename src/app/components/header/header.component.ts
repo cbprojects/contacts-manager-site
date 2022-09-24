@@ -1,15 +1,16 @@
+import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../.././services/rest.service';
+import { fadeIn } from 'ng-animate';
+import { MessageService } from 'primeng/api';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
-import { trigger, transition, useAnimation } from '@angular/animations';
-import { tada, fadeIn } from 'ng-animate';
-import { MessageService } from 'primeng/api';
-import { UsuarioModel } from 'src/app/model/usuario-model';
 import { TareaDTOModel } from 'src/app/model/dto/tarea-dto';
+import { TareaModel } from 'src/app/model/tarea-model';
+import { UsuarioModel } from 'src/app/model/usuario-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../.././services/rest.service';
 
 declare var $: any;
 
@@ -85,7 +86,7 @@ export class HeaderComponent implements OnInit {
     return ruta;
   }
 
-  toggleDropdown(id) {
+  toggleDropdown(id: string) {
     if (id === 'dropdownProfile' && $('#dropdownNotys').hasClass('show')) {
       $('#dropdownNotys').removeClass('show');
     }
@@ -153,13 +154,13 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  loginEnter(event) {
+  loginEnter(event: any) {
     if (event.keyCode === 13) {
       this.login();
     }
   }
 
-  recordarEnter(event) {
+  recordarEnter(event: any) {
     if (event.keyCode === 13) {
       this.restaurarClaveUsuario();
     }
@@ -228,9 +229,9 @@ export class HeaderComponent implements OnInit {
       tareaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarTareasPorFiltros, tareaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: TareaModel[] = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: TareaModel) => {
               if (temp.fechaRecordatorio !== undefined && temp.fechaRecordatorio !== null && !temp.realizado) {
                 let tareaDTO = this.objectModelInitializer.getDataDTOTareaModel();
                 tareaDTO.tareaTB = temp;
@@ -238,6 +239,7 @@ export class HeaderComponent implements OnInit {
               }
             });
           }
+
         },
           error => {
             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);

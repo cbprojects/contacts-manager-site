@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
-import { FacturaModel } from 'src/app/model/factura-model';
 import { FacturaConsultaDTOModel } from 'src/app/model/dto/factura-consulta-dto';
+import { FacturaModel } from 'src/app/model/factura-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -24,8 +24,8 @@ export class QFacturaComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  listaFacturas: FacturaModel[];
-  listaFacturasConsulta: FacturaConsultaDTOModel[];
+  listaFacturas: FacturaModel[] = [];
+  listaFacturasConsulta: FacturaConsultaDTOModel[] = [];
   numeroFacturaFiltro: any = "";
 
   // Utilidades
@@ -52,7 +52,7 @@ export class QFacturaComponent implements OnInit {
   }
 
   inicializar() {
-    this.sesionService.objFacturaCargado = null;
+    this.sesionService.objFacturaCargado = undefined;
     this.cargarFacturas();
     $('html').removeClass('nav-open');
     //$('#toggleMenuMobile').click();
@@ -64,7 +64,7 @@ export class QFacturaComponent implements OnInit {
     this.router.navigate(['/m-factura']);
   }
 
-  cargarValorEnumerado(i) {
+  cargarValorEnumerado(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoFactura.valores, i);
   }
 
@@ -76,13 +76,13 @@ export class QFacturaComponent implements OnInit {
       facturaFiltro.numeroFactura = this.numeroFacturaFiltro;
       this.restService.postREST(this.const.urlConsultarFacturasPorFiltros, facturaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            let listaNumerosFact = [];
+            let listaNumerosFact: any[] = [];
 
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: FacturaModel) => {
               if (listaNumerosFact.length === 0) {
-                let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
+                let facturaConsultaDTO: FacturaConsultaDTOModel = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                 facturaConsultaDTO.numeroFactura = temp.numeroFactura;
                 facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                 facturaConsultaDTO.total = temp.valorTotal;
@@ -93,7 +93,7 @@ export class QFacturaComponent implements OnInit {
                 if (listaNumerosFact.includes(temp.numeroFactura)) {
                   this.actualizarValorFactConsultaDeList(temp.numeroFactura, temp.valorTotal, temp);
                 } else {
-                  let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
+                  let facturaConsultaDTO: FacturaConsultaDTOModel = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                   facturaConsultaDTO.numeroFactura = temp.numeroFactura;
                   facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                   facturaConsultaDTO.total = temp.valorTotal;
@@ -134,13 +134,13 @@ export class QFacturaComponent implements OnInit {
       facturaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarFacturasPorFiltros, facturaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            let listaNumerosFact = [];
+            let listaNumerosFact: any[] = [];
 
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: FacturaModel) => {
               if (listaNumerosFact.length === 0) {
-                let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
+                let facturaConsultaDTO: FacturaConsultaDTOModel = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                 facturaConsultaDTO.numeroFactura = temp.numeroFactura;
                 facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                 facturaConsultaDTO.total = temp.valorTotal;
@@ -151,7 +151,7 @@ export class QFacturaComponent implements OnInit {
                 if (listaNumerosFact.includes(temp.numeroFactura)) {
                   this.actualizarValorFactConsultaDeList(temp.numeroFactura, temp.valorTotal, temp);
                 } else {
-                  let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
+                  let facturaConsultaDTO: FacturaConsultaDTOModel = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                   facturaConsultaDTO.numeroFactura = temp.numeroFactura;
                   facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                   facturaConsultaDTO.total = temp.valorTotal;
@@ -184,7 +184,7 @@ export class QFacturaComponent implements OnInit {
     }
   }
 
-  actualizarValorFactConsultaDeList(numeroFactura, valor, factura) {
+  actualizarValorFactConsultaDeList(numeroFactura: string, valor: number, factura: any) {
     this.listaFacturasConsulta.forEach(factConsulta => {
       if (factConsulta.numeroFactura === numeroFactura) {
         factConsulta.total = factConsulta.total + valor;

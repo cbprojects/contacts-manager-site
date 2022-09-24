@@ -1,13 +1,13 @@
 export interface TareaModel {
-    idTarea;
-    descripcion;
-    fechaRecordatorio;
-    realizado;
+    idTarea: any;
+    descripcion: any;
+    fechaRecordatorio: any;
+    realizado: any;
 
     // Auditoria
-    estado;
-    fechaCreacion;
-    fechaActualizacion;
-    usuarioCreacion;
-    usuarioActualizacion;
+    estado: any;
+    fechaCreacion: any;
+    fechaActualizacion: any;
+    usuarioCreacion: any;
+    usuarioActualizacion: any;
 }

@@ -13,7 +13,7 @@
 		<!-- CONTENT -->
 		<div class="content">
 			<div class="container-fluid">
-				<div class="row">
+				<div *ngIf="tarea" class="row">
 					<div class="{{esNuevaTarea ? 'displayNone' : 'col-md-4'}}">
 						<div class="card card-profile">
 							<div class="card-avatar">
@@ -48,7 +48,7 @@
 										</div>
 									</div>
 									<p-checkbox (click)="habilitarFechaRecordatorio()" [(ngModel)]="habilitarFecha"
-										binary="true" inputId="binary">
+										[binary]="true" inputId="binary">
 									</p-checkbox>
 									<div class="col-md-5">
 										<div class="form-group">

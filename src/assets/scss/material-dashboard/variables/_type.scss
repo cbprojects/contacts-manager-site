@@ -3,7 +3,7 @@
 // Font, line-height, and color for body text, headings, and more.
 
 // https://www.google.com/design/spec/style/typography.html#typography-styles
-// https://www.getmdl.io/styles/index.html
+// http://www.getmdl.io/styles/index.html
 
 $font-family-sans-serif: 'Roboto', 'Helvetica', 'Arial', sans-serif !default;
 $font-family-serif:      'Roboto Slab', 'Times New Roman', serif !default;
@@ -43,7 +43,7 @@ $display4-size: 2.125rem !default; // md display-1 34px was 3.5rem
 //
 //$line-height-base:                1.5 !default;
 //
-$headings-margin-bottom:     calc($spacer / 2) !default;
+$headings-margin-bottom:     ($spacer / 2) !default;
 //$headings-font-family:       inherit !default;
 $headings-font-weight:         400 !default; // was 500
 

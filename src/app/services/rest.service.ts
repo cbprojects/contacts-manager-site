@@ -1,6 +1,6 @@
-import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ObjectModelInitializer } from '../config/ObjectModelInitializer';
 
 const httpOptions = {
@@ -27,33 +27,31 @@ export class RestService {
   }
 
   // SERVICES WITHOUT SECURITY
-  getREST(url) {
+  getREST(url: string) {
     return this.http.get(url);
   }
 
-  postREST(url, data) {
+  postREST(url: string, data: any) {
     return this.http.post(url, data);
   }
 
-  putREST(url, data) {
+  putREST(url: string, data: any) {
     return this.http.put(url, data);
   }
 
-  deleteREST(url, id) {
-    let idParam = '{' + id + '}';
-
-    return this.http.delete(`${url}/${idParam}`);
+  deleteREST(url: string, id: string) {
+    return this.http.delete(`${url}/${id}`);
   }
 
-  getFileREST(url) {
+  getFileREST(url: string) {
     return this.http.get(url, { responseType: 'blob' });
   }
 
-  postFileREST(url, data) {
+  postFileREST(url: string, data: any) {
     return this.http.post(url, data, { responseType: 'blob' });
   }
 
-  postFileSendREST(url, data: File) {
+  postFileSendREST(url: string, data: File) {
     let formData: FormData = new FormData();
     formData.append('file', data);
 
@@ -62,7 +60,7 @@ export class RestService {
   // END SERVICES WITHOUT SECURITY
 
   // SERVICES WITH SECURITY
-  postOauthREST(url, usuario: string, clave: string) {
+  postOauthREST(url: string, usuario: string, clave: string) {
     const body = `grant_type=password&username=${encodeURIComponent(usuario)}&password=${encodeURIComponent(clave)}`;
 
     return this.http.post(url, body, {
@@ -70,19 +68,19 @@ export class RestService {
     });
   }
 
-  getSecureREST(url, token) {
+  getSecureREST(url: string, token: string) {
     return this.http.get(url, {
       headers: new HttpHeaders().set('Authorization', 'bearer ' + token).set('Content-Type', 'application/json')
     });
   }
 
-  postSecureREST(url, data, token) {
+  postSecureREST(url: string, data: any, token: string) {
     return this.http.post(url, data, {
       headers: new HttpHeaders().set('Authorization', 'bearer ' + token).set('Content-Type', 'application/json')
     });
   }
 
-  postSecureFileREST(url, data: File, token) {
+  postSecureFileREST(url: string, data: File, token: string) {
     let formData = new FormData();
     formData.append("file", data);
 

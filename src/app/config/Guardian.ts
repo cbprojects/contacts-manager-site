@@ -37,20 +37,20 @@ export class Guardian implements CanActivate {
       || URLactual.split("#")[1] !== "/") {
       //let URLTransformada = this.util.transformarSimboloUri(URLactual, this.listaRefPorcentajesUri);
 
-      /* Contacto
-      if (URLTransformada.split('?').length === 2) {
-        this.sesionService.contactoEnSesionTB = null;
-        let variableContacto = URLTransformada.split("#")[1].split("?")[1].split("=")[0];
-        let contacto: string = URLTransformada.split("#")[1].split("?")[1].split("=")[1];
-        let contactoTemp = JSON.parse(contacto);
-        if (contacto !== undefined && contacto !== null && variableContacto === this.const.tokenRecordarClave && contactoTemp.idContacto !== undefined && contactoTemp.idContacto !== null && contactoTemp.idContacto > 0 && contactoTemp.estado !== undefined && contactoTemp.estado !== null && contactoTemp.estado > 0 && contactoTemp.nombreContacto !== undefined && contactoTemp.nombreContacto !== null && contactoTemp.nombreContacto !== '' && contactoTemp.correoContacto !== undefined && contactoTemp.correoContacto !== null && contactoTemp.correoContacto !== '') {
-          this.sesionService.contactoEnSesionTB = contactoTemp;
-          this.sesionService.contactoEnSesionTB.fechaActualizacion = '';
-          this.sesionService.contactoEnSesionTB.fechaCreacion = '';
-          this.listaRefPorcentajesUri = [];
-          this.router.navigate(['/home']);
-        }
-      }*/
+      // Contacto
+      // if (URLTransformada.split('?').length === 2) {
+      //   this.sesionService.contactoEnSesionTB = null;
+      //   let variableContacto = URLTransformada.split("#")[1].split("?")[1].split("=")[0];
+      //   let contacto: string = URLTransformada.split("#")[1].split("?")[1].split("=")[1];
+      //   let contactoTemp = JSON.parse(contacto);
+      //   if (contacto !== undefined && contacto !== null && variableContacto === this.const.tokenRecordarClave && contactoTemp.idContacto !== undefined && contactoTemp.idContacto !== null && contactoTemp.idContacto > 0 && contactoTemp.estado !== undefined && contactoTemp.estado !== null && contactoTemp.estado > 0 && contactoTemp.nombreContacto !== undefined && contactoTemp.nombreContacto !== null && contactoTemp.nombreContacto !== '' && contactoTemp.correoContacto !== undefined && contactoTemp.correoContacto !== null && contactoTemp.correoContacto !== '') {
+      //     this.sesionService.contactoEnSesionTB = contactoTemp;
+      //     this.sesionService.contactoEnSesionTB.fechaActualizacion = '';
+      //     this.sesionService.contactoEnSesionTB.fechaCreacion = '';
+      //     this.listaRefPorcentajesUri = [];
+      //     this.router.navigate(['/home']);
+      //   }
+      // }
 
       if (user !== undefined && user !== null) {
         let usuarioTB = JSON.parse(user);

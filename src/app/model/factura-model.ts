@@ -1,17 +1,17 @@
 import { ConceptoFacturaModel } from "./concepto-factura-model";
 
 export interface FacturaModel {
-    idFactura;
-    numeroFactura;
+    idFactura: any;
+    numeroFactura: any;
     conceptoFacturaTB: ConceptoFacturaModel;
-    tipoFactura;
-    cantidad;
-    valorTotal;
+    tipoFactura: any;
+    cantidad: any;
+    valorTotal: any;
 
     // Auditoria
-    estado;
-    fechaCreacion;
-    fechaActualizacion;
-    usuarioCreacion;
-    usuarioActualizacion;
+    estado: any;
+    fechaCreacion: any;
+    fechaActualizacion: any;
+    usuarioCreacion: any;
+    usuarioActualizacion: any;
 }

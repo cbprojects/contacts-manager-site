@@ -1,6 +1,6 @@
 export interface ResponseEMailDTOModel {
-    exitoso;
-    mensaje;
-    correosEnviados;
-    correosNoEnviados;
+    exitoso: any;
+    mensaje: any;
+    correosEnviados: any;
+    correosNoEnviados: any;
 }

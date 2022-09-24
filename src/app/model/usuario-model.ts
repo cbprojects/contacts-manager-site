@@ -1,13 +1,13 @@
 export interface UsuarioModel {
-    idUsuario;
-    usuario;
-    clave;
-    correoUsuario;
+    idUsuario: any;
+    usuario: any;
+    clave: any;
+    correoUsuario: any;
 
     // Auditoria
-    estado;
-    fechaCreacion;
-    fechaActualizacion;
-    usuarioCreacion;
-    usuarioActualizacion;
+    estado: any;
+    fechaCreacion: any;
+    fechaActualizacion: any;
+    usuarioCreacion: any;
+    usuarioActualizacion: any;
 }

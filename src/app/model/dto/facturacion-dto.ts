@@ -1,7 +1,7 @@
 import { FacturaModel } from "../factura-model";
 
 export interface FacturacionDTOModel {
-    total;
+    total: any;
     facturaTB: FacturaModel;
     conceptoTempTB: any;
 }

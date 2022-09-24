@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
 import { MessageService, PrimeIcons } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { ContactoModel } from 'src/app/model/contacto-model';
 import { SeguimientoModel } from 'src/app/model/seguimiento-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -24,13 +24,13 @@ export class MSeguimientoComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  contacto: ContactoModel;
-  seguimiento: SeguimientoModel[];
-  seguimientoModificado: SeguimientoModel;
-  seguimientoCreado: SeguimientoModel;
-  enumProceso: any[];
-  enumIndustria: any[];
-  eventsSeguimiento: any[];
+  contacto: ContactoModel = this.objectModelInitializer.getDataContactoModel();
+  seguimiento: SeguimientoModel[] = [];
+  seguimientoModificado: SeguimientoModel = this.objectModelInitializer.getDataSeguimientoModel();
+  seguimientoCreado: SeguimientoModel = this.objectModelInitializer.getDataSeguimientoModel();
+  enumProceso: any[] = [];
+  enumIndustria: any[] = [];
+  eventsSeguimiento: any[] = [];
   mostrarPanelCrear: boolean = false;
   mostrarPanelModificar: boolean = false;
 
@@ -71,15 +71,15 @@ export class MSeguimientoComponent implements OnInit {
     this.enumIndustria = enums.industria.valores;
   }
 
-  cargarValorEnumeradoProcesoContacto(i) {
+  cargarValorEnumeradoProcesoContacto(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().procesoContacto.valores, i);
   }
 
-  cargarValorEnumeradoIndustria(i) {
+  cargarValorEnumeradoIndustria(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().industria.valores, i);
   }
 
-  cargarValorEnumeradoNivelSeguimiento(i) {
+  cargarValorEnumeradoNivelSeguimiento(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().nivelSeguimiento.valores, i);
   }
 
@@ -130,7 +130,7 @@ export class MSeguimientoComponent implements OnInit {
     }
   }
 
-  obtenerColorNivel(i) {
+  obtenerColorNivel(i: number) {
     let color = "#000";
     switch (i) {
       case 1:
@@ -149,7 +149,7 @@ export class MSeguimientoComponent implements OnInit {
     return color;
   }
 
-  obtenerIconNivel(i) {
+  obtenerIconNivel(i: number) {
     let icon = PrimeIcons.UNDO;
     switch (i) {
       case 1:
@@ -279,7 +279,7 @@ export class MSeguimientoComponent implements OnInit {
     }
   }
 
-  actualizarNivel(nivel, seguimiento: SeguimientoModel) {
+  actualizarNivel(nivel: any, seguimiento: SeguimientoModel) {
     try {
       this.contacto.procesoContacto = this.contacto.procesoContacto.value;
       this.contacto.industria = this.contacto.industria.value;
@@ -346,7 +346,7 @@ export class MSeguimientoComponent implements OnInit {
     }, 10);
   }
 
-  formatearFechaTabla(fecha) {
+  formatearFechaTabla(fecha: any) {
     let fechaFormateada = '';
 
     if (fecha !== undefined && fecha !== null) {

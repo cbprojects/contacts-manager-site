@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { TextProperties } from 'src/app/config/TextProperties';
-import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
-import { TareaModel } from 'src/app/model/tarea-model';
 import * as FileSaver from 'file-saver';
 import 'jspdf-autotable';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
+import { TextProperties } from 'src/app/config/TextProperties';
+import { Util } from 'src/app/config/Util';
+import { TareaModel } from 'src/app/model/tarea-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -25,10 +25,10 @@ export class QTareaComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  listaTareas: TareaModel[];
+  listaTareas: TareaModel[] = [];
   descripcionFiltro: any = "";
-  cols: any[];
-  exportColumns: any[];
+  cols: any[] = [];
+  exportColumns: any[] | undefined;
 
   // Utilidades
   msg: any;
@@ -63,7 +63,7 @@ export class QTareaComponent implements OnInit {
     } else {
       this.rows = this.enumRows[0];
     }
-    this.sesionService.objTareaCargado = null;
+    this.sesionService.objTareaCargado = undefined;
     this.cargarTareas();
     $('html').removeClass('nav-open');
     this.cols = [
@@ -87,9 +87,9 @@ export class QTareaComponent implements OnInit {
       tareaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarTareasPorFiltros, tareaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
-          if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
+          if (listaTemp && listaTemp.length > 0) {
+            listaTemp.forEach((temp: TareaModel) => {
               this.listaTareas.push(temp);
             });
           }
@@ -113,7 +113,7 @@ export class QTareaComponent implements OnInit {
     }
   }
 
-  formatearFechaTabla(fecha) {
+  formatearFechaTabla(fecha: any) {
     let fechaFormateada = '';
 
     if (fecha !== undefined && fecha !== null) {
@@ -141,7 +141,7 @@ export class QTareaComponent implements OnInit {
     listaExportar = this.obtenerListaExportar();
     import("jspdf").then(jsPDF => {
       import("jspdf-autotable").then(x => {
-        const doc = new jsPDF.default('p', 'pt');
+        const doc: any = new jsPDF.default('p', 'pt');
         doc['autoTable'](this.exportColumns, listaExportar,
           {
             styles: { fillColor: [12, 180, 201] },

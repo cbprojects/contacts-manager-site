@@ -29,15 +29,15 @@ export class QContactoComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  listaContactos: ContactoDTOModel[];
+  listaContactos: ContactoDTOModel[] = [];
   nombreFiltro: any = "";
   seleccionarTodos: boolean = false;
-  mailDTO: RequestContactoXEmpresaEMailDTOModel;
-  mailResponseDTO: ResponseEMailDTOModel;
-  cols: any[];
-  exportColumns: any[];
-  listaEmpresas: EmpresaModel[];
-  empresa: EmpresaModel;
+  mailDTO: RequestContactoXEmpresaEMailDTOModel | undefined;
+  mailResponseDTO: ResponseEMailDTOModel | undefined;
+  cols: any[] = [];
+  exportColumns: any[] = [];
+  listaEmpresas: EmpresaModel[] = [];
+  empresa: EmpresaModel | undefined;
   contactosSeleccionados: any;
 
   // Utilidades
@@ -70,7 +70,7 @@ export class QContactoComponent implements OnInit {
     } else {
       this.rows = this.enumRows[0];
     }
-    this.sesionService.objContactoCargado = null;
+    this.sesionService.objContactoCargado = undefined;
     this.empresa = this.objectModelInitializer.getDataEmpresaModel();
     this.cargarEmpresas();
     this.cargarContactos();
@@ -96,7 +96,7 @@ export class QContactoComponent implements OnInit {
     this.router.navigate(['/m-contacto']);
   }
 
-  cargarColorBadge(i) {
+  cargarColorBadge(i: number) {
     let color = "dark";
     switch (i) {
       case 1:
@@ -130,7 +130,7 @@ export class QContactoComponent implements OnInit {
         .subscribe(resp => {
           let listaContactosTemp = JSON.parse(JSON.stringify(resp));
           if (listaContactosTemp !== undefined && listaContactosTemp.length > 0) {
-            listaContactosTemp.forEach(contacto => {
+            listaContactosTemp.forEach((contacto: ContactoModel) => {
               let contactoTemp = this.convertirEnums(contacto);
               let contactoDTO = this.objectModelInitializer.getDataDTOContactoModel();
               contactoDTO.contactoTB = contactoTemp;
@@ -163,18 +163,18 @@ export class QContactoComponent implements OnInit {
     return contacto;
   }
 
-  cargarValorEnumerado(i) {
+  cargarValorEnumerado(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().procesoContacto.valores, i);
   }
 
-  cargarValorEnumeradoIndustria(i) {
+  cargarValorEnumeradoIndustria(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().industria.valores, i);
   }
 
-  enviarEmail(event: Event, contacto: ContactoModel) {
+  enviarEmail(event: any, contacto: ContactoModel) {
     this.confirmationService.confirm({
       target: event.target,
-      message: this.msg.lbl_esta_seguro_proceder + " Se enviará un correo de la Empresa: " + this.empresa.nombre,
+      message: this.msg.lbl_esta_seguro_proceder + " Se enviará un correo de la Empresa: " + (this.empresa ? this.empresa.nombre : ''),
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: this.msg.lbl_enum_si,
       rejectLabel: this.msg.lbl_enum_no,
@@ -191,7 +191,7 @@ export class QContactoComponent implements OnInit {
     });
   }
 
-  enviarEmailTodos(event: Event) {
+  enviarEmailTodos(event: any) {
     this.confirmationService.confirm({
       target: event.target,
       message: this.msg.lbl_esta_seguro_proceder,
@@ -240,42 +240,44 @@ export class QContactoComponent implements OnInit {
 
   enviarRestEmail(listaContactos: ContactoModel[]) {
     try {
-      // Conversiones de datos
-      this.mailDTO = this.objectModelInitializer.getDataRequestContactoXEmpresaEmailDtoModel();
-      this.mailDTO.desde = this.empresa.correo;
-      this.mailDTO.destinatarios = listaContactos;
-      this.mailDTO.asunto = "Asunto: ";
-      this.mailDTO.empresa = this.empresa;
-      this.mailDTO.template = this.empresa.idEmpresa === 1 ? "contactoDigmo.html" : "contacto.html";
-      if (this.mailDTO.destinatarios !== undefined && this.mailDTO.destinatarios !== null) {
-        this.mailDTO.destinatarios.forEach(contacto => {
-          contacto.procesoContacto = contacto.procesoContacto.value;
-          contacto.industria = contacto.industria.value;
-        });
+      if (this.empresa) {
+        // Conversiones de datos
+        this.mailDTO = this.objectModelInitializer.getDataRequestContactoXEmpresaEmailDtoModel();
+        this.mailDTO.desde = this.empresa.correo;
+        this.mailDTO.destinatarios = listaContactos;
+        this.mailDTO.asunto = "Asunto: ";
+        this.mailDTO.empresa = this.empresa;
+        this.mailDTO.template = this.empresa.idEmpresa === 1 ? "contactoDigmo.html" : "contacto.html";
+        if (this.mailDTO.destinatarios !== undefined && this.mailDTO.destinatarios !== null) {
+          this.mailDTO.destinatarios.forEach(contacto => {
+            contacto.procesoContacto = contacto.procesoContacto.value;
+            contacto.industria = contacto.industria.value;
+          });
+        }
+        this.restService.postREST(this.const.urlEnviarEmailContacto, this.mailDTO)
+          .subscribe(resp => {
+            let respuesta: ResponseEMailDTOModel = JSON.parse(JSON.stringify(resp));
+            if (respuesta !== null) {
+              // Mostrar mensaje de envios de correos exitoso o no
+              this.messageService.clear();
+              this.messageService.add({ severity: respuesta.exitoso ? this.const.severity[1] : this.const.severity[3], summary: respuesta.exitoso ? this.msg.lbl_summary_succes : this.msg.lbl_summary_danger, detail: respuesta.mensaje, sticky: true });
+            }
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
+
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+
+              console.log(error, "error");
+            })
       }
-      this.restService.postREST(this.const.urlEnviarEmailContacto, this.mailDTO)
-        .subscribe(resp => {
-          let respuesta: ResponseEMailDTOModel = JSON.parse(JSON.stringify(resp));
-          if (respuesta !== null) {
-            // Mostrar mensaje de envios de correos exitoso o no
-            this.messageService.clear();
-            this.messageService.add({ severity: respuesta.exitoso ? this.const.severity[1] : this.const.severity[3], summary: respuesta.exitoso ? this.msg.lbl_summary_succes : this.msg.lbl_summary_danger, detail: respuesta.mensaje, sticky: true });
-          }
-        },
-          error => {
-            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
-            let titleError = listaMensajes[0];
-            listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
-            this.messageService.clear();
-
-            listaMensajes.forEach(mensaje => {
-              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
-            });
-            this.messageService.add(mensajeFinal);
-
-            console.log(error, "error");
-          })
     } catch (e) {
       console.log(e);
     }
@@ -300,7 +302,7 @@ export class QContactoComponent implements OnInit {
     listaExportar = this.obtenerListaExportar();
     import("jspdf").then(jsPDF => {
       import("jspdf-autotable").then(x => {
-        const doc = new jsPDF.default('p', 'pt');
+        const doc: any = new jsPDF.default('p', 'pt');
         doc['autoTable'](this.exportColumns, listaExportar,
           {
             styles: { fillColor: [12, 180, 201] },
@@ -335,15 +337,15 @@ export class QContactoComponent implements OnInit {
   }
 
   cargarEmpresas() {
-    this.listaEmpresas = [];
     try {
+      this.listaEmpresas = [];
       let empresaFiltro = this.objectModelInitializer.getDataEmpresaModel();
       empresaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarEmpresasPorFiltros, empresaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: EmpresaModel) => {
               this.listaEmpresas.push(temp);
             });
           }

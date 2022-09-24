@@ -1,19 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../.././services/rest.service';
 import { MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
-import { TareaModel } from 'src/app/model/tarea-model';
-import { TareaDTOModel } from 'src/app/model/dto/tarea-dto';
-import { EmpresaModel } from 'src/app/model/empresa-model';
 import { ContactoModel } from 'src/app/model/contacto-model';
+import { FacturaConsultaDTOModel } from 'src/app/model/dto/factura-consulta-dto';
 import { ReporteFacturaDTOModel } from 'src/app/model/dto/reporte-factura-dto';
 import { ResponseEMailDTOModel } from 'src/app/model/dto/response-email-dto';
-import { FacturaConsultaDTOModel } from 'src/app/model/dto/factura-consulta-dto';
+import { TareaDTOModel } from 'src/app/model/dto/tarea-dto';
+import { EmpresaModel } from 'src/app/model/empresa-model';
+import { FacturaModel } from 'src/app/model/factura-model';
+import { TareaModel } from 'src/app/model/tarea-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../.././services/rest.service';
 
 declare var $: any;
 
@@ -31,12 +32,12 @@ export class HomeComponent implements OnInit {
   // Objetos de datos
   contactosActivos: any;
   empresasActivas: any;
-  listaTareas: TareaDTOModel[];
-  listaEmpresas: EmpresaModel[];
-  contactoEnSesionTB: ContactoModel;
+  listaTareas: TareaDTOModel[] = [];
+  listaEmpresas: EmpresaModel[] = [];
+  contactoEnSesionTB: ContactoModel | undefined = this.objectModelInitializer.getDataContactoModel();
   displayModalFactura: boolean = false;
-  empresaSeleccionadaTB: EmpresaModel;
-  listaFacturas: FacturaConsultaDTOModel[];
+  empresaSeleccionadaTB: EmpresaModel = this.objectModelInitializer.getDataEmpresaModel();
+  listaFacturas: FacturaConsultaDTOModel[] = [];
   numeroFactura: any = 0;
 
   // Utilidades
@@ -70,11 +71,11 @@ export class HomeComponent implements OnInit {
 
   inicializar() {
     // Inicializar objetos cargados de módulos
-    this.sesionService.objContactoCargado = null;
-    this.sesionService.objEmpresaCargado = null;
-    this.sesionService.objConceptoFacturaCargado = null;
-    this.sesionService.objFacturaCargado = null;
-    this.sesionService.objTareaCargado = null;
+    this.sesionService.objContactoCargado = undefined;
+    this.sesionService.objEmpresaCargado = undefined;
+    this.sesionService.objConceptoFacturaCargado = undefined;
+    this.sesionService.objFacturaCargado = undefined;
+    this.sesionService.objTareaCargado = undefined;
 
     // Inicializar ContactoHome
     this.contactoEnSesionTB = this.sesionService.contactoEnSesionTB;
@@ -200,9 +201,9 @@ export class HomeComponent implements OnInit {
       tareaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarTareasPorFiltros, tareaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: { idTarea: number; descripcion: string; fechaRecordatorio: string; realizado: boolean; estado: number; fechaCreacion: string; fechaActualizacion: string; usuarioCreacion: string; usuarioActualizacion: string; }) => {
               let tareaDTO = this.objectModelInitializer.getDataDTOTareaModel();
               tareaDTO.tareaTB = temp;
               this.listaTareas.push(tareaDTO);
@@ -268,9 +269,9 @@ export class HomeComponent implements OnInit {
       empresaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarEmpresasPorFiltros, empresaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: EmpresaModel) => {
               this.listaEmpresas.push(temp);
             });
           }
@@ -403,13 +404,13 @@ export class HomeComponent implements OnInit {
       facturaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarFacturasPorFiltros, facturaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            let listaNumerosFact = [];
+            let listaNumerosFact: any[] = [];
 
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: FacturaModel) => {
               if (listaNumerosFact.length === 0) {
-                let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
+                let facturaConsultaDTO: FacturaConsultaDTOModel = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                 facturaConsultaDTO.numeroFactura = temp.numeroFactura;
                 facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                 facturaConsultaDTO.total = temp.valorTotal;
@@ -419,7 +420,7 @@ export class HomeComponent implements OnInit {
                 if (listaNumerosFact.includes(temp.numeroFactura)) {
                   this.actualizarValorFactConsultaDeList(temp.numeroFactura, temp.valorTotal, temp);
                 } else {
-                  let facturaConsultaDTO = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
+                  let facturaConsultaDTO: FacturaConsultaDTOModel = this.objectModelInitializer.getDataFacturaConsultaDTOModel();
                   facturaConsultaDTO.numeroFactura = temp.numeroFactura;
                   facturaConsultaDTO.tipoFactura = this.cargarValorEnumerado(temp.tipoFactura);
                   facturaConsultaDTO.total = temp.valorTotal;
@@ -450,7 +451,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  actualizarValorFactConsultaDeList(numeroFactura, valor, factura) {
+  actualizarValorFactConsultaDeList(numeroFactura: string, valor: number, factura: any) {
     this.listaFacturas.forEach(factConsulta => {
       if (factConsulta.numeroFactura === numeroFactura) {
         factConsulta.total = factConsulta.total + valor;
@@ -459,7 +460,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  cargarValorEnumerado(i) {
+  cargarValorEnumerado(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoFactura.valores, i);
   }
 
@@ -469,7 +470,7 @@ export class HomeComponent implements OnInit {
     $('#fact-' + factura.numeroFactura).toggleClass('row-selected');
   }
 
-  getSombra(color) {
+  getSombra(color: string) {
     return "background: " + color + "; box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%), 0 7px 10px -5px " + color + ";"
   }
 }

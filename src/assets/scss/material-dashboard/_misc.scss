@@ -82,7 +82,6 @@ label{
       color: $white-color !important;
     }
   }
-
   .footer {
     z-index: 3 !important;
     position: absolute;
@@ -92,8 +91,6 @@ label{
     color: $white-color;
   }
   .page-header{
-    display: flex;
-    align-items: center;
 
     .content-center {
       z-index: 3;
@@ -114,90 +111,5 @@ label{
       width: 100%;
       z-index: 2;
     }
-  }
-}
-
-// docs
-
- .bd-docs {
-   .bd-toc-item {
-     .bd-sidenav a span {
-       float: right;
-       margin-top: 5px;
-       padding: 3px 7px;
-       font-size: 8px;
-       line-height: 9px;
-       background-color: $brand-primary;
-     }
-   }
- }
-
-
-// timepicker increase/decrease buttons
-
-.bootstrap-datetimepicker-widget .timepicker {
-  .table-condesed .btn{
-    .ripple-container {
-      width: 40px;
-      height: 40px;
-      margin: -11px 3px;
-    }
-  }
-}
-
-
-.off-canvas-sidebar {
-  .wrapper-full-page {
-    .page-header {
-      padding: 15vh 0 !important;
-    }
-  }
-}
-
-// RTL Page
-
-html[dir="rtl"] {
-  .main-panel {
-    float: left;
-  }
-
-  .sidebar,
-  .off-canvas-sidebar nav .navbar-collapse {
-    text-align: right;
-  }
-
-  .sidebar {
-    left: unset;
-    right: 0;
-
-    .nav {
-      padding-right: 0;
-
-      i {
-        float: right;
-        margin-left: 15px;
-        margin-right: unset;
-      }
-    }
-  }
-
-  .card {
-    &.card-chart {
-      direction: ltr;
-
-      .card-title,
-      .card-category {
-        text-align: right;
-      }
-    }
-
-    .card-body,
-    .card-footer {
-      direction: rtl;
-    }
-  }
-
-  .form-check .form-check-sign .check:before {
-    margin-right: 10px;
   }
 }

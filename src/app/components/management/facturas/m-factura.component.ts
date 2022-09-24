@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
 import { MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
-import { FacturaModel } from 'src/app/model/factura-model';
 import { ConceptoFacturaModel } from 'src/app/model/concepto-factura-model';
 import { FacturacionDTOModel } from 'src/app/model/dto/facturacion-dto';
-import { RequestFacturacionDTOModel } from 'src/app/model/dto/request-facturacion-dto';
 import { ReporteFacturaDTOModel } from 'src/app/model/dto/reporte-factura-dto';
+import { RequestFacturacionDTOModel } from 'src/app/model/dto/request-facturacion-dto';
 import { ResponseEMailDTOModel } from 'src/app/model/dto/response-email-dto';
+import { FacturaModel } from 'src/app/model/factura-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../../services/rest.service';
 
 declare var $: any;
 
@@ -28,16 +28,16 @@ export class MFacturaComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  factura: FacturaModel;
-  esNuevaFactura: boolean;
-  enumTipoFactura: any[];
-  listaFacturacion: FacturacionDTOModel[];
+  factura: FacturaModel = this.objectModelInitializer.getDataFacturaModel();
+  esNuevaFactura: boolean = false;
+  enumTipoFactura: any[] = [];
+  listaFacturacion: FacturacionDTOModel[] = [];
   listaConceptos: any;
   valorTotalFactura: any;
   empresaTB: any;
   contactoTB: any;
-  enumEmpresas: any[];
-  enumContactos: any[];
+  enumEmpresas: any[] = [];
+  enumContactos: any[] = [];
   pdfSrc: string = '';
 
   // Utilidades
@@ -83,15 +83,15 @@ export class MFacturaComponent implements OnInit {
     this.cargarContactos();
   }
 
-  cargarValorEnumerado(i) {
+  cargarValorEnumerado(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoFactura.valores, i);
   }
 
-  cargarLabelEnumerado(label) {
+  cargarLabelEnumerado(label: string) {
     return this.util.getLabelEnumerado(this.enumerados.getEnumerados().tipoFactura.valores, label);
   }
 
-  cargarValorConceptoEnumerado(i) {
+  cargarValorConceptoEnumerado(i: number) {
     return this.util.getValorEnumerado(this.enumerados.getEnumerados().tipoConcepto.valores, i);
   }
 
@@ -244,9 +244,9 @@ export class MFacturaComponent implements OnInit {
       conceptoFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarConceptosFacturasPorFiltros, conceptoFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: ConceptoFacturaModel) => {
               let conceptoTemp = this.convertirTipoConceptoEnum(temp);
               let enumConcepto = { value: conceptoTemp, label: conceptoTemp.descripcion };
               this.listaConceptos.push(enumConcepto);
@@ -257,7 +257,7 @@ export class MFacturaComponent implements OnInit {
                 let factDTO: FacturacionDTOModel = this.objectModelInitializer.getDataDTOFacturaModel();
                 factDTO.total = factura.valorTotal;
                 factDTO.facturaTB = factura;
-                this.listaConceptos.forEach(conceptoEnum => {
+                this.listaConceptos.forEach((conceptoEnum: { value: { idConcepto: any; }; }) => {
                   if (conceptoEnum.value.idConcepto === factura.conceptoFacturaTB.idConcepto) {
                     factDTO.conceptoTempTB = conceptoEnum;
                   }
@@ -293,7 +293,7 @@ export class MFacturaComponent implements OnInit {
     return concepto;
   }
 
-  calcularPrecioTotal(event, facturacionDTO: FacturacionDTOModel) {
+  calcularPrecioTotal(event: any, facturacionDTO: FacturacionDTOModel) {
     if (event === '') {
       facturacionDTO.facturaTB.cantidad = 0;
     } else {
@@ -318,7 +318,7 @@ export class MFacturaComponent implements OnInit {
     this.listaFacturacion.push(facturacionDTO);
   }
 
-  removerItemFactura(i) {
+  removerItemFactura(i: number) {
     this.listaFacturacion.splice(i, 1);
     this.valorTotalFactura = 0;
     this.listaFacturacion.forEach(fact => {
@@ -326,7 +326,7 @@ export class MFacturaComponent implements OnInit {
     });
   }
 
-  cargarConceptoDeTabla(event, facturacionDTO: FacturacionDTOModel) {
+  cargarConceptoDeTabla(event: any, facturacionDTO: FacturacionDTOModel) {
     facturacionDTO.facturaTB.conceptoFacturaTB = event.value;
     facturacionDTO.facturaTB.valorTotal = facturacionDTO.facturaTB.cantidad * facturacionDTO.facturaTB.conceptoFacturaTB.valorUnitario;
     this.valorTotalFactura = 0;
@@ -387,9 +387,9 @@ export class MFacturaComponent implements OnInit {
       empresaFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarEmpresasPorFiltros, empresaFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: { nombre: any; }) => {
               let enumEmpresa = { value: temp, label: temp.nombre };
               this.enumEmpresas.push(enumEmpresa);
             });
@@ -425,9 +425,9 @@ export class MFacturaComponent implements OnInit {
       contactoFiltro.estado = 1;
       this.restService.postREST(this.const.urlConsultarContactosPorFiltros, contactoFiltro)
         .subscribe(resp => {
-          let listaTemp = JSON.parse(JSON.stringify(resp));
+          let listaTemp: any = JSON.parse(JSON.stringify(resp));
           if (listaTemp !== undefined && listaTemp.length > 0) {
-            listaTemp.forEach(temp => {
+            listaTemp.forEach((temp: { nombreContacto: any; }) => {
               let enumContacto = { value: temp, label: temp.nombreContacto };
               this.enumContactos.push(enumContacto);
             });

@@ -1,20 +1,20 @@
 export interface ContactoModel {
-    idContacto;
-    nombreEmpresa;
-    telefonoEmpresa;
-    descripcionEmpresa;
-    nombreContacto;
-    correoContacto;
-    cargoContacto;
-    telefonoContacto;
-    ciudadContacto;
-    procesoContacto;
-    industria;
+    idContacto: any;
+    nombreEmpresa: any;
+    telefonoEmpresa: any;
+    descripcionEmpresa: any;
+    nombreContacto: any;
+    correoContacto: any;
+    cargoContacto: any;
+    telefonoContacto: any;
+    ciudadContacto: any;
+    procesoContacto: any;
+    industria: any;
 
     // Auditoria
-    estado;
-    fechaCreacion;
-    fechaActualizacion;
-    usuarioCreacion;
-    usuarioActualizacion;
+    estado: any;
+    fechaCreacion: any;
+    fechaActualizacion: any;
+    usuarioCreacion: any;
+    usuarioActualizacion: any;
 }

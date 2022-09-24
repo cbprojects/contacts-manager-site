@@ -1,18 +1,18 @@
 export interface EmpresaModel {
-    idEmpresa;
-    nombre;
-    telefono;
-    descripcion;
-    correo;
-    paginaWeb;
-    ciudad;
-    industria;
-    color;
+    idEmpresa: any;
+    nombre: any;
+    telefono: any;
+    descripcion: any;
+    correo: any;
+    paginaWeb: any;
+    ciudad: any;
+    industria: any;
+    color: any;
 
     // Auditoria
-    estado;
-    fechaCreacion;
-    fechaActualizacion;
-    usuarioCreacion;
-    usuarioActualizacion;
+    estado: any;
+    fechaCreacion: any;
+    fechaActualizacion: any;
+    usuarioCreacion: any;
+    usuarioActualizacion: any;
 }

@@ -1,15 +1,15 @@
 export interface ConceptoFacturaModel {
-    idConcepto;
-    codigo;
-    descripcion;
-    tipoConcepto;
-    unidad;
-    valorUnitario;
+    idConcepto: any;
+    codigo: any;
+    descripcion: any;
+    tipoConcepto: any;
+    unidad: any;
+    valorUnitario: any;
 
     // Auditoria
-    estado;
-    fechaCreacion;
-    fechaActualizacion;
-    usuarioCreacion;
-    usuarioActualizacion;
+    estado: any;
+    fechaCreacion: any;
+    fechaActualizacion: any;
+    usuarioCreacion: any;
+    usuarioActualizacion: any;
 }

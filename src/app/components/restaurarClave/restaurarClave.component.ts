@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../services/rest.service';
 import { MessageService } from 'primeng/api';
+import { Enumerados } from 'src/app/config/Enumerados';
+import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { Enumerados } from 'src/app/config/Enumerados';
-import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { UsuarioModel } from 'src/app/model/usuario-model';
+import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { RestService } from '../../services/rest.service';
 
 declare var $: any;
 
@@ -23,7 +23,7 @@ export class RestaurarClaveComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  usuario: UsuarioModel;
+  usuario: UsuarioModel | undefined;
   confirmarClave: string = "";
 
   // Utilidades
@@ -61,7 +61,7 @@ export class RestaurarClaveComponent implements OnInit {
   }
 
   restaurarClave() {
-    if (this.usuario.clave !== undefined && this.usuario.clave !== null && this.usuario.clave !== "" && this.usuario.clave === this.confirmarClave) {
+    if (this.usuario && this.usuario.clave && this.usuario.clave === this.confirmarClave) {
       try {
         this.usuario.estado = 1;
         this.restService.putREST(this.const.urlModificarClaveUsuario, this.usuario)
@@ -97,7 +97,7 @@ export class RestaurarClaveComponent implements OnInit {
 
   }
 
-  loginEnter(event) {
+  loginEnter(event: any) {
     if (event.keyCode === 13) {
       this.restaurarClave();
     }

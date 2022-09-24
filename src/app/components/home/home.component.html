@@ -145,7 +145,8 @@
 				<!-- End Dialog Facturas -->
 
 				<!-- Empresas -->
-				<div class="row" *ngIf="listaEmpresas.length > 0; else sinResultados">
+				<div class="row"
+					*ngIf="sesionService.objServiceSesion.esLogueado && listaEmpresas.length > 0; else sinResultados">
 					<div *ngFor="let empresa of listaEmpresas; index as i;" class="col-md-6">
 						<div class="card card-chart">
 							<div [style]="getSombra(empresa.color)"
@@ -293,7 +294,7 @@
 												<tr *ngFor="let tarea of listaTareas; index as i;">
 													<td style="width: 50px;" class="text-center">
 														<p-checkbox (onChange)="actualizarTareaRealizada(tarea.tareaTB)"
-															[(ngModel)]="tarea.tareaTB.realizado" binary="true"
+															[(ngModel)]="tarea.tareaTB.realizado" [binary]="true"
 															inputId="binary">
 														</p-checkbox>
 													</td>

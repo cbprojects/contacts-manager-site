@@ -1,6 +1,6 @@
 import { TareaModel } from "../tarea-model";
 
 export interface TareaDTOModel {
-    seleccionado;
+    seleccionado: any;
     tareaTB: TareaModel;
 }
