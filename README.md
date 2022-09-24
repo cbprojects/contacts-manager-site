@@ -37,3 +37,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
         -Dsonar.host.url=https://sonarqube.cbaeneprojects.com/ \
         -Dsonar.login=e554bd71fcd509f2a3f7fba33f524d59bb5bd6c6
     ```
+
+## GIT COMMANDS FOR TAGS
+
+git tag -a v2.0.2 -m "Deploy - v2.0.2"
+git push origin --tags
