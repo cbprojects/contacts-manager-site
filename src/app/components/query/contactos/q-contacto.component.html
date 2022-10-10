@@ -52,41 +52,44 @@
 									<ng-template pTemplate="caption">
 										<div class="p-d-flex">
 											<button type="submit" class="btn btn-info" routerLink="/m-contacto"><i
+													aria-hidden="true"
 													class="pi pi-user-plus m-1"></i>{{msg.lbl_btn_crear}}</button>
 											<div class="clearfix"></div>
 											<button type="submit" class="btn btn-default" (click)="dt.exportCSV()"
-												pTooltip="Descargar CSV" tooltipPosition="bottom"><i
+												pTooltip="Descargar CSV" tooltipPosition="bottom"><i aria-hidden="true"
 													class="pi pi-file-o m-1"></i></button>
 											<div class="clearfix"></div>
 											<button type="submit" class="btn btn-danger" (click)="exportPdf()"
-												pTooltip="Descargar PDF" tooltipPosition="bottom"><i
+												pTooltip="Descargar PDF" tooltipPosition="bottom"><i aria-hidden="true"
 													class="pi pi-file-pdf m-1"></i></button>
 											<div class="clearfix"></div>
 											<button type="submit" class="btn btn-success" (click)="exportExcel()"
 												pTooltip="Descargar Excel" tooltipPosition="bottom"><i
-													class="pi pi-file-excel m-1"></i></button>
+													aria-hidden="true" class="pi pi-file-excel m-1"></i></button>
 											<div class="clearfix"></div>
 										</div>
 									</ng-template>
 									<ng-template pTemplate="header" let-columns>
 										<tr class="text-primary">
-											<th style="width: 40px;" class="text-center">
-												<p-checkbox (click)="seleccionarTodosContactos()"
+											<th scope="col" style="width: 40px;" class="text-center">
+												<!-- <p-checkbox (click)="seleccionarTodosContactos()"
 													[(ngModel)]="seleccionarTodos" [binary]="true" inputId="binary">
-												</p-checkbox>
+												</p-checkbox> -->
 											</th>
-											<th style="width: 40px;" class="td-actions text-center">
-												<button type="button" (click)="enviarEmailTodos($event)"
+											<th scope="col" style="width: 40px;" class="td-actions text-center">
+												<!-- <button type="button" (click)="enviarEmailTodos($event)"
 													class="btn btn-primary btn-link btn-sm">
-													<i class="material-icons"
+													<i aria-hidden="true" class="material-icons"
 														style="font-size: 28px;margin-top: -25px;">mark_as_unread</i>
 												</button>
-												<p-confirmPopup></p-confirmPopup>
+												<p-confirmPopup
+													[style]="{'color' :  '#fff', 'background-color': empresa && empresa.color ? empresa.color+'54' : '#1d2225'}">
+												</p-confirmPopup> -->
 											</th>
-											<th style="width: 40px;" class="text-center">
-												<i class="material-icons">tag</i>
+											<th scope="col" style="width: 40px;" class="text-center">
+												<i aria-hidden="true" class="material-icons">tag</i>
 											</th>
-											<th class="text-center" *ngFor="let col of columns">
+											<th scope="col" class="text-center" *ngFor="let col of columns">
 												<div *ngIf="col.header !== msg.lbl_table_header_proceso && col.header !== msg.lbl_table_header_industria"
 													pSortableColumn="contactoTB.{{[col.field]}}">{{col.header}}
 													<p-sortIcon field="contactoTB.{{[col.field]}}"></p-sortIcon>
@@ -120,8 +123,10 @@
 												<button type="button" [disabled]="!contacto.seleccionado"
 													(click)="enviarEmail($event, contacto.contactoTB)"
 													class="btn btn-primary btn-link btn-sm">
-													<p-confirmPopup></p-confirmPopup>
-													<i class="material-icons"
+													<p-confirmPopup
+														[style]="{'color' : '#fff', 'background-color': empresa && empresa.color ? empresa.color+'54' : '#1d2225'}">
+													</p-confirmPopup>
+													<i aria-hidden="true" class="material-icons"
 														style="font-size: 25px;margin-top: -15px;">mail</i>
 												</button>
 											</td>
@@ -157,7 +162,7 @@
 						<div class="card card-stats">
 							<div class="card-header card-header-info card-header-icon">
 								<div class="card-icon">
-									<i class="material-icons">nat</i>
+									<i aria-hidden="true" class="material-icons">nat</i>
 								</div>
 								<p class="card-category">{{msg.lbl_procesos}}</p>
 							</div>
