@@ -353,6 +353,14 @@ export class TextProperties {
       lbl_enum_industria_quimica: idioma === constant.idiomaEs ? 'Industria Química' : 'Chemical Industry',
       lbl_enum_industria_textil: idioma === constant.idiomaEs ? 'Industria Textil' : 'Textile Industry',
       lbl_enum_industria_comercial_hotel: idioma === constant.idiomaEs ? 'Centros Comerciales y Hotelería' : 'Shopping Centers and Hospitality',
+      lbl_enum_industria_plastico: idioma === constant.idiomaEs ? 'Plástico' : 'Plastic',
+      lbl_enum_industria_petroquimica: idioma === constant.idiomaEs ? 'Petroquímica' : 'Petrochemical',
+      lbl_enum_industria_electrica: idioma === constant.idiomaEs ? 'Eléctrica' : 'Electric',
+      lbl_enum_industria_gas: idioma === constant.idiomaEs ? 'Gas' : 'Gas',
+      lbl_enum_industria_maderas: idioma === constant.idiomaEs ? 'Maderas' : 'Woods',
+      lbl_enum_industria_cosmetica: idioma === constant.idiomaEs ? 'Cosmética' : 'Cosmetics',
+      lbl_enum_industria_centro_oncologico: idioma === constant.idiomaEs ? 'Centro Oncológico' : 'Oncology Center',
+      lbl_enum_industria_hospital: idioma === constant.idiomaEs ? 'Hospital' : 'Hospital',
 
       // Mtto Contacto
       lbl_contactos: idioma === constant.idiomaEs ? 'Contactos' : 'Contacts',

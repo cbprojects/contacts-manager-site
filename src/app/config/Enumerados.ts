@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TextProperties } from './TextProperties';
 import { SesionService } from '../services/sesionService/sesion.service';
+import { TextProperties } from './TextProperties';
 
 
 @Injectable()
@@ -104,7 +104,15 @@ export class Enumerados {
           { value: 6, label: properties.lbl_enum_industria_metalurgica },
           { value: 7, label: properties.lbl_enum_industria_quimica },
           { value: 8, label: properties.lbl_enum_industria_textil },
-          { value: 9, label: properties.lbl_enum_industria_comercial_hotel }
+          { value: 9, label: properties.lbl_enum_industria_comercial_hotel },
+          { value: 9, label: properties.lbl_enum_industria_plastico },
+          { value: 9, label: properties.lbl_enum_industria_petroquimica },
+          { value: 9, label: properties.lbl_enum_industria_electrica },
+          { value: 9, label: properties.lbl_enum_industria_gas },
+          { value: 9, label: properties.lbl_enum_industria_maderas },
+          { value: 9, label: properties.lbl_enum_industria_cosmetica },
+          { value: 9, label: properties.lbl_enum_industria_centro_oncologico },
+          { value: 9, label: properties.lbl_enum_industria_hospital }
         ]
       },
       //valorIva: {cod: 25},
