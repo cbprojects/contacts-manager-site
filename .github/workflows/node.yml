@@ -6,7 +6,7 @@ name: Deploy to Digital Ocean
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   build:
@@ -16,59 +16,66 @@ jobs:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v3
-    - name: 1. Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: 2. CD to root
-      run: cd ~/work/contacts-manager-site/contacts-manager-site/      
-    - name: 3. Test ls DIST (1)
-      run: ls
-    - name: 4. Install Dependencies
-      run: npm install
-    - name: 5. SonarQube Scan
-      run: npm run sonar
-    - name: 6. Build DIST
-      run: npm run deploy-prod
-    - name: 7. Delete prev DIST
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        port: ${{ secrets.SSH_PORT }}
-        script: |
-          cd /var/www/contact-manager.cbaeneprojects.com
-          rm -r html
+      - uses: actions/checkout@v3
+      - name: 1. Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: 2. Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-
+      - name: 3. CD to root
+        run: cd ~/work/contacts-manager-site/contacts-manager-site/
+      - name: 4. Install Dependencies
+        run: npm install
+      - name: 5. SonarCloud Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: npm run sonar
+      - name: 6. Build DIST
+        run: npm run deploy-prod
+      - name: 7. Delete prev DIST
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /var/www/contact-manager.cbaeneprojects.com
+            rm -r html
+            ls
+      - name: 8. MV Folder HTML
+        run: mv dist/contacts-manager-site dist/html
+      - name: 9. CD new DIST and Compress ZIP of new DIST
+        run: |
+          cd dist
           ls
-    - name: 8. MV Folder HTML
-      run: mv dist/contacts-manager-site dist/html
-    - name: 9. CD new DIST and Compress ZIP of new DIST
-      run: |
-           cd dist
-           ls
-           zip -r html.zip html
-           ls
-    - name: 10. Transfer DIST SSH
-      uses: garygrossgarten/github-action-scp@v0.7.3
-      with:
-        local: dist/html.zip
-        remote: /var/www/contact-manager.cbaeneprojects.com/html.zip
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        port: ${{ secrets.SSH_PORT }}
-    - name: 11. Deploy DIST SSH
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        port: ${{ secrets.SSH_PORT }}
-        script: |
-          cd /var/www/contact-manager.cbaeneprojects.com
-          unzip html.zip
-          rm -r html.zip
+          zip -r html.zip html
           ls
+      - name: 10. Transfer DIST SSH
+        uses: garygrossgarten/github-action-scp@v0.7.3
+        with:
+          local: dist/html.zip
+          remote: /var/www/contact-manager.cbaeneprojects.com/html.zip
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+      - name: 11. Deploy DIST SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /var/www/contact-manager.cbaeneprojects.com
+            unzip html.zip
+            rm -r html.zip
+            ls
