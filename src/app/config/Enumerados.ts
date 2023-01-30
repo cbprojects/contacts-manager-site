@@ -105,14 +105,15 @@ export class Enumerados {
           { value: 7, label: properties.lbl_enum_industria_quimica },
           { value: 8, label: properties.lbl_enum_industria_textil },
           { value: 9, label: properties.lbl_enum_industria_comercial_hotel },
-          { value: 9, label: properties.lbl_enum_industria_plastico },
-          { value: 9, label: properties.lbl_enum_industria_petroquimica },
-          { value: 9, label: properties.lbl_enum_industria_electrica },
-          { value: 9, label: properties.lbl_enum_industria_gas },
-          { value: 9, label: properties.lbl_enum_industria_maderas },
-          { value: 9, label: properties.lbl_enum_industria_cosmetica },
-          { value: 9, label: properties.lbl_enum_industria_centro_oncologico },
-          { value: 9, label: properties.lbl_enum_industria_hospital }
+          { value: 10, label: properties.lbl_enum_industria_plastico },
+          { value: 11, label: properties.lbl_enum_industria_petroquimica },
+          { value: 12, label: properties.lbl_enum_industria_electrica },
+          { value: 13, label: properties.lbl_enum_industria_gas },
+          { value: 14, label: properties.lbl_enum_industria_maderas },
+          { value: 15, label: properties.lbl_enum_industria_cosmetica },
+          { value: 16, label: properties.lbl_enum_industria_centro_oncologico },
+          { value: 17, label: properties.lbl_enum_industria_hospital },
+          { value: 18, label: properties.lbl_enum_industria_minera }
         ]
       },
       //valorIva: {cod: 25},

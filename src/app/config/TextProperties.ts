@@ -361,6 +361,7 @@ export class TextProperties {
       lbl_enum_industria_cosmetica: idioma === constant.idiomaEs ? 'Cosmética' : 'Cosmetics',
       lbl_enum_industria_centro_oncologico: idioma === constant.idiomaEs ? 'Centro Oncológico' : 'Oncology Center',
       lbl_enum_industria_hospital: idioma === constant.idiomaEs ? 'Hospital' : 'Hospital',
+      lbl_enum_industria_minera: idioma === constant.idiomaEs ? 'Industria Minera' : 'Mining Industry',
 
       // Mtto Contacto
       lbl_contactos: idioma === constant.idiomaEs ? 'Contactos' : 'Contacts',

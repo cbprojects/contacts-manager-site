@@ -656,3 +656,8 @@ p-checkbox {
 .card-chart{
   min-height: 28rem;
 }
+
+.nice-select.open .list {
+  max-height: 200px;
+  overflow: auto;
+}
