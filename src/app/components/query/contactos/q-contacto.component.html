@@ -32,7 +32,8 @@
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<label class="bmd-label-floating card-category">{{msg.lbl_empresas}}</label>
+											<label
+												class="bmd-label-floating card-category text-white">{{msg.lbl_empresas}}</label>
 											<select id="selectEmpresa" nice-select [attr.data-value]="empresa"
 												[(ngModel)]="empresa">
 												<option *ngFor="let empresa of listaEmpresas" [ngValue]="empresa">

@@ -247,7 +247,7 @@ export class QContactoComponent implements OnInit {
         this.mailDTO.destinatarios = listaContactos;
         this.mailDTO.asunto = "Asunto: ";
         this.mailDTO.empresa = this.empresa;
-        this.mailDTO.template = this.empresa.idEmpresa === 1 ? "contactoDigmo.html" : "contacto.html";
+        this.mailDTO.template = this.getEmailTemplate(this.empresa.idEmpresa);
         if (this.mailDTO.destinatarios !== undefined && this.mailDTO.destinatarios !== null) {
           this.mailDTO.destinatarios.forEach(contacto => {
             contacto.procesoContacto = contacto.procesoContacto.value;
@@ -281,6 +281,29 @@ export class QContactoComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  getEmailTemplate(idEmpresa: number) {
+    let emailTemplateName = "";
+    switch (idEmpresa) {
+      case 1:
+        emailTemplateName = "contactoDigmo.html";
+        break;
+      case 2:
+        emailTemplateName = "contactoPisosRTM.html";
+        break;
+      case 4:
+        emailTemplateName = "contactoConsorcio.html";
+        break;
+      case 5:
+        emailTemplateName = "contactoMultiaislamientos.html";
+        break;
+      case 8:
+        emailTemplateName = "contactoAbraxas.html";
+        break;
+    }
+
+    return emailTemplateName;
   }
 
   obtenerListaExportar() {

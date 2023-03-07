@@ -46,6 +46,7 @@ export class MEmpresaComponent implements OnInit {
   }
 
   inicializar() {
+    this.cargarEnumerados();
     this.empresa = this.objectModelInitializer.getDataEmpresaModel();
     this.empresa.industria = this.cargarValorEnumeradoIndustria(0);
     this.esNuevaEmpresa = true;
