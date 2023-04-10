@@ -301,6 +301,9 @@ export class QContactoComponent implements OnInit {
       case 8:
         emailTemplateName = "contactoAbraxas.html";
         break;
+      case 9:
+        emailTemplateName = "contactoConsorcioPisos.html";
+        break;
     }
 
     return emailTemplateName;
