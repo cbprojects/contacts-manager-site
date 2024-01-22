@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-//export var HOST = 'http://localhost:9002';
-//export var HOST = 'https://10.176.56.211:9002';
-export var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
+export var HOST = 'http://localhost:9002';
+// export var HOST = 'https://10.176.56.211:9002';
+// export var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
 
-//export var SYSTEM = 'http://localhost:4200';
-//export var SYSTEM = 'https://10.176.56.211:7001';
+// export var SYSTEM = 'http://localhost:4200';
+// export var SYSTEM = 'https://10.176.56.211:7001';
 export var SYSTEM = 'https://www.contact-manager.cbaeneprojects.com';
 
 @Injectable()
@@ -51,11 +51,14 @@ export class ObjectModelInitializer {
       urlLoginUsuario: `${HOST}/central/contactos/loginUsuario`,
       urlRestaurarClave: `${HOST}/central/contactos/restaurarClave`,
       urlModificarClaveUsuario: `${HOST}/central/contactos/modificarClaveUsuario`,
-      // Archivos
-      urlEnviarEmailContacto: `${HOST}/central/contactos/archivos/enviarEmailContacto`,
-      urlEnviarEmailContactoCliente: `${HOST}/central/contactos/archivos/emailContactoCliente`,
-      urlEnviarEmailFactura: `${HOST}/central/contactos/archivos/enviarEmailFactura`,
+      // Email
+      urlEnviarEmailContacto: `${HOST}/central/contactos/email/enviarEmailContacto`,
+      urlEnviarEmailContactoCliente: `${HOST}/central/contactos/email/emailContactoCliente`,
+      urlEnviarEmailFactura: `${HOST}/central/contactos/email/enviarEmailFactura`,
+      // Reportes
       urlGenerarReporteFactura: `${HOST}/central/contactos/reportes/generarReporteFactura`,
+      // Archivos
+      urlArchivosSubirInfo: `${HOST}/central/contactos/archivos/subirInfo`,
       // Contactos
       urlContarContactos: `${HOST}/central/contactos/contarContactos`,
       urlConsultarContactosPorFiltros: `${HOST}/central/contactos/consultarContactosPorFiltros`,

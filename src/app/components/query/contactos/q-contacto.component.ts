@@ -17,13 +17,17 @@ import { RestService } from '../../../services/rest.service';
 
 declare let $: any;
 
+interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
+}
+
 @Component({
   selector: 'app-q-contacto',
   templateUrl: './q-contacto.component.html',
   styleUrls: ['./q-contacto.component.scss'],
   providers: [RestService, MessageService]
 })
-
 export class QContactoComponent implements OnInit {
   // Objetos de Sesion
   sesion: any;
@@ -39,6 +43,7 @@ export class QContactoComponent implements OnInit {
   listaEmpresas: EmpresaModel[] = [];
   empresa: EmpresaModel | undefined;
   contactosSeleccionados: any;
+  uploadedFiles: any[] = [];
 
   // Utilidades
   msg: any;
@@ -61,6 +66,45 @@ export class QContactoComponent implements OnInit {
     $('#menu').children().removeClass('active');
     $($('#menu').children()[1]).addClass('active');
     $('.card').bootstrapMaterialDesign();
+  }
+
+  onUpload(event: UploadEvent) {
+    this.uploadedFiles = [];  
+    for (let file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+
+    this.messageService.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
+  }
+
+  importar() {
+    if (this.uploadedFiles && this.uploadedFiles.length > 0) {
+      let file = this.uploadedFiles[0];
+      try {
+        this.restService.postFileSendREST(this.const.urlArchivosSubirInfo, file)
+          .subscribe(resp => {
+            let okMessage = { severity: this.const.severity[1], summary: this.msg.lbl_summary_success, detail: 'Archivo importado correctamente.', sticky: true };
+            this.messageService.add(okMessage);
+            this.cargarContactos();
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
+
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+
+              console.log(error, "error");
+            })
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 
   inicializar() {

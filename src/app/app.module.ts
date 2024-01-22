@@ -29,6 +29,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DialogModule } from 'primeng/dialog';
+import { FileUploadModule } from 'primeng/fileupload';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { OrganizationChartModule } from 'primeng/organizationchart';
@@ -128,6 +129,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CardModule,
     TimelineModule,
     TooltipModule,
+    FileUploadModule,
     ConfirmPopupModule,
     CheckboxModule,
     ButtonModule,

@@ -163,10 +163,31 @@
 						<div class="card card-stats">
 							<div class="card-header card-header-info card-header-icon">
 								<div class="card-icon">
-									<i aria-hidden="true" class="material-icons">nat</i>
+									<div class="row justify-content-right">
+										<div class="col-md-2">
+											<i aria-hidden="true" class="material-icons">nat</i>
+										</div>
+										<div class="col-md-10">
+											<h4 style="margin-top: 16px;">Importar Contactos</h4>
+										</div>
+									</div>
 								</div>
 								<p class="card-category">{{msg.lbl_procesos}}</p>
 							</div>
+
+							<div class="card-body row">
+								<p-fileUpload name="file" [fileLimit]="1" url="{{const.urlArchivosSubirInfo}}" (onUpload)="onUpload($event)" [multiple]="true" accept=".csv, .xls, .xlsx, .txt" [maxFileSize]="1000000">
+									<ng-template pTemplate="content">
+										<ul *ngIf="uploadedFiles.length">
+											<li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+										</ul>
+									</ng-template>
+								</p-fileUpload>
+								<button type="submit" (click)="importar()"
+									class="btn btn-secondary pull-right">{{msg.lbl_btn_importar}}</button>
+								<div class="clearfix"></div>
+							</div>
+
 							<div class="card-footer">
 								<div class="stats">
 									<div class="row" style="padding: 0 10px;">
