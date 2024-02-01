@@ -387,6 +387,10 @@ export class TextProperties {
       lbl_empresas_actualiza_subtitles: idioma === constant.idiomaEs ? 'Actualiza tus Empresas' : 'Update your Companies',
       lbl_mtto_id_empresa: idioma === constant.idiomaEs ? 'ID Empresa' : 'Company ID',
       lbl_mtto_correo_empresa: idioma === constant.idiomaEs ? 'Correo Empresa' : 'Company E-Mail',
+      lbl_mtto_confirm_password: idioma === constant.idiomaEs ? 'Confirmar Clave' : 'Confirm Password',
+      lbl_mtto_mail_password: idioma === constant.idiomaEs ? 'Clave Correo' : 'Password E-Mail',
+      lbl_mtto_mail_template: idioma === constant.idiomaEs ? 'Plantilla Correo' : 'Template E-Mail',
+      lbl_mtto_mail_asunto: idioma === constant.idiomaEs ? 'Asunto Correo' : 'Subject E-Mail',
       lbl_mtto_pagina_web: idioma === constant.idiomaEs ? 'Página Web' : 'Web Page',
       lbl_mtto_color: idioma === constant.idiomaEs ? 'Color' : 'Color',
 

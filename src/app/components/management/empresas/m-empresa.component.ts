@@ -25,6 +25,7 @@ export class MEmpresaComponent implements OnInit {
   // Objetos de datos
   empresa: EmpresaModel = this.objectModelInitializer.getDataEmpresaModel();
   esNuevaEmpresa: boolean = false;
+  confirmPassword: any;
 
   enumIndustria: any[] = [];
 
@@ -46,6 +47,7 @@ export class MEmpresaComponent implements OnInit {
   }
 
   inicializar() {
+    this.confirmPassword = '';
     this.cargarEnumerados();
     this.empresa = this.objectModelInitializer.getDataEmpresaModel();
     this.empresa.industria = this.cargarValorEnumeradoIndustria(0);
@@ -79,33 +81,39 @@ export class MEmpresaComponent implements OnInit {
 
   crearEmpresa() {
     try {
-      this.empresa.industria = this.empresa.industria.value;
-      this.restService.postREST(this.const.urlCrearEmpresa, this.empresa)
-        .subscribe(resp => {
-          let respuesta: EmpresaModel = JSON.parse(JSON.stringify(resp));
-          if (respuesta !== null) {
-            // Mostrar mensaje exitoso y consultar comentarios de nuevo
-            this.messageService.clear();
-            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
+      if (this.empresa.mailPassword === this.confirmPassword) {
+        this.empresa.industria = this.empresa.industria.value;
+        this.restService.postREST(this.const.urlCrearEmpresa, this.empresa)
+          .subscribe(resp => {
+            let respuesta: EmpresaModel = JSON.parse(JSON.stringify(resp));
+            if (respuesta !== null) {
+              // Mostrar mensaje exitoso y consultar comentarios de nuevo
+              this.messageService.clear();
+              this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
 
-            this.ngOnInit();
-            $('.card').bootstrapMaterialDesign();
-          }
-        },
-          error => {
-            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
-            let titleError = listaMensajes[0];
-            listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
-            this.messageService.clear();
+              this.ngOnInit();
+              $('.card').bootstrapMaterialDesign();
+            }
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
 
-            listaMensajes.forEach(mensaje => {
-              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
-            });
-            this.messageService.add(mensajeFinal);
-            this.empresa.industria = this.cargarValorEnumeradoIndustria(this.empresa.industria);
-            console.log(error, "error");
-          })
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+              this.empresa.industria = this.cargarValorEnumeradoIndustria(this.empresa.industria);
+              console.log(error, "error");
+            })
+      } else {
+        this.messageService.clear();
+        let mensajeFinal = { severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: "Las claves para el envío de emails deben coincidir", sticky: true };
+        this.messageService.add(mensajeFinal);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -113,35 +121,41 @@ export class MEmpresaComponent implements OnInit {
 
   modificarEmpresa() {
     try {
-      this.empresa.industria = this.empresa.industria.value;
-      this.restService.putREST(this.const.urlModificarEmpresa, this.empresa)
-        .subscribe(resp => {
-          let respuesta: EmpresaModel = JSON.parse(JSON.stringify(resp));
-          if (respuesta !== null) {
-            // Mostrar mensaje exitoso y consultar comentarios de nuevo
-            this.messageService.clear();
-            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
+      if (this.empresa.mailPassword === this.confirmPassword) {
+        this.empresa.industria = this.empresa.industria.value;
+        this.restService.putREST(this.const.urlModificarEmpresa, this.empresa)
+          .subscribe(resp => {
+            let respuesta: EmpresaModel = JSON.parse(JSON.stringify(resp));
+            if (respuesta !== null) {
+              // Mostrar mensaje exitoso y consultar comentarios de nuevo
+              this.messageService.clear();
+              this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
 
-            this.volverConsulta();
-          }
-        },
-          error => {
-            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
-            let titleError = listaMensajes[0];
-            listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
-            this.messageService.clear();
-
-            listaMensajes.forEach(mensaje => {
-              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
-            });
-            this.messageService.add(mensajeFinal);
-            if (this.empresa.estado === 0) {
-              this.empresa.estado = 1;
+              this.volverConsulta();
             }
-            this.empresa.industria = this.cargarValorEnumeradoIndustria(this.empresa.industria);
-            console.log(error, "error");
-          })
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
+
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+              if (this.empresa.estado === 0) {
+                this.empresa.estado = 1;
+              }
+              this.empresa.industria = this.cargarValorEnumeradoIndustria(this.empresa.industria);
+              console.log(error, "error");
+            })
+      } else {
+        this.messageService.clear();
+        let mensajeFinal = { severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: "Las claves para el envío de emails deben coincidir", sticky: true };
+        this.messageService.add(mensajeFinal);
+      }
     } catch (e) {
       console.log(e);
     }

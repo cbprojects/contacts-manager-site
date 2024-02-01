@@ -29,6 +29,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DialogModule } from 'primeng/dialog';
+import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
@@ -39,6 +40,7 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
 // Imports - Components
+import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NiceSelectModule } from "ng-nice-select";
 import { AppComponent } from './app.component';
@@ -120,6 +122,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FormsModule,
     HttpClientModule,
     NgSelectModule,
+    AngularEditorModule,
+    FieldsetModule,
     NiceSelectModule,
     MessagesModule,
     MessageModule,

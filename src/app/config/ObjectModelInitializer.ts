@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-export var HOST = 'http://localhost:9002';
+// export var HOST = 'https://localhost:8443/contact-manager-server';
 // export var HOST = 'https://10.176.56.211:9002';
-// export var HOST = 'https://cbaeneprojects.com:8443/CentralContactos';
+export var HOST = 'https://cbaeneprojects.com:8401/contact-manager-server';
 
 // export var SYSTEM = 'http://localhost:4200';
 // export var SYSTEM = 'https://10.176.56.211:7001';
@@ -273,8 +273,6 @@ export class ObjectModelInitializer {
       desde: '',
       empresa: this.getDataEmpresaModel(),
       destinatarios: [],
-      asunto: '',
-      template: ''
     }
   };
 
@@ -289,6 +287,9 @@ export class ObjectModelInitializer {
       ciudad: '',
       industria: 0,
       color: '',
+      mailTemplate: '',
+      mailAsunto: '',
+      mailPassword: '',
 
       // Auditoria
       estado: 0,

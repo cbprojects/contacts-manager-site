@@ -8,6 +8,9 @@ export interface EmpresaModel {
     ciudad: any;
     industria: any;
     color: any;
+    mailTemplate: any;
+    mailAsunto: any;
+    mailPassword: any;
 
     // Auditoria
     estado: any;

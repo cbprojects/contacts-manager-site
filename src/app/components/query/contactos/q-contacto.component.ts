@@ -69,7 +69,7 @@ export class QContactoComponent implements OnInit {
   }
 
   onUpload(event: UploadEvent) {
-    this.uploadedFiles = [];  
+    this.uploadedFiles = [];
     for (let file of event.files) {
       this.uploadedFiles.push(file);
     }
@@ -77,35 +77,35 @@ export class QContactoComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
   }
 
-  importar() {
-    if (this.uploadedFiles && this.uploadedFiles.length > 0) {
-      let file = this.uploadedFiles[0];
-      try {
-        this.restService.postFileSendREST(this.const.urlArchivosSubirInfo, file)
-          .subscribe(resp => {
-            let okMessage = { severity: this.const.severity[1], summary: this.msg.lbl_summary_success, detail: 'Archivo importado correctamente.', sticky: true };
-            this.messageService.add(okMessage);
-            this.cargarContactos();
-          },
-            error => {
-              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
-              let titleError = listaMensajes[0];
-              listaMensajes.splice(0, 1);
-              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
-              this.messageService.clear();
+  // importar() {
+  //   if (this.uploadedFiles && this.uploadedFiles.length > 0) {
+  //     let file = this.uploadedFiles[0];
+  //     try {
+  //       this.restService.postFileSendREST(this.const.urlArchivosSubirInfo, file)
+  //         .subscribe(resp => {
+  //           let okMessage = { severity: this.const.severity[1], summary: this.msg.lbl_summary_success, detail: 'Archivo importado correctamente.', sticky: true };
+  //           this.messageService.add(okMessage);
+  //           this.cargarContactos();
+  //         },
+  //           error => {
+  //             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+  //             let titleError = listaMensajes[0];
+  //             listaMensajes.splice(0, 1);
+  //             let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+  //             this.messageService.clear();
 
-              listaMensajes.forEach(mensaje => {
-                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
-              });
-              this.messageService.add(mensajeFinal);
+  //             listaMensajes.forEach(mensaje => {
+  //               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+  //             });
+  //             this.messageService.add(mensajeFinal);
 
-              console.log(error, "error");
-            })
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }
+  //             console.log(error, "error");
+  //           })
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   }
+  // }
 
   inicializar() {
     let rowsLS = localStorage.getItem("rowsLS");
@@ -289,9 +289,7 @@ export class QContactoComponent implements OnInit {
         this.mailDTO = this.objectModelInitializer.getDataRequestContactoXEmpresaEmailDtoModel();
         this.mailDTO.desde = this.empresa.correo;
         this.mailDTO.destinatarios = listaContactos;
-        this.mailDTO.asunto = "Asunto: ";
         this.mailDTO.empresa = this.empresa;
-        this.mailDTO.template = this.getEmailTemplate(this.empresa.idEmpresa);
         if (this.mailDTO.destinatarios !== undefined && this.mailDTO.destinatarios !== null) {
           this.mailDTO.destinatarios.forEach(contacto => {
             contacto.procesoContacto = contacto.procesoContacto.value;
@@ -325,29 +323,6 @@ export class QContactoComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-  }
-
-  getEmailTemplate(idEmpresa: number) {
-    let emailTemplateName = "";
-    switch (idEmpresa) {
-      case 1:
-        emailTemplateName = "contactoDigmo.html";
-        break;
-      case 2:
-        emailTemplateName = "contactoPisosRTM.html";
-        break;
-      case 4:
-        emailTemplateName = "contactoConsorcio.html";
-        break;
-      case 5:
-        emailTemplateName = "contactoMultiaislamientos.html";
-        break;
-      case 8:
-        emailTemplateName = "contactoAbraxas.html";
-        break;
-    }
-
-    return emailTemplateName;
   }
 
   obtenerListaExportar() {
@@ -415,6 +390,7 @@ export class QContactoComponent implements OnInit {
             listaTemp.forEach((temp: EmpresaModel) => {
               this.listaEmpresas.push(temp);
             });
+            console.log(this.listaEmpresas);
           }
         },
           error => {
