@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MessageService } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
@@ -17,7 +18,6 @@ declare var $: any;
   styleUrls: ['./m-empresa.component.scss'],
   providers: [RestService, MessageService]
 })
-
 export class MEmpresaComponent implements OnInit {
   // Objetos de Sesion
   sesion: any;
@@ -26,6 +26,43 @@ export class MEmpresaComponent implements OnInit {
   empresa: EmpresaModel = this.objectModelInitializer.getDataEmpresaModel();
   esNuevaEmpresa: boolean = false;
   confirmPassword: any;
+  editorConfig: AngularEditorConfig = {
+    editable: false,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: false,
+    showToolbar: false,
+    placeholder: '',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ]
+  };
 
   enumIndustria: any[] = [];
 
@@ -55,6 +92,7 @@ export class MEmpresaComponent implements OnInit {
     if (this.sesionService.objEmpresaCargado !== undefined && this.sesionService.objEmpresaCargado !== null && this.sesionService.objEmpresaCargado.idEmpresa > 0) {
       this.empresa = this.sesionService.objEmpresaCargado;
       this.esNuevaEmpresa = false;
+      this.confirmPassword = this.empresa.mailPassword;
     }
     $('html').removeClass('nav-open');
     //$('#toggleMenuMobile').click();
