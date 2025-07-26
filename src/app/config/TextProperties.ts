@@ -362,7 +362,7 @@ export class TextProperties {
 			lbl_enum_industria_centro_oncologico: idioma === constant.idiomaEs ? 'Centro Oncológico' : 'Oncology Center',
 			lbl_enum_industria_hospital: idioma === constant.idiomaEs ? 'Hospital' : 'Hospital',
 			lbl_enum_industria_eventos: idioma === constant.idiomaEs ? 'Grandes Eventos' : 'Big Events',
-			lbl_enum_industria_servicios_publicos: idioma === constant.idiomaEs ? 'Grandes Eventos' : 'Big Events',
+			lbl_enum_industria_servicios_publicos: idioma === constant.idiomaEs ? 'Servicios Públicos' : 'Public Services',
 
 			// Mtto Contacto
 			lbl_contactos: idioma === constant.idiomaEs ? 'Contactos' : 'Contacts',
