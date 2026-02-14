@@ -1,2 +1,11 @@
 {
+  "/contact-manager-server": {
+    "target": "https://api.contacts-manager.coffeetech.com.mx/contact-manager-server",
+    "pathRewrite": {
+      "^/contact-manager-server": ""
+    },
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
 }

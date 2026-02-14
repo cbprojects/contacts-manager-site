@@ -326,44 +326,174 @@ export class QContactoComponent implements OnInit {
   }
 
   obtenerListaExportar() {
-    let listaExportar: ContactoModel[] = [];
+    let listaExportar: any[] = [];
     if (this.listaContactos !== undefined && this.listaContactos !== null && this.listaContactos.length > 0) {
       this.listaContactos.forEach(contacto => {
         let contact = this.objectModelInitializer.getDataContactoModel();
         this.util.copiarElemento(contacto.contactoTB, contact);
-        contact.procesoContacto = contacto.contactoTB.procesoContacto.label;
-        contact.industria = contacto.contactoTB.industria.label;
-        listaExportar.push(contact);
+        const proceso = contacto.contactoTB.procesoContacto && contacto.contactoTB.procesoContacto.label ? contacto.contactoTB.procesoContacto.label : '';
+        const industria = contacto.contactoTB.industria && contacto.contactoTB.industria.label ? contacto.contactoTB.industria.label : '';
+        const ciudad = contact.ciudadContacto ? contact.ciudadContacto : 'Sin Ciudad';
+        listaExportar.push({
+          ciudadContacto: ciudad,
+          nombreEmpresa: contact.nombreEmpresa ? contact.nombreEmpresa : '',
+          nombreContacto: contact.nombreContacto ? contact.nombreContacto : '',
+          correoContacto: contact.correoContacto ? contact.correoContacto : '',
+          telefonoContacto: contact.telefonoContacto ? contact.telefonoContacto : '',
+          industria: industria,
+          procesoContacto: proceso
+        });
       });
     }
     return listaExportar;
   }
 
+  private normalizarTexto(valor: string) {
+    return valor
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[\\/*?:[\]]/g, '')
+      .trim();
+  }
+
+  private ordenarListaExportar(listaExportar: any[]) {
+    return listaExportar.sort((a, b) => {
+      const ciudadA = (a.ciudadContacto || '').toString().toLowerCase();
+      const ciudadB = (b.ciudadContacto || '').toString().toLowerCase();
+      if (ciudadA !== ciudadB) {
+        return ciudadA.localeCompare(ciudadB);
+      }
+      const nombreA = (a.nombreContacto || '').toString().toLowerCase();
+      const nombreB = (b.nombreContacto || '').toString().toLowerCase();
+      return nombreA.localeCompare(nombreB);
+    });
+  }
+
+  private agruparPorCiudad(listaExportar: any[]) {
+    const grupos = new Map<string, any[]>();
+    listaExportar.forEach(contacto => {
+      const ciudad = contacto.ciudadContacto ? contacto.ciudadContacto : 'Sin Ciudad';
+      if (!grupos.has(ciudad)) {
+        grupos.set(ciudad, []);
+      }
+      grupos.get(ciudad)?.push(contacto);
+    });
+    return grupos;
+  }
+
+  private obtenerNombreHojaUnico(nombreBase: string, usados: Set<string>) {
+    let base = nombreBase || 'SinCiudad';
+    if (base.length > 31) {
+      base = base.slice(0, 31);
+    }
+
+    let candidato = base;
+    let contador = 1;
+    while (usados.has(candidato.toLowerCase())) {
+      const sufijo = `_${contador}`;
+      const limite = 31 - sufijo.length;
+      candidato = `${base.slice(0, limite)}${sufijo}`;
+      contador++;
+    }
+
+    usados.add(candidato.toLowerCase());
+    return candidato;
+  }
+
+  private construirFilasCsv(campos: string[], fila: any) {
+    return campos.map(campo => {
+      const valor = fila[campo] !== undefined && fila[campo] !== null ? String(fila[campo]) : '';
+      return `"${valor.replace(/"/g, '""')}"`;
+    }).join(',');
+  }
+
+  exportCsv() {
+    const listaExportar = this.ordenarListaExportar(this.obtenerListaExportar());
+    const gruposPorCiudad = this.agruparPorCiudad(listaExportar);
+    const campos = ['nombreEmpresa', 'nombreContacto', 'correoContacto', 'telefonoContacto', 'industria', 'procesoContacto'];
+    const encabezado = ['Empresa', 'Contacto', 'Correo', 'Telefono', 'Industria', 'Proceso'];
+    const lineas: string[] = [];
+
+    gruposPorCiudad.forEach((contactos, ciudad) => {
+      lineas.push(`"Ciudad: ${ciudad}"`);
+      lineas.push(encabezado.map(col => `"${col}"`).join(','));
+      contactos.forEach(contacto => {
+        lineas.push(this.construirFilasCsv(campos, contacto));
+      });
+      lineas.push('');
+    });
+
+    const contenido = '\ufeff' + lineas.join('\r\n');
+    const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8;' });
+    FileSaver.saveAs(blob, 'Contactos_' + new Date().getTime() + '.csv');
+  }
+
   exportPdf() {
-    let listaExportar: ContactoModel[] = [];
-    listaExportar = this.obtenerListaExportar();
+    const listaExportar = this.ordenarListaExportar(this.obtenerListaExportar());
+    const gruposPorCiudad = this.agruparPorCiudad(listaExportar);
+    const columnasTabla = [
+      { title: this.msg.lbl_table_header_nombre_empresa, dataKey: 'nombreEmpresa' },
+      { title: this.msg.lbl_table_header_nombre_contacto, dataKey: 'nombreContacto' },
+      { title: this.msg.lbl_table_header_correo, dataKey: 'correoContacto' },
+      { title: this.msg.lbl_table_header_telefono, dataKey: 'telefonoContacto' },
+      { title: this.msg.lbl_table_header_industria, dataKey: 'industria' },
+      { title: this.msg.lbl_table_header_proceso, dataKey: 'procesoContacto' }
+    ];
+
     import("jspdf").then(jsPDF => {
       import("jspdf-autotable").then(x => {
         const doc: any = new jsPDF.default('p', 'pt');
-        doc['autoTable'](this.exportColumns, listaExportar,
-          {
-            styles: { fillColor: [12, 180, 201] },
-            headStyles: { halign: 'center', fillColor: [12, 180, 201] },
-            bodyStyles: { fillColor: [255, 255, 255] },
-            footStyles: { fillColor: [12, 180, 201] },
+        let inicioY = 30;
+        let primerBloque = true;
+
+        gruposPorCiudad.forEach((contactos, ciudad) => {
+          if (!primerBloque) {
+            inicioY = (doc.lastAutoTable ? doc.lastAutoTable.finalY : inicioY) + 28;
           }
-        );
+          primerBloque = false;
+
+          if (inicioY > 760) {
+            doc.addPage();
+            inicioY = 30;
+          }
+
+          doc.setFontSize(12);
+          doc.text(`Ciudad: ${ciudad}`, 40, inicioY);
+          doc['autoTable'](columnasTabla, contactos, {
+            startY: inicioY + 8,
+            styles: { fillColor: [255, 255, 255], textColor: [33, 37, 41] },
+            headStyles: { halign: 'center', fillColor: [12, 180, 201] },
+            bodyStyles: { fillColor: [255, 255, 255] }
+          });
+        });
+
         doc.save('Contactos_' + new Date().getTime() + '.pdf');
       })
     });
   }
 
   exportExcel() {
-    let listaExportar: ContactoModel[] = [];
-    listaExportar = this.obtenerListaExportar();
+    const listaExportar = this.ordenarListaExportar(this.obtenerListaExportar());
+    const gruposPorCiudad = this.agruparPorCiudad(listaExportar);
     import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(listaExportar);
-      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const workbook = xlsx.utils.book_new();
+      const hojasUsadas = new Set<string>();
+
+      gruposPorCiudad.forEach((contactos, ciudad) => {
+        const filas = contactos.map(contacto => ({
+          Empresa: contacto.nombreEmpresa,
+          Contacto: contacto.nombreContacto,
+          Correo: contacto.correoContacto,
+          Telefono: contacto.telefonoContacto,
+          Industria: contacto.industria,
+          Proceso: contacto.procesoContacto
+        }));
+        const worksheet = xlsx.utils.json_to_sheet(filas);
+        const nombreBase = this.normalizarTexto(ciudad);
+        const nombreHoja = this.obtenerNombreHojaUnico(nombreBase, hojasUsadas);
+        xlsx.utils.book_append_sheet(workbook, worksheet, nombreHoja);
+      });
+
       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, "Contactos");
     });

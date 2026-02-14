@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
-// export var HOST = 'https://localhost:8443/contact-manager-server';
-// export var HOST = 'https://10.176.56.211:9002';
-export var HOST = 'https://api.contacts-manager.coffeetech.com.mx/contact-manager-server';
-
-// export var SYSTEM = 'http://localhost:4200';
-// export var SYSTEM = 'https://10.176.56.211:7001';
-export var SYSTEM = 'https://www.contacts-manager.coffeetech.com.mx';
+export var HOST = environment.apiBaseUrl;
+export var SYSTEM = environment.appBaseUrl;
 
 @Injectable()
 export class ObjectModelInitializer {
