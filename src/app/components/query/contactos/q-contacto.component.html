@@ -68,6 +68,21 @@
 												pTooltip="Descargar Excel" tooltipPosition="bottom"><i
 													aria-hidden="true" class="pi pi-file-excel m-1"></i></button>
 											<div class="clearfix"></div>
+											<button type="submit" class="btn" (click)="exportSql()"
+												pTooltip="Descargar SQL" tooltipPosition="bottom"
+												style="background-color: #6f42c1; color: #fff; border-color: #6f42c1;"><i
+													aria-hidden="true" class="pi pi-database m-1" style="color: #fff;"></i></button>
+											<div class="clearfix"></div>
+											<button type="submit" class="btn" (click)="exportCsvFull()"
+												pTooltip="Descargar CSV Auditoria" tooltipPosition="bottom"
+												style="background-color: #3f4652; color: #fff; border-color: #3f4652;"><i
+													aria-hidden="true" class="pi pi-file-o m-1" style="color: #fff;"></i>A</button>
+											<div class="clearfix"></div>
+											<button type="submit" class="btn" (click)="exportExcelFull()"
+												pTooltip="Descargar Excel Auditoria" tooltipPosition="bottom"
+												style="background-color: #1f6f3d; color: #fff; border-color: #1f6f3d;"><i
+													aria-hidden="true" class="pi pi-file-excel m-1" style="color: #fff;"></i>A</button>
+											<div class="clearfix"></div>
 										</div>
 									</ng-template>
 									<ng-template pTemplate="header" let-columns>
@@ -176,7 +191,10 @@
 							</div>
 
 							<div class="card-body row">
-								<p-fileUpload name="file" [fileLimit]="1" url="{{const.urlArchivosSubirInfo}}" (onUpload)="onUpload($event)" [multiple]="true" accept=".csv, .xls, .xlsx, .txt" [maxFileSize]="1000000">
+								<p-fileUpload #fileUploadRef name="file" [fileLimit]="1" [customUpload]="true"
+									(uploadHandler)="onUpload($event)" [multiple]="false" accept=".csv"
+									[maxFileSize]="10000000" chooseLabel="Elegir" uploadLabel="Cargar"
+									cancelLabel="Cancelar">
 									<ng-template pTemplate="content">
 										<ul *ngIf="uploadedFiles.length">
 											<li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
@@ -184,6 +202,75 @@
 									</ng-template>
 								</p-fileUpload>
 								<div class="clearfix"></div>
+								<div class="col-md-12 mt-3" *ngIf="contactosPendientesImportar && contactosPendientesImportar.length > 0">
+									<div class="alert alert-info">
+										Archivo: <strong>{{nombreArchivoPendiente}}</strong> | Registros listos: <strong>{{contactosPendientesImportar.length}}</strong>
+									</div>
+									<button type="button" class="btn btn-success mr-2" (click)="confirmarImportacionContactos()">
+										<i aria-hidden="true" class="pi pi-check m-1"></i>Confirmar Importacion
+									</button>
+									<button type="button" class="btn btn-secondary" (click)="cancelarImportacionContactos()">
+										<i aria-hidden="true" class="pi pi-times m-1"></i>Cancelar
+									</button>
+								</div>
+								<div class="col-md-12 mt-3" *ngIf="resumenImportacionValidos && resumenImportacionValidos.length > 0">
+									<h5 class="text-success">Registros Validos ({{resumenImportacionValidos.length}})</h5>
+									<p-table [value]="resumenImportacionValidos" [paginator]="true" [rows]="20"
+										[rowsPerPageOptions]="[20, 40, 60]" responsiveLayout="scroll"
+										styleClass="table p-datatable-striped p-datatable-sm"
+										currentPageReportTemplate="Registros {first} al {last} de {totalRecords}"
+										[showCurrentPageReport]="true">
+										<ng-template pTemplate="header">
+											<tr>
+												<th>Linea</th>
+												<th>Tipo</th>
+												<th>Empresa</th>
+												<th>Contacto</th>
+												<th>Correo</th>
+												<th>Detalle</th>
+											</tr>
+										</ng-template>
+										<ng-template pTemplate="body" let-fila>
+											<tr>
+												<td>{{fila.linea}}</td>
+												<td>{{fila.tipo}}</td>
+												<td>{{fila.nombreEmpresa}}</td>
+												<td>{{fila.nombreContacto}}</td>
+												<td>{{fila.correoContacto}}</td>
+												<td>{{fila.detalle}}</td>
+											</tr>
+										</ng-template>
+									</p-table>
+								</div>
+								<div class="col-md-12 mt-3" *ngIf="resumenImportacionInvalidos && resumenImportacionInvalidos.length > 0">
+									<h5 class="text-danger">Registros Invalidos ({{resumenImportacionInvalidos.length}})</h5>
+									<p-table [value]="resumenImportacionInvalidos" [paginator]="true" [rows]="20"
+										[rowsPerPageOptions]="[20, 40, 60]" responsiveLayout="scroll"
+										styleClass="table p-datatable-striped p-datatable-sm"
+										currentPageReportTemplate="Registros {first} al {last} de {totalRecords}"
+										[showCurrentPageReport]="true">
+										<ng-template pTemplate="header">
+											<tr>
+												<th>Linea</th>
+												<th>Tipo</th>
+												<th>Empresa</th>
+												<th>Contacto</th>
+												<th>Correo</th>
+												<th>Motivo</th>
+											</tr>
+										</ng-template>
+										<ng-template pTemplate="body" let-fila>
+											<tr>
+												<td>{{fila.linea}}</td>
+												<td>{{fila.tipo}}</td>
+												<td>{{fila.nombreEmpresa}}</td>
+												<td>{{fila.nombreContacto}}</td>
+												<td>{{fila.correoContacto}}</td>
+												<td>{{fila.detalle}}</td>
+											</tr>
+										</ng-template>
+									</p-table>
+								</div>
 							</div>
 
 							<div class="card-footer">

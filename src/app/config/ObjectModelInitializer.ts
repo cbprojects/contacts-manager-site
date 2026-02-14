@@ -60,6 +60,7 @@ export class ObjectModelInitializer {
       urlConsultarContactosPorFiltros: `${HOST}/central/contactos/consultarContactosPorFiltros`,
       urlCrearContacto: `${HOST}/central/contactos/crearContacto`,
       urlModificarContacto: `${HOST}/central/contactos/modificarContacto`,
+      urlImportarContactosMasivo: `${HOST}/central/contactos/importarContactosMasivo`,
       // Empresas
       urlContarEmpresas: `${HOST}/central/contactos/contarEmpresas`,
       urlConsultarEmpresasPorFiltros: `${HOST}/central/contactos/consultarEmpresasPorFiltros`,
